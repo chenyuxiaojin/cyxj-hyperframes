@@ -1,18 +1,33 @@
-# 已经在 GitHub 的子仓库（不重复跟踪）
+# 上游 git 仓库（在工作区里独立维护，不重复跟踪）
 hyperframes-student-kit/
 hyperframes-launches/
 
+# 个人录屏素材（含人脸/声音，不推 GitHub 公开）
+录屏/
+
 # 大视频/音频文件（用 Git LFS 或独立管理）
-录屏/*.mp4
-录屏/*.mov
-xcyj-progress/**/*.mp4
-xcyj-progress/**/*.mov
-xcyj-progress/**/*.mp3
+*.mp4
+*.mov
+*.mp3
+*.wav
+*.m4a
+
+# 但允许模板/示例的小图标和 logo
+!templates/**/assets/*.png
+!templates/**/assets/*.svg
+!examples/**/assets/*.png
+!examples/**/assets/*.svg
 
 # 构建产物 / 缓存
 **/node_modules/
 **/renders/
 **/.hyperframes/
+**/.waveform-cache/
+**/.debug-studio.mjs
+
+# Claude Code workspace state
+.claude/
+**/.claude/
 
 # macOS / IDE
 **/.DS_Store
