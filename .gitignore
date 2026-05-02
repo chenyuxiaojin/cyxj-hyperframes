@@ -1,0 +1,20 @@
+# 已经在 GitHub 的子仓库（不重复跟踪）
+hyperframes-student-kit/
+hyperframes-launches/
+
+# 大视频/音频文件（用 Git LFS 或独立管理）
+录屏/*.mp4
+录屏/*.mov
+xcyj-progress/**/*.mp4
+xcyj-progress/**/*.mov
+xcyj-progress/**/*.mp3
+
+# 构建产物 / 缓存
+**/node_modules/
+**/renders/
+**/.hyperframes/
+
+# macOS / IDE
+**/.DS_Store
+**/.idea/
+**/.vscode/

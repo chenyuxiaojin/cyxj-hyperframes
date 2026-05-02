@@ -1,0 +1,345 @@
+<template id="beat-5-pip-template">
+  <div
+    data-composition-id="beat-5-pip"
+    data-start="0"
+    data-duration="13.16"
+    data-width="1920"
+    data-height="1080"
+  >
+    <!-- Background -->
+    <div class="b5-bg"></div>
+    <div class="b5-grid"></div>
+    <div class="b5-stars"></div>
+    <div class="b5-vignette"></div>
+    <div class="b5-pip-halo"></div>
+
+    <!-- Hit #1: 自动做"动效" — anchors to recording word "动效" at 14.36 (master)
+         → local 1.52. Hold through master 17.36 → local 4.52, then exit. -->
+    <div class="b5-hit b5-hit-1">
+      <div class="b5-hit-kicker">DEMO · 1</div>
+      <div class="b5-hit-title">
+        <span class="b5-hit-word">自动</span>
+        <span class="b5-hit-word">做动效</span>
+      </div>
+      <div class="b5-hit-sub">字幕、图标、转场、片头片尾——一句话搞定</div>
+    </div>
+
+    <!-- Hit #2: 用 Claude Code — anchors to "Claude Code" at master 19.10 →
+         local 6.26. Hold through 21.50 → local 8.66, then exit. -->
+    <div class="b5-hit b5-hit-2">
+      <div class="b5-hit-kicker">HOW · 2</div>
+      <div class="b5-hit-title">
+        <span class="b5-hit-word">Claude</span>
+        <span class="b5-hit-word">Code</span>
+      </div>
+      <div class="b5-hit-sub">写 HTML/CSS 描述效果，浏览器渲染成 MP4</div>
+    </div>
+
+    <!-- Hit #3: 片头片尾 — anchors to "片头片尾" at master 21.50 → local 8.66.
+         Brief flash before outro takes over. -->
+    <div class="b5-hit b5-hit-3">
+      <div class="b5-hit-kicker">RESULT · 3</div>
+      <div class="b5-hit-title">
+        <span class="b5-hit-word">片头</span>
+        <span class="b5-hit-word">片尾</span>
+      </div>
+      <div class="b5-hit-sub">动态品牌、专业开场——直接渲染成 MP4</div>
+    </div>
+
+    <!-- Outro CTA — "陈与小金 · XCYJ". Holds from local 10.5 to end. -->
+    <div class="b5-outro">
+      <div class="b5-outro-tick"></div>
+      <div class="b5-outro-eyebrow">陈与小金</div>
+      <div class="b5-outro-title">
+        XCYJ
+      </div>
+      <div class="b5-outro-bar"></div>
+      <div class="b5-outro-foot">Powered by Claude Code · HyperFrames</div>
+    </div>
+
+    <style>
+      [data-composition-id="beat-5-pip"] {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+      }
+      [data-composition-id="beat-5-pip"] .b5-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 25% 40%,
+            rgba(217, 119, 87, 0.10) 0%,
+            transparent 55%),
+          radial-gradient(ellipse at 70% 80%,
+            rgba(40, 90, 160, 0.08) 0%,
+            transparent 60%),
+          #05080f;
+      }
+      [data-composition-id="beat-5-pip"] .b5-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          repeating-linear-gradient(0deg,
+            rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 90px),
+          repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 90px);
+        mask-image: radial-gradient(ellipse at 30% 50%,
+          #000 40%, transparent 85%);
+      }
+      [data-composition-id="beat-5-pip"] .b5-stars {
+        position: absolute;
+        inset: 0;
+      }
+      [data-composition-id="beat-5-pip"] .b5-star {
+        position: absolute;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 6px #fff;
+      }
+      [data-composition-id="beat-5-pip"] .b5-vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center,
+          transparent 35%,
+          rgba(0, 0, 0, 0.55) 95%);
+      }
+      [data-composition-id="beat-5-pip"] .b5-pip-halo {
+        position: absolute;
+        top: -100px;
+        right: -100px;
+        width: 900px;
+        height: 1200px;
+        background: radial-gradient(ellipse at 70% 50%,
+          rgba(217, 119, 87, 0.22) 0%,
+          rgba(217, 119, 87, 0.05) 45%,
+          transparent 70%);
+        filter: blur(30px);
+        pointer-events: none;
+      }
+
+      /* ---------- Side hits ---------- */
+      [data-composition-id="beat-5-pip"] .b5-hit {
+        position: absolute;
+        top: 50%;
+        left: 130px;
+        transform: translateY(-50%);
+        width: 1180px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        opacity: 0;
+      }
+      [data-composition-id="beat-5-pip"] .b5-hit-kicker {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.42em;
+        color: #d97757;
+        text-shadow: 0 0 16px rgba(217, 119, 87, 0.6);
+      }
+      [data-composition-id="beat-5-pip"] .b5-hit-title {
+        font-size: 168px;
+        font-weight: 900;
+        line-height: 0.95;
+        letter-spacing: -0.02em;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0 28px;
+      }
+      [data-composition-id="beat-5-pip"] .b5-hit-word {
+        display: inline-block;
+        background: linear-gradient(180deg, #ffffff 0%, #b8b8b8 62%, #f1f1f1 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow:
+          0 0 26px rgba(255, 255, 255, 0.35),
+          0 0 50px rgba(255, 255, 255, 0.14);
+      }
+      [data-composition-id="beat-5-pip"] .b5-hit-2 .b5-hit-word,
+      [data-composition-id="beat-5-pip"] .b5-hit-3 .b5-hit-word:last-child {
+        background: linear-gradient(180deg, #ffffff 0%, #f5b39a 55%, #d97757 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      [data-composition-id="beat-5-pip"] .b5-hit-sub {
+        margin-top: 8px;
+        font-size: 32px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.74);
+        letter-spacing: 0.02em;
+      }
+
+      /* ---------- Outro CTA ---------- */
+      [data-composition-id="beat-5-pip"] .b5-outro {
+        position: absolute;
+        top: 50%;
+        left: 130px;
+        transform: translateY(-50%);
+        width: 1180px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        opacity: 0;
+      }
+      [data-composition-id="beat-5-pip"] .b5-outro-tick {
+        width: 80px;
+        height: 6px;
+        background: #d97757;
+        border-radius: 3px;
+        box-shadow: 0 0 18px rgba(217, 119, 87, 0.8);
+      }
+      [data-composition-id="beat-5-pip"] .b5-outro-eyebrow {
+        font-size: 56px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: rgba(255, 255, 255, 0.92);
+      }
+      [data-composition-id="beat-5-pip"] .b5-outro-title {
+        font-family: "Inter", "Noto Sans SC", sans-serif;
+        font-size: 240px;
+        font-weight: 900;
+        line-height: 0.92;
+        letter-spacing: 0.02em;
+        background: linear-gradient(180deg, #ffffff 0%, #f5b39a 60%, #d97757 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow:
+          0 0 40px rgba(255, 255, 255, 0.3),
+          0 0 80px rgba(217, 119, 87, 0.35);
+      }
+      [data-composition-id="beat-5-pip"] .b5-outro-bar {
+        margin-top: 8px;
+        width: 280px;
+        height: 4px;
+        background: linear-gradient(90deg, #d97757, rgba(217,119,87,0));
+        border-radius: 2px;
+        box-shadow: 0 0 14px rgba(217, 119, 87, 0.6);
+      }
+      [data-composition-id="beat-5-pip"] .b5-outro-foot {
+        margin-top: 24px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        color: rgba(255, 255, 255, 0.55);
+      }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      (() => {
+        window.__timelines = window.__timelines || {};
+        const tl = gsap.timeline({ paused: true });
+        const root = '[data-composition-id="beat-5-pip"]';
+
+        // Seeded starfield (deterministic)
+        const starsEl = document.querySelector(`[data-composition-id="beat-5-pip"] .b5-stars`);
+        const STAR_COUNT = 40;
+        const stars = [];
+        for (let i = 0; i < STAR_COUNT; i++) {
+          const el = document.createElement("div");
+          el.className = "b5-star";
+          const hx = Math.abs(Math.sin(i * 12.9898 + 78.233));
+          const hy = Math.abs(Math.cos(i * 4.1414 + 23.456));
+          const size = 1.5 + (Math.abs(Math.sin(i * 2.71)) * 3);
+          el.style.left   = (40 + hx * 1260) + "px";
+          el.style.top    = (40 + hy * 1000) + "px";
+          el.style.width  = size + "px";
+          el.style.height = size + "px";
+          el.style.opacity = (0.25 + Math.abs(Math.sin(i * 3.14)) * 0.55).toFixed(2);
+          starsEl.appendChild(el);
+          stars.push(el);
+        }
+
+        // Local 0.00 == master 12.84.
+        // Recording word onsets (master → local for this beat):
+        //   "动效"        14.36 → 1.52
+        //   "Claude Code" 19.10 → 6.26
+        //   "片头片尾"    21.50 → 8.66
+        //   recording end 22.60 → 9.76
+
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-bg`,    { opacity: 0, duration: 0.50, ease: "power2.out" }, 0);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-grid`,  { opacity: 0, duration: 0.80, ease: "power2.out" }, 0.10);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-pip-halo`,
+          { opacity: 0, scale: 0.85, duration: 0.8, ease: "power3.out" }, 0.15);
+
+        stars.forEach((s, i) => {
+          const dx = (Math.sin(i * 0.9) * 22);
+          const dy = -14 - Math.abs(Math.cos(i * 1.3)) * 10;
+          gsap.to(s,
+            { x: dx, y: dy, duration: 3.2, repeat: 3, yoyo: true,
+              ease: "sine.inOut", delay: (i % 8) * 0.08 });
+        });
+
+        // ---- Hit #1: "自动 做动效" — local 1.52–4.50 ----
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-1`, { opacity: 1, duration: 0.01 }, 1.52);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-1 .b5-hit-kicker`,
+          { x: -20, opacity: 0, duration: 0.35, ease: "expo.out" }, 1.52);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-1 .b5-hit-word`,
+          { y: 60, opacity: 0, scale: 0.92, filter: "blur(12px)",
+            duration: 0.55, ease: "power3.out", stagger: 0.12 }, 1.62);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-1 .b5-hit-sub`,
+          { x: -14, opacity: 0, duration: 0.4, ease: "power2.out" }, 2.05);
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-1`,
+          { opacity: 0, y: -30, filter: "blur(14px)",
+            duration: 0.30, ease: "power2.in" }, 4.50);
+        tl.set(`[data-composition-id="beat-5-pip"] .b5-hit-1`,
+          { opacity: 0, visibility: "hidden" }, 4.80);
+
+        // ---- Hit #2: "Claude Code" — local 6.26–8.30 ----
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-2`, { opacity: 1, duration: 0.01 }, 6.26);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-2 .b5-hit-kicker`,
+          { x: -20, opacity: 0, duration: 0.35, ease: "expo.out" }, 6.26);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-2 .b5-hit-word`,
+          { y: 60, opacity: 0, scale: 0.92, filter: "blur(12px)",
+            duration: 0.55, ease: "power3.out", stagger: 0.12 }, 6.36);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-2 .b5-hit-sub`,
+          { x: -14, opacity: 0, duration: 0.4, ease: "power2.out" }, 6.85);
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-2`,
+          { opacity: 0, y: -30, filter: "blur(14px)",
+            duration: 0.30, ease: "power2.in" }, 8.30);
+        tl.set(`[data-composition-id="beat-5-pip"] .b5-hit-2`,
+          { opacity: 0, visibility: "hidden" }, 8.60);
+
+        // ---- Hit #3: "片头 片尾" — local 8.66–10.30 ----
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-3`, { opacity: 1, duration: 0.01 }, 8.66);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-3 .b5-hit-kicker`,
+          { x: -20, opacity: 0, duration: 0.35, ease: "expo.out" }, 8.66);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-3 .b5-hit-word`,
+          { y: 60, opacity: 0, scale: 0.92, filter: "blur(12px)",
+            duration: 0.50, ease: "power3.out", stagger: 0.12 }, 8.76);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-hit-3 .b5-hit-sub`,
+          { x: -14, opacity: 0, duration: 0.4, ease: "power2.out" }, 9.20);
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-hit-3`,
+          { opacity: 0, y: -30, filter: "blur(14px)",
+            duration: 0.30, ease: "power2.in" }, 10.30);
+        tl.set(`[data-composition-id="beat-5-pip"] .b5-hit-3`,
+          { opacity: 0, visibility: "hidden" }, 10.55);
+
+        // ---- Outro CTA — local 10.55 → end (13.16) ----
+        tl.to(`[data-composition-id="beat-5-pip"] .b5-outro`, { opacity: 1, duration: 0.01 }, 10.55);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-outro-tick`,
+          { width: 0, opacity: 0, duration: 0.45, ease: "power3.out" }, 10.55);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-outro-eyebrow`,
+          { x: -16, opacity: 0, duration: 0.4, ease: "expo.out" }, 10.65);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-outro-title`,
+          { y: 70, opacity: 0, scale: 0.92, filter: "blur(14px)",
+            duration: 0.7, ease: "power3.out" }, 10.80);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-outro-bar`,
+          { width: 0, opacity: 0, duration: 0.55, ease: "power3.out" }, 11.40);
+        tl.from(`[data-composition-id="beat-5-pip"] .b5-outro-foot`,
+          { opacity: 0, duration: 0.5, ease: "power1.out" }, 11.70);
+
+        // Duration anchor
+        tl.to({}, { duration: 13.16 }, 0);
+        window.__timelines["beat-5-pip"] = tl;
+      })();
+    </script>
+  </div>
+</template>
