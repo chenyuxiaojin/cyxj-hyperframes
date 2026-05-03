@@ -1,35 +1,78 @@
-# 上游 git 仓库（在工作区里独立维护，不重复跟踪）
+# ============================================================
+# 上游 git 仓库（独立维护，不进我的 git）
+# ============================================================
 hyperframes-student-kit/
 hyperframes-launches/
 
-# 个人录屏素材（含人脸/声音，不推 GitHub 公开）
+# ============================================================
+# 个人素材
+# ============================================================
+# 录屏（含人脸/声音，不推 GitHub）
 录屏/
 
-# 大视频/音频文件（用 Git LFS 或独立管理）
+# 大视频/音频
 *.mp4
 *.mov
 *.mp3
 *.wav
 *.m4a
 
-# 但允许模板/示例的小图标和 logo
+# 但允许小图标 / SVG / 转写 JSON
 !templates/**/assets/*.png
 !templates/**/assets/*.svg
+!templates/**/assets/*.json
 !examples/**/assets/*.png
 !examples/**/assets/*.svg
+!examples/**/assets/*.json
+!参考库/**/assets/*.png
+!参考库/**/assets/*.svg
+!参考库/**/assets/*.json
 
+# ============================================================
 # 构建产物 / 缓存
+# ============================================================
 **/node_modules/
 **/renders/
 **/.hyperframes/
 **/.waveform-cache/
 **/.debug-studio.mjs
 
-# Claude Code workspace state
-.claude/
-**/.claude/
+# ============================================================
+# 软链（指向 gitignored 上游，跨机器不可用，不进 git）
+# ============================================================
+# MOTION_PHILOSOPHY 软链
+MOTION_PHILOSOPHY.md
 
+# 仓库根 .claude/skills/ 下的 7 个上游 skill 软链
+.claude/skills/gsap
+.claude/skills/hyperframes
+.claude/skills/hyperframes-cli
+.claude/skills/hyperframes-registry
+.claude/skills/website-to-hyperframes
+.claude/skills/make-a-video
+.claude/skills/short-form-video
+
+# 参考库下 nate-demos 和 heygen-launches 整目录是软链
+参考库/nate-demos/
+参考库/heygen-launches/
+
+# ============================================================
+# Claude Code workspace state
+# ============================================================
+.claude/settings.local.json
+.claude/agents/
+# 自写的两个 skill 是真目录，允许进 git：
+# .claude/skills/cyxj-new-video/
+# .claude/skills/cyxj-add-block/
+
+# 子工程 / 模板内的 .claude state
+templates/**/.claude/
+参考库/**/.claude/
+2026-*/**/.claude/
+
+# ============================================================
 # macOS / IDE
+# ============================================================
 **/.DS_Store
 **/.idea/
 **/.vscode/
