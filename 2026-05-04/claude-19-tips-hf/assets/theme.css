@@ -2147,5 +2147,278 @@ html, body {
     }
 
 
+/* === Tip 06 ask-questions === */
 
+    /* Tip 06 让 Claude 主动追问 — 12.667s — 5 cues + hero hold */
 
+    /* hero opener zh 大字 */
+    [data-composition-id="tip-06-ask-questions"] .hero-zh {
+      font-family: var(--f-zh);
+      font-weight: 800;
+      font-size: 132px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      white-space: nowrap;
+      margin: 0;
+      padding: 8px 0;
+    }
+
+    /* 主舞台 */
+    [data-composition-id="tip-06-ask-questions"] .ask-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      opacity: 0;
+    }
+
+    /* mode-toggle-bar 复刻（callback Tip 4） */
+    [data-composition-id="tip-06-ask-questions"] .mode-toggle-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 28px;
+      background: rgba(255, 251, 245, 0.92);
+      border: 1px solid var(--c-line);
+      border-radius: 999px;
+      box-shadow: var(--shadow-soft);
+      font-family: var(--f-mono);
+      font-size: 22px;
+      color: var(--c-teal);
+      letter-spacing: 0;
+      font-weight: 700;
+      white-space: nowrap;
+      opacity: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .mode-toggle-bar .pause {
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: var(--c-teal);
+    }
+    [data-composition-id="tip-06-ask-questions"] .mode-toggle-bar .dot {
+      color: var(--c-teal);
+      font-size: 26px;
+      line-height: 1;
+      opacity: 0.75;
+    }
+
+    /* Claude 提问气泡（左对齐，Claude 橙 dot） */
+    [data-composition-id="tip-06-ask-questions"] .claude-bubble {
+      align-self: flex-start;
+      max-width: 720px;
+      padding: 16px 22px;
+      border-radius: 16px 16px 16px 4px;
+      background: rgba(255, 251, 245, 0.92);
+      border: 1px solid var(--c-line);
+      font-family: var(--f-zh);
+      font-size: 26px;
+      line-height: 1.4;
+      color: var(--c-text);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      opacity: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .claude-bubble-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--c-orange);
+      box-shadow: 0 0 12px var(--c-orange-glow);
+      flex-shrink: 0;
+      margin-top: 10px;
+    }
+
+    /* 用户气泡（右对齐，teal dot） */
+    [data-composition-id="tip-06-ask-questions"] .user-bubble {
+      align-self: flex-end;
+      max-width: 720px;
+      padding: 16px 22px;
+      border-radius: 16px 16px 4px 16px;
+      background: rgba(220, 230, 230, 0.65);
+      border: 1px solid rgba(47, 125, 115, 0.35);
+      font-family: var(--f-zh);
+      font-size: 26px;
+      line-height: 1.4;
+      color: var(--c-text);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: flex-start;
+      gap: 14px;
+      opacity: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .user-bubble-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--c-teal);
+      box-shadow: 0 0 10px rgba(47, 125, 115, 0.6);
+      flex-shrink: 0;
+      margin-top: 10px;
+    }
+
+    /* hero 大字指令（cue D 用户的"灵魂句"） */
+    [data-composition-id="tip-06-ask-questions"] .hero-prompt {
+      font-family: var(--f-zh);
+      font-weight: 800;
+      font-size: 88px;
+      line-height: 1.15;
+      letter-spacing: 0;
+      text-align: center;
+      white-space: nowrap;
+      margin: 0;
+      padding: 8px 0;
+    }
+
+    /* 95% 进度大数字（cue E hero hold） */
+    [data-composition-id="tip-06-ask-questions"] .pct-95-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      justify-content: center;
+    }
+    [data-composition-id="tip-06-ask-questions"] .pct-95-num {
+      font-family: var(--f-mono);
+      font-weight: 800;
+      font-size: 220px;
+      line-height: 1;
+      color: var(--c-orange);
+      filter: drop-shadow(0 0 36px rgba(217, 119, 87, 0.5));
+      letter-spacing: -0.02em;
+    }
+    [data-composition-id="tip-06-ask-questions"] .pct-95-pct {
+      font-family: var(--f-mono);
+      font-weight: 800;
+      font-size: 100px;
+      color: var(--c-orange);
+      letter-spacing: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .pct-95-bar {
+      width: 760px;
+      height: 14px;
+      background: var(--c-surface-2);
+      border-radius: var(--r-chip);
+      overflow: hidden;
+      box-shadow: 0 0 0 1px var(--c-line), inset 0 2px 4px rgba(43, 38, 34, 0.08);
+      margin: 0 auto;
+    }
+    [data-composition-id="tip-06-ask-questions"] .pct-95-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--c-orange), #E8A07A);
+      border-radius: var(--r-chip);
+      box-shadow: 0 0 18px rgba(217, 119, 87, 0.55);
+    }
+
+    /* ========= V2: cue B 双卡片重做（Tip 4 callback） ========= */
+
+    [data-composition-id="tip-06-ask-questions"] .ask-cards-row {
+      display: flex;
+      gap: 60px;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    /* 左卡：mini cc-window */
+    [data-composition-id="tip-06-ask-questions"] .ask-cc-window {
+      width: 540px;
+      min-height: 320px;
+      grid-template-rows: 56px 1fr auto;
+    }
+    [data-composition-id="tip-06-ask-questions"] .ask-cc-window .cc-prompt-line {
+      font-size: 28px;
+    }
+    [data-composition-id="tip-06-ask-questions"] .ask-cc-window .cc-info {
+      margin-top: 16px;
+      font-size: 18px;
+    }
+    [data-composition-id="tip-06-ask-questions"] .ask-cc-window .cc-statusline {
+      font-size: 18px;
+    }
+    [data-composition-id="tip-06-ask-questions"] .ask-cc-window .cc-sl-icon.mode {
+      background: var(--c-orange);
+    }
+
+    /* 右卡：questions-panel（plan 模式产出的问题列表） */
+    [data-composition-id="tip-06-ask-questions"] .questions-panel {
+      width: 660px;
+      min-height: 320px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-line);
+      border-radius: 14px;
+      box-shadow: var(--shadow-panel);
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    [data-composition-id="tip-06-ask-questions"] .questions-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--c-line);
+    }
+    [data-composition-id="tip-06-ask-questions"] .questions-title {
+      font-family: var(--f-mono);
+      font-size: 20px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-06-ask-questions"] .questions-mode {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(217, 119, 87, 0.12);
+      border: 1px solid rgba(217, 119, 87, 0.35);
+      color: var(--c-orange);
+      font-family: var(--f-mono);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    [data-composition-id="tip-06-ask-questions"] .questions-mode-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--c-orange);
+      box-shadow: 0 0 8px var(--c-orange-glow);
+    }
+    [data-composition-id="tip-06-ask-questions"] .questions-list {
+      display: grid;
+      gap: 12px;
+    }
+    [data-composition-id="tip-06-ask-questions"] .question-item {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background: rgba(255, 251, 245, 0.65);
+      border: 1px solid var(--c-line);
+      font-family: var(--f-zh);
+      font-size: 22px;
+      color: var(--c-text);
+      font-weight: 500;
+      opacity: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .question-item-num {
+      color: var(--c-orange);
+      font-family: var(--f-mono);
+      font-weight: 800;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-06-ask-questions"] .question-item-text {
+      letter-spacing: 0;
+      flex: 1;
+    }
