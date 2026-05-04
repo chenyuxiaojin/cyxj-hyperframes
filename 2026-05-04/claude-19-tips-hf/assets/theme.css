@@ -834,4 +834,427 @@ html, body {
 
     [data-composition-id="tip-10-esc-stop"] .statement-wrap { text-align: center; }
     [data-composition-id="tip-10-esc-stop"] .hero-statement { font-size: 100px; }
-  
+
+
+/* === Tip 02 commit === */
+
+    /* Tip 02 commit「git 快照」— 16.866s — 7 cues + hero hold */
+
+    /* hero opener mono 大字（cue A） */
+    [data-composition-id="tip-02-commit"] .hero-mono {
+      font-family: var(--f-mono);
+      font-weight: 700;
+      font-size: 152px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      white-space: nowrap;
+      margin: 0;
+      padding: 8px 0;
+    }
+
+    /* 文件夹卡片（cue C） */
+    [data-composition-id="tip-02-commit"] .folder-card {
+      width: 640px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-line);
+      border-radius: var(--r-card);
+      box-shadow: var(--shadow-panel);
+      overflow: hidden;
+      transform-origin: center center;
+    }
+    [data-composition-id="tip-02-commit"] .folder-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 22px 28px;
+      background: var(--c-surface-2);
+      border-bottom: 1px solid var(--c-line);
+      font-family: var(--f-mono);
+      font-size: 26px;
+      color: var(--c-muted);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    [data-composition-id="tip-02-commit"] .folder-icon {
+      width: 32px;
+      height: 24px;
+      background: var(--c-orange);
+      border-radius: 4px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-02-commit"] .folder-icon::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 0;
+      width: 14px;
+      height: 8px;
+      background: var(--c-orange);
+      border-radius: 4px 4px 0 0;
+    }
+    [data-composition-id="tip-02-commit"] .folder-body {
+      padding: 24px 26px 28px;
+      display: grid;
+      gap: 14px;
+    }
+
+    /* 文件改动行（cue C 内部 stagger） */
+    [data-composition-id="tip-02-commit"] .file-chip {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      border-radius: 10px;
+      background: rgba(255, 251, 245, 0.65);
+      border: 1px solid var(--c-line);
+      font-family: var(--f-mono);
+      font-size: 26px;
+      color: var(--c-text);
+      font-weight: 500;
+    }
+    [data-composition-id="tip-02-commit"] .file-chip-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-02-commit"] .file-chip-status.modified { background: var(--c-warning); }
+    [data-composition-id="tip-02-commit"] .file-chip-status.added    { background: var(--c-success); }
+    [data-composition-id="tip-02-commit"] .file-chip-name {
+      color: var(--c-text);
+      font-weight: 600;
+    }
+
+    /* 时间轴（cue D / E 屏幕水平中线居中，3 polaroid 横向排列） */
+    [data-composition-id="tip-02-commit"] .commit-timeline {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1180px;
+      height: 360px;
+      perspective: 1200px;
+      pointer-events: none;
+    }
+    [data-composition-id="tip-02-commit"] .timeline-line {
+      position: absolute;
+      left: 80px;
+      right: 80px;
+      top: 308px;
+      height: 2px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        var(--c-line) 8%,
+        var(--c-line) 92%,
+        transparent 100%);
+      transform: translateY(-1px);
+      opacity: 0;
+    }
+    [data-composition-id="tip-02-commit"] .commit-slot {
+      position: absolute;
+      width: 280px;
+      height: 320px;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      transform-style: preserve-3d;
+    }
+    [data-composition-id="tip-02-commit"] .commit-slot[data-slot="1"] { left: 80px; }
+    [data-composition-id="tip-02-commit"] .commit-slot[data-slot="2"] { left: 450px; }
+    [data-composition-id="tip-02-commit"] .commit-slot[data-slot="3"] { left: 820px; }
+
+    /* 「随时回退」标签 — 3 张卡片正下方 */
+    [data-composition-id="tip-02-commit"] .timeline-label {
+      position: absolute;
+      left: 50%;
+      bottom: -40px;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 26px;
+      border-radius: 999px;
+      background: rgba(255, 251, 245, 0.78);
+      border: 1px solid var(--c-line);
+      font-family: var(--f-zh);
+      font-weight: 700;
+      font-size: 28px;
+      color: var(--c-text);
+      letter-spacing: 0.04em;
+      box-shadow: var(--shadow-soft);
+      opacity: 0;
+      white-space: nowrap;
+    }
+    [data-composition-id="tip-02-commit"] .timeline-label-en {
+      font-family: var(--f-en);
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      font-weight: 600;
+    }
+
+    /* polaroid 卡（米色，含 thumbnail + commit message + hash） */
+    [data-composition-id="tip-02-commit"] .polaroid {
+      width: 240px;
+      height: 280px;
+      background: #FFFEF8;
+      border: 1px solid var(--c-line);
+      border-radius: 6px;
+      box-shadow: 0 16px 36px rgba(43, 38, 34, 0.22);
+      padding: 12px 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--f-mono);
+      transform-style: preserve-3d;
+      transform-origin: center center;
+      opacity: 0;
+      position: relative;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-thumb {
+      height: 130px;
+      background: linear-gradient(135deg, var(--c-surface-2) 0%, rgba(217, 119, 87, 0.32) 100%);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(45deg,
+          transparent 0 8px,
+          rgba(43, 38, 34, 0.06) 8px 9px);
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-icon-mini {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 24px;
+      background: var(--c-orange);
+      border-radius: 4px;
+      opacity: 0.85;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-icon-mini::before {
+      content: '';
+      position: absolute;
+      top: -7px;
+      left: 0;
+      width: 14px;
+      height: 8px;
+      background: var(--c-orange);
+      border-radius: 4px 4px 0 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 4px 4px 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-msg {
+      font-family: var(--f-mono);
+      font-size: 16px;
+      color: var(--c-text);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-hash {
+      font-family: var(--f-mono);
+      font-size: 13px;
+      color: var(--c-orange);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-label {
+      font-size: 11px;
+      color: var(--c-muted);
+      letter-spacing: 0.10em;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* polaroid 终端 overlay（cue E 末，polaroid #3 cross-fade morph 到终端样式） */
+    [data-composition-id="tip-02-commit"] .polaroid-terminal-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--c-terminal);
+      border-radius: 6px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-family: var(--f-mono);
+      color: var(--c-terminal-text);
+      opacity: 0;
+      pointer-events: none;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-titlebar {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-titlebar .mac-dot {
+      width: 9px;
+      height: 9px;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-cmd {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-prompt {
+      color: var(--c-orange);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-text {
+      color: var(--c-terminal-text);
+      letter-spacing: 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-cursor {
+      display: inline-block;
+      width: 9px;
+      height: 22px;
+      background: var(--c-orange);
+      vertical-align: text-bottom;
+      box-shadow: 0 0 8px rgba(217, 119, 87, 0.7);
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-info {
+      margin-top: auto;
+      font-size: 14px;
+      color: rgba(248, 241, 231, 0.55);
+      letter-spacing: 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-term-info-ok {
+      color: var(--c-success);
+    }
+
+    /* commit dot 圆点（slot 内 timeline-line 上） */
+    [data-composition-id="tip-02-commit"] .commit-dot {
+      position: absolute;
+      top: 300px;
+      left: 50%;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--c-orange);
+      box-shadow: 0 0 0 4px var(--c-bg), 0 0 24px var(--c-orange-glow);
+      transform: translateX(-50%) scale(0);
+      opacity: 0;
+    }
+
+    /* polaroid icon hint（cue B 右上角埋 callback） */
+    [data-composition-id="tip-02-commit"] .polaroid-icon-hint {
+      position: absolute;
+      top: 220px;
+      right: 220px;
+      width: 110px;
+      height: 130px;
+      background: #FFFEF8;
+      border: 1px solid var(--c-line);
+      border-radius: 4px;
+      padding: 7px 7px 18px;
+      box-shadow: 0 10px 22px rgba(43, 38, 34, 0.18);
+      transform: rotate(-8deg);
+      opacity: 0;
+    }
+    [data-composition-id="tip-02-commit"] .polaroid-icon-hint .polaroid-thumb {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 快门 overlay（cue D 大闪 + cue E 两次 mini-flash） */
+    [data-composition-id="tip-02-commit"] .shutter {
+      position: absolute;
+      inset: 0;
+      background: #FFFEF8;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 80;
+    }
+
+    /* 反向回滚光束（cue E：从右往左 sweep） */
+    [data-composition-id="tip-02-commit"] .reverse-arrow {
+      position: absolute;
+      left: 0;
+      bottom: 200px;
+      width: 100%;
+      height: 18px;
+      background: linear-gradient(270deg,
+        transparent 0%,
+        rgba(217, 119, 87, 0.0) 20%,
+        rgba(217, 119, 87, 0.85) 50%,
+        rgba(217, 119, 87, 0.0) 80%,
+        transparent 100%);
+      filter: blur(8px);
+      transform: translateX(120%);
+      pointer-events: none;
+      opacity: 0;
+      mix-blend-mode: screen;
+      z-index: 70;
+    }
+
+    /* git init chip（cue F 暗色 terminal island） */
+    [data-composition-id="tip-02-commit"] .git-init-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 24px 40px;
+      background: var(--c-terminal);
+      border-radius: 14px;
+      box-shadow:
+        0 28px 64px rgba(34, 31, 28, 0.36),
+        0 0 0 1px rgba(217, 119, 87, 0.18) inset;
+      font-family: var(--f-mono);
+      color: var(--c-terminal-text);
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+    [data-composition-id="tip-02-commit"] .git-init-arrow {
+      color: var(--c-orange);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-02-commit"] .git-init-cursor {
+      display: inline-block;
+      width: 14px;
+      height: 38px;
+      background: var(--c-orange);
+      margin-left: 6px;
+      vertical-align: middle;
+      box-shadow: 0 0 12px rgba(217, 119, 87, 0.7);
+    }
+
+    /* 「快照」标题缩到右上角作小标签时的样式（cue C 之后） */
+    [data-composition-id="tip-02-commit"] .snapshot-label-mini {
+      position: absolute;
+      top: 130px;
+      right: 130px;
+      font-family: var(--f-zh);
+      font-weight: 800;
+      font-size: 56px;
+      color: var(--c-orange);
+      opacity: 0;
+      letter-spacing: 0;
+    }
