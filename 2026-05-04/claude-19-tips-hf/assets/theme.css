@@ -415,10 +415,10 @@ html, body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse 70% 70% at 50% 50%,
-    transparent 25%,
-    rgba(43, 38, 34, 0.20) 65%,
-    rgba(43, 38, 34, 0.45) 100%);
+  background: radial-gradient(ellipse 78% 78% at 50% 50%,
+    transparent 40%,
+    rgba(43, 38, 34, 0.06) 70%,
+    rgba(43, 38, 34, 0.18) 100%);
 }
 
 /* 米色 8-stop chrome gradient 文字（dark bookends 让 sweep 不漏边） */
@@ -4542,6 +4542,14 @@ html, body {
 
 
 /* === Tip 14 worktree — 43.1s — 8 cues — 世界树成长结构 === */
+
+    /* Wavy 透视网格覆盖（prototype）：颜色加深 + 网格放稀 + SVG turbulence filter */
+    [data-composition-id="tip-14-worktree"] .perspective-grid.wavy {
+      background:
+        repeating-linear-gradient(0deg,  rgba(43, 38, 34, 0.11) 0 1px, transparent 1px 100px),
+        repeating-linear-gradient(90deg, rgba(43, 38, 34, 0.11) 0 1px, transparent 1px 100px);
+      filter: url(#wavy-distort-14);
+    }
 
     [data-composition-id="tip-14-worktree"] .hero-zh {
       font-family: var(--f-zh);
