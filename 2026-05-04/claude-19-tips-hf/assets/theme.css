@@ -7051,3 +7051,372 @@ html, body {
       z-index: 13;
     }
 
+/* === Tip 19 skill-creator === */
+
+    [data-composition-id="tip-19-skill-creator"] .opener-subtitle {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      font-family: var(--f-en);
+      font-size: 32px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-19-skill-creator"] .opener-subtitle .hot-tag {
+      color: var(--c-orange);
+      font-weight: 800;
+    }
+
+    /* === Cue 2: SKILL.md 文件卡 + 视频封面 === */
+    [data-composition-id="tip-19-skill-creator"] .skill-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      padding: 160px 140px 160px 100px;
+      opacity: 0;
+      z-index: 6;
+    }
+
+    /* SKILL.md 文件卡（暗色终端风文件） */
+    [data-composition-id="tip-19-skill-creator"] .skill-file-card {
+      flex: 1;
+      max-width: 980px;
+      height: 660px;
+      background: var(--c-terminal);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(34, 31, 28, 0.32),
+                  0 0 0 1px rgba(217, 119, 87, 0.14),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      display: grid;
+      grid-template-rows: 56px 1fr;
+      overflow: hidden;
+      opacity: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 22px;
+      background: var(--c-terminal-soft);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-card-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      background: var(--c-orange);
+      color: #fff;
+      font-family: var(--f-mono);
+      font-size: 13px;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-card-path {
+      font-family: var(--f-mono);
+      font-size: 18px;
+      color: rgba(248, 241, 231, 0.65);
+      letter-spacing: 0.02em;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-card-path .path-skill {
+      color: var(--c-orange);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-card-body {
+      padding: 28px 36px 28px;
+      font-family: var(--f-mono);
+      font-size: 22px;
+      line-height: 1.6;
+      color: rgba(248, 241, 231, 0.85);
+      overflow: hidden;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-yaml-fence {
+      color: rgba(248, 241, 231, 0.45);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-yaml-key {
+      color: var(--c-orange);
+      font-weight: 800;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-yaml-value {
+      color: #76B594;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-md-h {
+      color: rgba(248, 241, 231, 1);
+      font-weight: 800;
+      margin-top: 10px;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-md-line {
+      color: rgba(248, 241, 231, 0.72);
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-md-line .skill-md-bullet {
+      color: var(--c-orange);
+      margin-right: 8px;
+    }
+
+    /* 右侧 视频封面卡（"之前讲过"参考） */
+    [data-composition-id="tip-19-skill-creator"] .prev-video-card {
+      position: relative;
+      width: 460px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      opacity: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .prev-video-thumb-wrap {
+      position: relative;
+      width: 460px;
+      height: 600px;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 28px 70px rgba(43, 38, 34, 0.32),
+                  0 0 70px rgba(217, 119, 87, 0.30);
+    }
+    [data-composition-id="tip-19-skill-creator"] .prev-video-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    [data-composition-id="tip-19-skill-creator"] .prev-video-arrow-chip {
+      position: absolute;
+      right: -28px;
+      top: -22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: var(--c-orange);
+      color: #fff;
+      font-family: var(--f-mono);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      box-shadow: 0 10px 28px rgba(217, 119, 87, 0.65);
+      transform: rotate(6deg);
+      z-index: 14;
+      white-space: nowrap;
+    }
+    [data-composition-id="tip-19-skill-creator"] .prev-video-label {
+      font-family: var(--f-mono);
+      font-size: 18px;
+      color: var(--c-muted);
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    [data-composition-id="tip-19-skill-creator"] .prev-video-label .hot {
+      color: var(--c-orange);
+      font-weight: 800;
+    }
+
+    /* === Cue 3: 流程图（重复任务 → Skill → 自动完成）=== */
+    [data-composition-id="tip-19-skill-creator"] .flow-stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding: 200px 80px 180px;
+      opacity: 0;
+      z-index: 7;
+    }
+    [data-composition-id="tip-19-skill-creator"] .flow-panel {
+      flex: 1;
+      max-width: 480px;
+      height: 580px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    [data-composition-id="tip-19-skill-creator"] .flow-panel-label {
+      font-family: var(--f-mono);
+      font-size: 20px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    [data-composition-id="tip-19-skill-creator"] .repeat-task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+    [data-composition-id="tip-19-skill-creator"] .repeat-task-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 22px;
+      border-radius: 14px;
+      background: rgba(43, 38, 34, 0.05);
+      border: 1px solid var(--c-line);
+      font-family: var(--f-zh);
+      font-size: 26px;
+      color: var(--c-text);
+      opacity: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .repeat-task-bullet {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--c-warning);
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .repeat-task-text {
+      flex: 1;
+    }
+    [data-composition-id="tip-19-skill-creator"] .repeat-task-meta {
+      font-family: var(--f-mono);
+      font-size: 16px;
+      color: var(--c-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* 中央 Skill 总图标 */
+    [data-composition-id="tip-19-skill-creator"] .skill-orb {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      border-radius: 32px;
+      background: linear-gradient(135deg, var(--c-orange) 0%, #E8A07A 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 88px;
+      box-shadow: 0 22px 60px rgba(217, 119, 87, 0.50),
+                  0 0 0 2px rgba(255, 251, 245, 0.32),
+                  0 0 80px rgba(217, 119, 87, 0.35);
+      opacity: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .skill-orb-label {
+      font-family: var(--f-mono);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--c-text);
+      letter-spacing: 0.06em;
+      opacity: 0;
+    }
+
+    /* 流程箭头（左→中、中→右）*/
+    [data-composition-id="tip-19-skill-creator"] .flow-arrows {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 6;
+    }
+    [data-composition-id="tip-19-skill-creator"] .flow-arrow-path {
+      fill: none;
+      stroke: var(--c-orange);
+      stroke-width: 4;
+      stroke-dasharray: 12 8;
+      opacity: 0;
+    }
+
+    /* 右侧自动完成 chip 列 */
+    [data-composition-id="tip-19-skill-creator"] .done-chip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 22px;
+      border-radius: 14px;
+      background: rgba(78, 143, 114, 0.10);
+      border: 1.5px solid rgba(78, 143, 114, 0.50);
+      font-family: var(--f-zh);
+      font-size: 24px;
+      color: var(--c-success);
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(78, 143, 114, 0.18);
+      opacity: 0;
+      width: 100%;
+    }
+    [data-composition-id="tip-19-skill-creator"] .done-chip-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--c-success);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-mono);
+      font-size: 16px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .done-chip-text {
+      flex: 1;
+    }
+    [data-composition-id="tip-19-skill-creator"] .done-chip-meta {
+      font-family: var(--f-mono);
+      font-size: 14px;
+      color: var(--c-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* === Cue 4: hero hold === */
+    [data-composition-id="tip-19-skill-creator"] .closing-hero {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      z-index: 14;
+    }
+    [data-composition-id="tip-19-skill-creator"] .closing-logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 30px;
+      object-fit: cover;
+      image-rendering: pixelated;
+      background: #2A2826;
+      box-shadow: 0 18px 44px rgba(43, 38, 34, 0.32),
+                  0 0 0 1px rgba(43, 38, 34, 0.08),
+                  0 0 80px rgba(217, 119, 87, 0.50);
+    }
+    [data-composition-id="tip-19-skill-creator"] .closing-zh {
+      font-family: var(--f-zh);
+      font-weight: 800;
+      font-size: 180px;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      margin: 0;
+      padding: 8px 0;
+    }
+    [data-composition-id="tip-19-skill-creator"] .closing-en {
+      font-family: var(--f-en);
+      font-size: 30px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--c-muted);
+      font-weight: 700;
+    }
+    [data-composition-id="tip-19-skill-creator"] #closing-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 13;
+    }
+
