@@ -7522,3 +7522,67 @@ html, body {
       z-index: 13;
     }
 
+    /* ============================================================
+       Hook（00-hook.html）—— 5.266s 片头
+       身份反差 + 投入证据 + 数字承诺
+       ============================================================ */
+    [data-composition-id="hook"] .perspective-grid.wavy {
+      background:
+        repeating-linear-gradient(0deg,  rgba(43, 38, 34, 0.11) 0 1px, transparent 1px 100px),
+        repeating-linear-gradient(90deg, rgba(43, 38, 34, 0.11) 0 1px, transparent 1px 100px);
+      filter: url(#wavy-distort-hook);
+    }
+
+    /* 投入证据 chip（数字 + 中文 label） */
+    [data-composition-id="hook"] .hook-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 28px 56px 24px;
+      background: rgba(248, 241, 231, 0.62);
+      border: 1.5px solid rgba(217, 119, 87, 0.28);
+      border-radius: 22px;
+      backdrop-filter: blur(6px) saturate(1.05);
+      -webkit-backdrop-filter: blur(6px) saturate(1.05);
+      box-shadow: 0 12px 36px rgba(43, 38, 34, 0.10),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.40);
+    }
+    [data-composition-id="hook"] .hook-chip-num {
+      font-family: var(--f-mono);
+      font-size: 152px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--c-orange);
+      letter-spacing: -0.03em;
+      text-shadow: 0 0 36px rgba(217, 119, 87, 0.28);
+    }
+    [data-composition-id="hook"] .hook-chip-label {
+      font-family: var(--f-zh);
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-muted);
+    }
+
+    /* 19 招关键词 scatter（V6 黑洞引力 ambient backdrop）
+       全程朝中央慢速 drift，cue1 早期淡入；居中锚点用 GSAP xPercent/yPercent 控制
+       —— CSS 不写 transform translate（避免与 GSAP drift x/y 冲突） */
+    [data-composition-id="hook"] .scatter-word {
+      position: absolute;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--c-muted);
+      white-space: nowrap;
+      letter-spacing: 0.02em;
+      opacity: 0;
+    }
+    [data-composition-id="hook"] .scatter-word.mono {
+      font-family: var(--f-mono);
+      font-weight: 500;
+    }
+    [data-composition-id="hook"] .scatter-word.zh {
+      font-family: var(--f-zh);
+      font-weight: 700;
+    }
+
