@@ -14,7 +14,7 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 ~/项目/参考仓库/hyperframes/
 ├── .claude/skills/                       # 9 个 skill（7 软链 + 2 自写）
 ├── MOTION_PHILOSOPHY.md                  # 软链 → student-kit 的美学准则
-├── templates/                            # 3 个精简骨架（直接 cp 起步用）
+├── templates/                            # 4 个精简骨架 + components 零件（直接 cp 起步用）
 ├── 参考库/
 │   ├── INDEX.md                          # ⭐ 入口索引（每次做新视频先扫这里）
 │   ├── catalog.json                      # 46 个 catalog 零件 metadata
@@ -55,6 +55,21 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 7. 主动问"要抽成模板吗？" → 抽 / 不抽
 
 **装零件**：在某个工程目录下说 "加个转场" / "加 macos 通知" / "Logo 落版"，`/cyxj-add-block` 会从 catalog 推荐 + 安装 + 给引用代码。
+
+## Claude / Codex 边界
+
+这两个 AI 可以共用同一个视频工作台，但边界必须按目录和指令文件分开：
+
+| 使用方 | 读哪个指令 | skill 入口 | 负责什么 |
+|---|---|---|---|
+| Claude Code | `CLAUDE.md` | `.claude/skills/` | 继续按原流程制作视频、归档、抽模板 |
+| Codex | `AGENTS.md` | `.agents/skills/` | 用同一套工作流制作视频、审查仓库、修模板/文档/边界 |
+
+协作规则：
+- 不要改 `.agents/skills/` 的 Codex 专属措辞，除非明确是在同步两边 SOP
+- Codex 也不应该改 `.claude/skills/` 的 Claude 专属措辞，除非同步 SOP
+- 正在制作的视频工程放在 `2026-MM-DD/<slug>/`，另一个 AI 做审查或基础设施修复时必须先排除这个施工目录
+- 公共模板、参考库、README、INDEX、`.gitignore` 是共享层；修改共享层前先跑对应模板的 `npx hyperframes lint` 和必要的 `npx hyperframes inspect`
 
 ## 必须遵守的硬约束
 
@@ -120,6 +135,8 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 | `templates/host-overlay/` | 录屏铺底 + 4 overlay 模板 |
 | `templates/host-overlay-alpha/` | 同上 alpha 变体（达芬奇用） |
 | `templates/demo-fullscreen/` | 7 beat 串联无录屏 |
+| `templates/tutorial-8beat/` | 8 beat 教程结构（hook→pain→punchline→concept→flow→outro） |
+| `templates/components/cc-window/` | Claude Code 终端 UI 零件（19-tips 沉淀） |
 | `TEMPLATE_USAGE.md` | 模板复用 checklist |
 | `MOTION_PHILOSOPHY.md` | Nate 的动效美学 10 法则 + Infinite 拆解 |
 | `examples/codex-intro/script.md` | Codex × Claude Code 教程实际配音文案 |
