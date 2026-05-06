@@ -204,12 +204,12 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 
 跟参考库不同：模板是抽过的精简骨架，**直接 cp 起步**用。
 
-| 模板 | 拓扑 | 输出 | 适用场景 |
-|---|---|---|---|
-| `templates/host-overlay/` | 录屏铺底 + 4 overlay（背景不透明） | 整片 MP4 | 主播口播为主 |
-| `templates/host-overlay-alpha/` | 仅 4 overlay（背景透明） | ProRes 4444 alpha MOV | 想在达芬奇精修录屏 |
-| `templates/demo-fullscreen/` | 7 beat 串联（无录屏） | 整片 MP4 | 含中文文字的"虚构 demo" |
-| `templates/tutorial-8beat/` | 8 beat 教程（hook → pain-list → verdict → punchline → promise → concept → flow → outro），含 face FULL→PiP→FULL 时序 + kicker + 终端 + 卡片栈 + 执行计划列表 + 章节切换卡 | 整片 MP4 | 中文教程视频 ≥30s ≥6 beat（口播 + 多组件） |
+| 模板 | 拓扑 | 输出 | 适用场景 | 对应 DNA 形态 |
+|---|---|---|---|---|
+| `templates/host-overlay/` | 录屏铺底 + 4 overlay（背景不透明） | 整片 MP4 | 主播口播为主 | 教程类 → 暖米色 `#F7F2EA` |
+| `templates/host-overlay-alpha/` | 仅 4 overlay（背景透明） | ProRes 4444 alpha MOV | 想在达芬奇精修录屏 | 教程类 → 暖米色 `#F7F2EA`（透明输出，底色由达芬奇上的录屏决定） |
+| `templates/demo-fullscreen/` | 7 beat 串联（无录屏） | 整片 MP4 | 含中文文字的"虚构 demo" | 自由 → 按片子主题选（DNA 第 1 条"其他形态"）；商业 promo / 视觉冲击常用 |
+| `templates/tutorial-8beat/` | 8 beat 教程（hook → pain-list → verdict → punchline → promise → concept → flow → outro），含 face FULL→PiP→FULL 时序 + kicker + 终端 + 卡片栈 + 执行计划列表 + 章节切换卡 | 整片 MP4 | 中文教程视频 ≥30s ≥6 beat（口播 + 多组件） | 教程类 → 暖米色 `#F7F2EA`（19-tips 实战验证） |
 
 详见 `TEMPLATE_USAGE.md`。
 
