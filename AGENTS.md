@@ -119,7 +119,7 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 ## 中文环境注意
 
 - 路径含中文（仓库本身在 `~/项目/参考仓库/hyperframes/`），所有命令注意 UTF-8
-- 模板默认字体栈：`"Noto Sans SC", "Inter", sans-serif`（demo-fullscreen 偏中文）；`JetBrains Mono` 用于终端/代码片段
+- 模板默认字体栈：`"Noto Sans SC", "Inter", sans-serif`（中文 hero 字偏 Noto）；`JetBrains Mono` 用于终端/代码片段
 - headless Chromium 渲染时 Google Fonts CDN 偶尔超时会回退系统字体——重渲一次或本地化字体
 
 ## 维护节奏
@@ -138,9 +138,9 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 | 路径 | 内容 |
 |---|---|
 | `参考库/INDEX.md` | ⭐ 一切入口：18 工程 + 46 catalog 零件 + 9 skill 索引 |
-| `templates/host-overlay/` | ⚠️ **已废弃** 录屏铺底 + 4 overlay 模板（伪模板，请从 0 写） |
-| `templates/host-overlay-alpha/` | ⚠️ **已废弃** 同上 alpha 变体（伪模板，请从 0 写） |
-| `templates/demo-fullscreen/` | ⚠️ **已废弃** 7 beat 串联无录屏（伪模板，请从 0 写） |
+| `templates/tutorial-8beat/` | 8 beat 教程结构（hook→pain→punchline→concept→flow→outro）—— **当前唯一从 0 设计的真模板** |
+| `templates/components/cc-window/` | Claude Code 终端 UI 零件（19-tips 沉淀） |
+| `参考库/历史模板/` | 3 个伪模板档案（demo-fullscreen / host-overlay / host-overlay-alpha）—— ⚠️ **不要 cp 起步**，仅供回查旧形态 |
 | `TEMPLATE_USAGE.md` | 模板复用 checklist |
 | `MOTION_PHILOSOPHY.md` | Nate 的动效美学 10 法则 + Infinite 拆解 |
 | `examples/codex-intro/script.md` | Codex × Claude Code 教程实际配音文案 |

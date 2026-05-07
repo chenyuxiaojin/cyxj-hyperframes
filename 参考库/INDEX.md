@@ -227,18 +227,27 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 
 ---
 
-## 五、模板（仓库根 `templates/`，4 个）
+## 五、模板（仓库根 `templates/`，1 个真模板）
 
-跟参考库不同：模板是抽过的精简骨架，**直接 cp 起步**用。
+跟参考库不同：模板是抽过的精简骨架，**直接 cp 起步**用。当前**只有 1 个**从 0 设计的真模板。
 
 | 模板 | 拓扑 | 输出 | 适用场景 | 对应 DNA 形态 |
 |---|---|---|---|---|
-| `templates/host-overlay/` | 录屏铺底 + 4 overlay（背景不透明） | 整片 MP4 | 主播口播为主 | 教程类 → 暖米色 `#F7F2EA` |
-| `templates/host-overlay-alpha/` | 仅 4 overlay（背景透明） | ProRes 4444 alpha MOV | 想在达芬奇精修录屏 | 教程类 → 暖米色 `#F7F2EA`（透明输出，底色由达芬奇上的录屏决定） |
-| `templates/demo-fullscreen/` | 7 beat 串联（无录屏） | 整片 MP4 | 含中文文字的"虚构 demo" | 自由 → 按片子主题选（DNA 第 1 条"其他形态"）；商业 promo / 视觉冲击常用 |
 | `templates/tutorial-8beat/` | 8 beat 教程（hook → pain-list → verdict → punchline → promise → concept → flow → outro），含 face FULL→PiP→FULL 时序 + kicker + 终端 + 卡片栈 + 执行计划列表 + 章节切换卡 | 整片 MP4 | 中文教程视频 ≥30s ≥6 beat（口播 + 多组件） | 教程类 → 暖米色 `#F7F2EA`（19-tips 实战验证） |
 
 详见 `TEMPLATE_USAGE.md`。
+
+### 历史模板（`参考库/历史模板/`，3 个伪模板档案 ⚠️）
+
+> ⚠️ **不要 cp 起步**——这 3 个目录是早期工作目录（xcyj-progress）直接 rename 而成的伪模板：id 未抽净、内容是上一条视频的具体产物、底色用 DNA 已废弃的深蓝。仅作档案保留，便于回查"当年那条视频是怎么搭的"。这些形态请**从 0 写工程**。
+
+| 历史目录 | 真身（从哪个工程 rename 来的） | 形态 |
+|---|---|---|
+| `参考库/历史模板/host-overlay/` | xcyj-claude-demo-v2（参考库/我的作品/2026-05-02-claude-demo-v2/） | 录屏铺底 + 4 overlay |
+| `参考库/历史模板/host-overlay-alpha/` | xcyj-claude-overlays-only（参考库/我的作品/2026-05-02-claude-overlays-only/） | 仅 overlay alpha 输出 |
+| `参考库/历史模板/demo-fullscreen/` | xcyj-codex-claude-intro（参考库/我的作品/2026-05-02-codex-claude-intro/） | 7 beat 串联无录屏 |
+
+详见 `参考库/历史模板/README.md`。
 
 **⭐ tutorial-8beat 配套资产**：
 - 风格借鉴方法论：`docs/STYLE_BORROW_PLAYBOOK.md`

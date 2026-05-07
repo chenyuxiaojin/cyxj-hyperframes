@@ -38,7 +38,7 @@ description: 中文 YouTube 教程视频的全生命周期助手（基于 HyperF
 
 ### A0.5 模板选择决策树（先看这个，再用 A1 问用户确认）
 
-四个模板各自的边界（每个模板都有自己的 `templates/<name>/README.md` 详述用法，决策树这里只给"选哪个"）：
+真模板只有一个（`templates/tutorial-8beat/`）。其他形态请**从 0 写**——`参考库/历史模板/` 下保留了 3 个伪模板档案，仅供回查旧形态拓扑，**不要 cp 起步**。
 
 ```
 1. 是不是 9:16 竖屏？
@@ -46,32 +46,32 @@ description: 中文 YouTube 教程视频的全生命周期助手（基于 HyperF
    └─ 否 → 继续
 
 2. 有没有录屏（主播口播 + 屏幕操作）？
-   ├─ 有 → 后期想不想在达芬奇里精修录屏 / 调色 / 替换素材？
-   │       ├─ 想 → ⚠️ **已废弃** templates/host-overlay-alpha/ —— 一次性工程改名而成的伪模板（id 未抽净，内容是 claude-overlays-only 旧工程的具体产物）。这种形态请从 0 写工程
-   │       └─ 不想，直接出成品 → ⚠️ **已废弃** templates/host-overlay/ —— 同上（claude-demo-v2 旧工程 rename），请从 0 写
+   ├─ 有 → 从 0 写工程（参考 docs/hyperframes-official/getting-started/quickstart.md 最小骨架）
+   │       拓扑回查：参考库/历史模板/host-overlay/（直出 mp4）或 /host-overlay-alpha/（达芬奇精修 alpha）
    └─ 没有 → 继续
 
 3. 是不是结构化教程（≥30s，含「hook + 痛点 + 解决方案 + 流程」完整段落，≥6 beat）？
    ├─ 是 → templates/tutorial-8beat/   （8 beat 教程骨架，含 face FULL→PiP→FULL 时序、kicker、终端、卡片栈、执行计划列表、章节切换卡）
-   └─ 否（单段演示 / 概念片 / 品牌片中段 / 纯视觉叙事 ≤30s）→ ⚠️ **已废弃** templates/demo-fullscreen/ —— 一次性工程改名而成的伪模板（codex-claude-intro 旧工程 rename，未抽净）。请从 0 写
+   └─ 否（单段演示 / 概念片 / 品牌片中段 / 纯视觉叙事 ≤30s）→ 从 0 写工程
+       拓扑回查：参考库/历史模板/demo-fullscreen/（7 beat 串联无录屏）
 ```
 
 **对应 DNA 形态**（参考库/INDEX.md 第 5 节模板表已标注）：
-- host-overlay / host-overlay-alpha / tutorial-8beat → 教程类，底色用暖米色 `#F7F2EA`（19-tips 实战验证）
-- demo-fullscreen → 自由，按片子主题选底色（DNA 第 1 条"其他形态"分支）
+- 录屏教程类 / tutorial-8beat → 教程类，底色用暖米色 `#F7F2EA`（19-tips 实战验证）
+- 单段演示 / 概念片 → 自由，按片子主题选底色（DNA 第 1 条"其他形态"分支）
 
-**多段混用**：一条视频可以用多个模板，达芬奇里串联（如开头 demo-fullscreen 钩子 → 中段 host-overlay 录屏讲解 → 收尾 demo-fullscreen 品牌 hold）。每段单独建 `2026-MM-DD/<slug>-<segment>/` 工作区分别 render。
+**多段混用**：一条视频可以用多个段落，达芬奇里串联（如开头 demo 钩子 → 中段录屏讲解 → 收尾品牌 hold）。每段单独建 `2026-MM-DD/<slug>-<segment>/` 工作区分别 render。
 
-> ⚠️ **2026-05-06 模板状态**：3 个伪模板（demo-fullscreen / host-overlay / host-overlay-alpha）已废弃。当前只有 `templates/tutorial-8beat/` 是从 0 设计的真模板。其他形态请从 0 写工程（手写 meta.json + index.html + compositions/*.html，参考 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架）。文件未移动以避免新断裂，下一轮独立任务清理。
+> ⚠️ **2026-05-07 模板状态**：原 3 个伪模板（demo-fullscreen / host-overlay / host-overlay-alpha）已移到 `参考库/历史模板/`（仅档案保留，不要 cp 起步）。当前唯一从 0 设计的真模板是 `templates/tutorial-8beat/`。其他形态从 0 写——等同形态做到 3-5 次重复后，从最近几条工程里抽真模板。详见 [`参考库/历史模板/README.md`](../../../参考库/历史模板/README.md)。
 
 ### A1. 问清四件事（一次性，用 AskUserQuestion 多选）
 
 1. **视频形态**（影响选哪个模板，按 A0.5 决策树排序）：
    - A. 9:16 竖屏 → 调用 `/short-form-video` skill 接管，本 skill 退出
-   - B. ⚠️ **已废弃** 横屏 + 有录屏 + 直接出成品 → `templates/host-overlay/`（伪模板，请从 0 写）
-   - C. ⚠️ **已废弃** 横屏 + 有录屏 + 达芬奇精修 → `templates/host-overlay-alpha/`（伪模板，请从 0 写）
+   - B. 横屏 + 有录屏 + 直接出成品 → **从 0 写**（拓扑回查：`参考库/历史模板/host-overlay/`）
+   - C. 横屏 + 有录屏 + 达芬奇精修 → **从 0 写**（拓扑回查：`参考库/历史模板/host-overlay-alpha/`，alpha 输出）
    - D. 横屏 + 无录屏 + 结构化教程（≥30s ≥6 beat 含口播） → `templates/tutorial-8beat/`
-   - E. ⚠️ **已废弃** 横屏 + 无录屏 + 单段演示 / 概念片 → `templates/demo-fullscreen/`（伪模板，请从 0 写）
+   - E. 横屏 + 无录屏 + 单段演示 / 概念片 → **从 0 写**（拓扑回查：`参考库/历史模板/demo-fullscreen/`）
 2. **主题** —— 自由文本，转 kebab-case 当 slug（去除中文，保留拼音/英文/数字/`-`）
 3. **大致时长** —— 5-30s / 30-60s / 60-120s / 自定义
 4. **是否有参考素材**（决定要不要走阶段 D 风格借鉴）：
@@ -93,13 +93,15 @@ description: 中文 YouTube 教程视频的全生命周期助手（基于 HyperF
 
 让用户决定是先看还是直接建。
 
-### A3. 复制模板，建工作区
+### A3. 建工作区
 
 ```bash
 DATE=$(date +%Y-%m-%d)
 mkdir -p $DATE
-cp -R templates/<选中模板> $DATE/<slug>/
 ```
+
+- **形态 D（tutorial-8beat）**：`cp -R templates/tutorial-8beat $DATE/<slug>/`
+- **形态 B/C/E（从 0 写）**：`mkdir $DATE/<slug>/ && cd $DATE/<slug>/`，照 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架（meta.json + hyperframes.json + index.html + compositions/*.html + assets/）一步步建。可参考 `参考库/历史模板/<对应拓扑>/` 看旧形态怎么拼，但**不要直接 cp**——那些目录的 id 没抽净、底色还是旧 DNA 深蓝。
 
 ### A4. 改 meta.json 和 index.html
 
@@ -107,7 +109,7 @@ cp -R templates/<选中模板> $DATE/<slug>/
 cd $DATE/<slug>/
 ```
 
-- 改 `meta.json` 的 `id` 和 `name`：把模板里的 `xcyj-host-overlay-template` 之类替换成 `xcyj-<slug>`、可读中文 name
+- 改 `meta.json` 的 `id` 和 `name`：把模板里的占位符替换成 `xcyj-<slug>`、可读中文 name（从 0 写时直接填正确值）
 - 改 `index.html`：
   - `<title>` 标签
   - `<div id="root" data-composition-id="...">` 改 id
@@ -122,7 +124,7 @@ cd $DATE/<slug>/
 
 下一步等你提供：
 1. 文案（每个 beat 的字幕、标题）
-2. 录屏文件（如果是 host-overlay 模式）
+2. 录屏文件（如果是有录屏的形态）
 3. 配音文件（可选）
 
 提供后我会改各个 beat 的 html，跑 lint，preview。
@@ -270,7 +272,7 @@ mv 2026-MM-DD/<slug>  参考库/我的作品/<日期>-<slug>
 
 ### C1. 起模板名
 
-询问用户："这个新模板叫什么？建议 kebab-case，比如 `host-overlay-tech-grid` 或 `demo-fullscreen-7beat`"
+询问用户："这个新模板叫什么？建议 kebab-case，比如 `tutorial-7beat-product` 或 `concept-card-stack`"
 
 ### C2. 复制 + 抽空具体内容
 

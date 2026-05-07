@@ -1,5 +1,7 @@
 # Host-Overlay Template
 
+> ⚠️ **2026-05-07 已废弃**：本目录是 `xcyj-claude-demo-v2` 工程 rename 而成的伪模板（id 未抽净，内容是上一条视频的具体产物，底色用 DNA 已废弃的深蓝）。**不要 cp 起步**——这种形态请从 0 写工程，参考 `docs/hyperframes-official/getting-started/quickstart.md` 最小骨架。本 README 仅作历史参考，描述的拓扑可借鉴但内容已过时。详见 [`参考库/历史模板/README.md`](../README.md)。
+
 ## 适用场景
 
 **主播口播为主，录屏铺满底层，4 个 overlay 浮在上面辅助讲解**（总时长 ≥30s，推荐 20–30s 片段）。

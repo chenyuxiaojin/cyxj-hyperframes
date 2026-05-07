@@ -6,22 +6,22 @@
 
 ---
 
-## 四个模板
+## 模板
+
+当前**只有一个**从 0 设计的真模板。其他形态请从 0 写工程（手抄 meta.json + index.html + compositions/*.html，参考 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架）。
 
 | 模板 | 适合的视频类型 | 拓扑 | 输出 |
 |---|---|---|---|
-| [`templates/host-overlay`](templates/host-overlay) | 主播口播为主，旁边浮一些动效辅助讲解 | 录屏铺满 + 4 个 beat overlay | 整片 MP4（含录屏 + overlay） |
-| [`templates/host-overlay-alpha`](templates/host-overlay-alpha) | 同上，但希望在达芬奇里精修录屏 | 仅 overlay，背景透明 | ProRes 4444 alpha MOV |
-| [`templates/demo-fullscreen`](templates/demo-fullscreen) | 含中文文字的"虚构 demo" 整片，配音后期加 | 7 beat 串联，无录屏 | 整片 MP4 |
 | [`templates/tutorial-8beat`](templates/tutorial-8beat) | 5-10min 教程的片头 / 中段过渡 / 结构化讲解 | 8 beat 串联（hook→pain→punchline→concept→flow→outro）| 整片 MP4 |
 
 **选哪个**：
-- 主体是真人 → `host-overlay` (整片) 或 `host-overlay-alpha` (达芬奇精修)
-- 主体是 hyperframes 画面、单段演示 → `demo-fullscreen`
 - 教程类、需要"hook + 痛点 + 解决方案 + 流程"完整结构 → `tutorial-8beat`
-- 一个视频里多种段落 → 都用，达芬奇里串联
+- 主播口播 + overlay / 单段演示 / 概念片 / 品牌片 → 从 0 写（参考 `参考库/历史模板/` 里的旧形态档案对照拓扑，但**不要**直接 cp 起步——那 3 个目录是早期工程 rename 而成的伪模板）
+- 一个视频里多种段落 → 每段单独建工作区分别 render，达芬奇里串联
 
 详细复用指南见 [`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md)。
+
+> ⚠️ **2026-05-07 模板状态**：原 `templates/host-overlay/`、`templates/host-overlay-alpha/`、`templates/demo-fullscreen/` 已移到 `参考库/历史模板/`（伪模板，不要 cp 起步）。详见 [`参考库/历史模板/README.md`](参考库/历史模板/README.md)。
 
 ---
 
@@ -35,11 +35,8 @@
 ├── CLAUDE.md                  ← Claude Code 工作边界
 ├── .agents/skills/            ← Codex wrapper skills
 ├── .claude/skills/            ← Claude Code skills
-├── templates/                 ← 四个可复用模板（git 跟踪）
-│   ├── host-overlay/          ← 主播 + overlay（v2 风格）
-│   ├── host-overlay-alpha/    ← 主播 + overlay 的 alpha 变体
-│   ├── demo-fullscreen/       ← 演示风格整片（7 beat）
-│   ├── tutorial-8beat/        ← 教程结构化片头/过渡（8 beat）
+├── templates/                 ← 真模板 + 组件零件（git 跟踪）
+│   ├── tutorial-8beat/        ← 唯一真模板：教程结构化片头/过渡（8 beat）
 │   └── components/            ← 可复用零件（cc-window 等）
 ├── examples/                  ← 已经做过的视频的脚本/文案
 │   └── codex-intro/
@@ -66,12 +63,13 @@ Claude Code 看 `CLAUDE.md` 和 `.claude/skills/`；Codex 看 `AGENTS.md` 和 `.
 ### 用模板做新视频（30 秒了解）
 
 ```bash
-# 1. 在仓库根复制模板成日期工作区
+# 1. 在仓库根复制 tutorial-8beat 模板成日期工作区
 DATE=$(date +%Y-%m-%d)
 mkdir -p "$DATE"
-cp -R templates/demo-fullscreen "$DATE/my-new-intro"
+cp -R templates/tutorial-8beat "$DATE/my-new-intro"
 
-# 2. 改文案 / 时间码 / beat 内容（看 TEMPLATE_USAGE.md 的 checklist）
+# 2. 改 meta.json 的 id（xcyj-tutorial-8beat-PLACEHOLDER → xcyj-<slug>）
+#    改文案 / 时间码 / beat 内容（看 TEMPLATE_USAGE.md 的 checklist）
 
 # 3. 渲染
 cd "$DATE/my-new-intro"
@@ -81,7 +79,7 @@ npx hyperframes render --quality standard --format mp4 \
   --output renders/my-new-intro.mp4
 ```
 
-详见 [`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md)。
+非教程形态（主播 + overlay / 单段演示 / 概念片）请从 0 写——详见 [`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md) 和 [`参考库/历史模板/README.md`](参考库/历史模板/README.md)。
 
 ---
 
