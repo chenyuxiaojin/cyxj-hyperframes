@@ -35,7 +35,7 @@ mono SVG 用 `fill="currentColor"`，CSS 设 `color` 就染色：
 ```
 当 `<img>` 用时无法染色（SVG sprite 被 sandbox 隔离），需要染色就走内联。
 
-## 当前清单（33 个）
+## 当前清单（34 个）
 
 ### Anthropic 家族
 | 文件 | 变体 | 用途 |
@@ -89,6 +89,7 @@ mono SVG 用 `fill="currentColor"`，CSS 设 `color` 就染色：
 | `langchain.svg` | color | LangChain |
 | `notion.svg` | mono | Notion |
 | `obsidian.svg` | color | Obsidian |
+| `figma.svg` | mono | Figma 设计工具 |
 
 ## 添加新 logo
 
