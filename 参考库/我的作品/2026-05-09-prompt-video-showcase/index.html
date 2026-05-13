@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>一句提示词生成炫酷视频案例合集</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+SC:wght@500;600;700;800;900&display=block" rel="stylesheet" />
+    <style>
+      * { box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; background: #090b12; color: #f7f2ea; font-family: "Noto Sans SC", "Inter", sans-serif; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: radial-gradient(circle at 18% 20%, rgba(255, 92, 71, 0.24), transparent 32%), radial-gradient(circle at 76% 18%, rgba(81, 170, 255, 0.28), transparent 34%), linear-gradient(135deg, #080a12 0%, #111827 48%, #16110f 100%); }
+      #grid { position: absolute; inset: 0; opacity: 0.18; pointer-events: none; background-image: linear-gradient(rgba(245,242,234,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(245,242,234,0.08) 1px, transparent 1px); background-size: 96px 96px; }
+      #grain { position: absolute; inset: 0; opacity: 0.13; mix-blend-mode: overlay; pointer-events: none; background-image: linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 7px 7px; z-index: 50; }
+      .chapter { position: absolute; left: 58px; top: 48px; z-index: 60; display: flex; gap: 14px; font: 700 22px "JetBrains Mono"; letter-spacing: 0.18em; color: rgba(247,242,234,0.76); }
+      .chapter strong { color: #ff6a4a; }
+      #pulse { position: absolute; left: 64px; bottom: 64px; width: 180px; height: 4px; border-radius: 999px; background: linear-gradient(90deg, #ff6a4a, #5bb8ff, transparent); z-index: 60; }
+      .scene { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      .kicker { font: 800 24px "JetBrains Mono"; letter-spacing: 0.14em; margin-bottom: 28px; }
+      h1 { margin: 0; font-size: 90px; line-height: 1.05; letter-spacing: 0; color: #f7f2ea; }
+      p { margin: 36px 0 0; font-size: 34px; line-height: 1.45; color: rgba(247,242,234,0.7); font-weight: 800; }
+      .caption { position: absolute; left: 96px; bottom: 92px; font-size: 40px; font-weight: 800; color: #f7f2ea; }
+
+      #case-typer .case-label { position: absolute; left: 96px; top: 140px; font: 700 24px "JetBrains Mono"; letter-spacing: 0.16em; color: #5bb8ff; }
+      #case-typer .stage { position: absolute; inset: 210px 110px 170px 110px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 54px; align-items: center; }
+      #case-typer .prompt-card { height: 520px; padding: 34px; border-radius: 28px; background: rgba(8, 11, 20, 0.88); border: 1px solid rgba(91, 184, 255, 0.35); box-shadow: 0 36px 100px rgba(0,0,0,0.5), 0 0 80px rgba(91,184,255,0.12); }
+      #case-typer .terminal-top { display: flex; align-items: center; gap: 12px; height: 48px; color: rgba(247,242,234,0.55); font: 600 18px "JetBrains Mono"; }
+      #case-typer .terminal-top span { width: 14px; height: 14px; border-radius: 50%; background: #ff6a4a; }
+      #case-typer .terminal-top span:nth-child(2) { background: #ffd166; }
+      #case-typer .terminal-top span:nth-child(3) { background: #44d19d; margin-right: 18px; }
+      #case-typer .prompt-line { margin-top: 84px; font: 800 44px "Noto Sans SC"; line-height: 1.35; color: #f7f2ea; }
+      #case-typer .prompt-line.muted { margin-top: 42px; font: 700 30px "Noto Sans SC"; color: rgba(247,242,234,0.72); }
+      #case-typer .caret { color: #ff6a4a; margin-right: 18px; font-family: "JetBrains Mono"; }
+      #case-typer .typed { display: inline-block; clip-path: inset(0 100% 0 0); }
+      #case-typer .result-card { position: relative; height: 620px; border-radius: 34px; border: 1px solid rgba(255,255,255,0.16); background: linear-gradient(140deg, rgba(247,242,234,0.11), rgba(91,184,255,0.11)); overflow: hidden; box-shadow: 0 44px 110px rgba(0,0,0,0.42); }
+      #case-typer .mini-frame { position: absolute; border-radius: 22px; background: linear-gradient(135deg, #ff6a4a, #5bb8ff); box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+      #case-typer .mini-frame.hero { left: 80px; top: 76px; width: 500px; height: 270px; }
+      #case-typer .mini-frame.one { right: 70px; top: 122px; width: 250px; height: 150px; background: linear-gradient(135deg, #ffd166, #ff6a4a); }
+      #case-typer .mini-frame.two { left: 130px; bottom: 82px; width: 260px; height: 150px; background: linear-gradient(135deg, #44d19d, #5bb8ff); }
+      #case-typer .mini-frame.three { right: 92px; bottom: 72px; width: 330px; height: 190px; background: linear-gradient(135deg, #d77cff, #5bb8ff); }
+      #case-typer .render-badge { position: absolute; right: 46px; top: 44px; padding: 16px 22px; border-radius: 999px; background: rgba(7,10,18,0.72); color: #f7f2ea; font: 800 18px "JetBrains Mono"; letter-spacing: 0.12em; }
+
+      #case-spotlight .prompt-chip { position: absolute; left: 96px; top: 140px; padding: 18px 26px; border-radius: 999px; background: rgba(247,242,234,0.1); border: 1px solid rgba(247,242,234,0.18); color: rgba(247,242,234,0.82); font: 700 27px "Noto Sans SC"; z-index: 2; }
+      #case-spotlight svg { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+      #case-spotlight .base-text { font: 900 154px "JetBrains Mono"; letter-spacing: 0; fill: rgba(247,242,234,0.19); }
+      #case-spotlight .light-text { font: 900 154px "JetBrains Mono"; letter-spacing: 0; fill: #f7f2ea; }
+      #case-spotlight .lamp-group, #case-spotlight .lamp-head { transform-origin: 960px 208px; }
+      #case-spotlight .lamp-head { filter: drop-shadow(0 0 28px rgba(255,106,74,0.72)); }
+
+      #case-assembly .copy, #case-ticker .copy, #case-chat .copy { position: absolute; left: 96px; top: 184px; width: 760px; }
+      #case-assembly .kicker { color: #ff6a4a; }
+      #case-assembly .logo-stage { position: absolute; right: 170px; top: 210px; width: 600px; height: 600px; display: grid; place-items: center; }
+      #case-assembly svg { width: 520px; height: 520px; overflow: visible; filter: drop-shadow(0 34px 70px rgba(0,0,0,0.45)); }
+      #case-assembly .part { transform-origin: 260px 260px; }
+      #case-assembly .impact-ring { position: absolute; width: 420px; height: 420px; border: 3px solid rgba(91,184,255,0.75); border-radius: 50%; opacity: 0; }
+
+      #case-ticker .kicker { color: #5bb8ff; }
+      #case-ticker .copy { width: 620px; z-index: 5; }
+      #case-ticker h1 { font-size: 76px; }
+      #case-ticker .ticker-wrap { position: absolute; right: -250px; top: -190px; width: 1050px; height: 1480px; display: flex; gap: 28px; transform: perspective(1000px) rotateX(18deg) rotateZ(-7deg) scale(1.0); }
+      #case-ticker .col { width: 320px; display: flex; flex-direction: column; gap: 28px; }
+      #case-ticker .tile { height: 230px; border-radius: 26px; display: grid; place-items: center; font: 900 40px "Inter"; color: #081019; box-shadow: 0 28px 70px rgba(0,0,0,0.36); border: 1px solid rgba(255,255,255,0.32); }
+      #case-ticker .red { background: linear-gradient(135deg, #ff6a4a, #ffd166); }
+      #case-ticker .blue { background: linear-gradient(135deg, #5bb8ff, #d77cff); }
+      #case-ticker .green { background: linear-gradient(135deg, #44d19d, #5bb8ff); }
+      #case-ticker .yellow { background: linear-gradient(135deg, #f7f2ea, #ffd166); }
+      #case-ticker .fade { position: absolute; left: 0; right: 0; height: 220px; z-index: 3; pointer-events: none; }
+      #case-ticker .fade.top { top: 0; background: linear-gradient(to bottom, #090b12, transparent); }
+      #case-ticker .fade.bottom { bottom: 0; background: linear-gradient(to top, #090b12, transparent); }
+
+      #case-chat .phone { position: absolute; left: 150px; top: 110px; width: 610px; height: 860px; border-radius: 58px; background: #edf1f3; color: #111827; box-shadow: 0 44px 120px rgba(0,0,0,0.55); padding: 38px 34px; border: 10px solid #10131c; }
+      #case-chat .status { font: 800 20px "Inter"; color: #111827; }
+      #case-chat .chat-title { margin-top: 22px; text-align: center; font-size: 26px; font-weight: 900; }
+      #case-chat .bubble { position: relative; max-width: 420px; margin-top: 46px; padding: 22px 26px; border-radius: 24px; font-size: 28px; line-height: 1.35; font-weight: 800; opacity: 0; }
+      #case-chat .left { background: #ffffff; margin-right: auto; }
+      #case-chat .right { background: #95ec69; margin-left: auto; }
+      #case-chat .small { max-width: 360px; }
+      #case-chat .done { font-size: 34px; background: linear-gradient(135deg, #95ec69, #44d19d); }
+      #case-chat .copy { left: 860px; top: 216px; width: 850px; }
+      #case-chat .kicker { color: #44d19d; }
+
+      #case-outro { display: grid; place-items: center; text-align: center; }
+      #case-outro .rings { position: absolute; width: 720px; height: 720px; }
+      #case-outro .rings span { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(91,184,255,0.28); }
+      #case-outro .rings span:nth-child(2) { inset: 86px; border-color: rgba(255,106,74,0.34); }
+      #case-outro .rings span:nth-child(3) { inset: 172px; border-color: rgba(247,242,234,0.22); }
+      #case-outro .logo { position: absolute; top: 230px; width: 160px; height: 160px; border-radius: 40px; display: grid; place-items: center; background: linear-gradient(135deg, #ff6a4a, #5bb8ff); color: #081019; font: 900 42px "Inter"; box-shadow: 0 30px 90px rgba(91,184,255,0.34); }
+      #case-outro .stack { position: absolute; bottom: 160px; display: flex; gap: 16px; }
+      #case-outro .stack div { padding: 18px 24px; border-radius: 999px; color: #f7f2ea; background: rgba(247,242,234,0.1); border: 1px solid rgba(247,242,234,0.18); font: 800 20px "JetBrains Mono"; letter-spacing: 0.08em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="prompt-video-showcase" data-start="0" data-duration="40" data-width="1920" data-height="1080">
+      <div id="grid"></div><div id="grain"></div><div class="chapter"><strong>PROMPT</strong> / VIDEO CASES</div><div id="pulse"></div>
+
+      <div id="case-typer" class="scene" data-composition-id="case-typer" data-start="0" data-duration="7" data-track-index="1" data-width="1920" data-height="1080">
+        <div class="case-label">CASE 01 / CLAUDE TYPER</div><div class="stage"><div class="prompt-card"><div class="terminal-top"><span></span><span></span><span></span><b>claude-code</b></div><div class="prompt-line"><span class="caret">&gt;</span><span class="typed">帮我把这个网页变成 30 秒产品发布视频</span></div><div class="prompt-line muted"><span class="caret">✓</span>生成片头、转场、UI 展示和 Logo 落版</div></div><div class="result-card"><div class="mini-frame hero"></div><div class="mini-frame one"></div><div class="mini-frame two"></div><div class="mini-frame three"></div><div class="render-badge">VIDEO RENDERED</div></div></div><div class="caption">一句提示词，不是出文案，是直接出可渲染的视频结构。</div>
+      </div>
+
+      <div id="case-spotlight" class="scene" data-composition-id="case-spotlight" data-start="6.6" data-duration="6.6" data-track-index="2" data-width="1920" data-height="1080">
+        <div class="prompt-chip">“生成一个聚光灯扫过文字的 reveal 动画”</div><svg viewBox="0 0 1920 1080"><defs><filter id="spot-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18" result="blur"></feGaussianBlur><feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter><mask id="spot-mask"><g class="lamp-group"><path d="M918 208 L1002 208 L1128 850 L792 850 Z" fill="#fff"></path></g></mask></defs><text x="960" y="548" text-anchor="middle" dominant-baseline="middle" class="base-text">PROMPT TO VIDEO</text><g mask="url(#spot-mask)"><text x="960" y="548" text-anchor="middle" dominant-baseline="middle" class="light-text" filter="url(#spot-glow)">PROMPT TO VIDEO</text></g><g class="lamp-head"><circle cx="960" cy="198" r="34" fill="#f7f2ea"></circle><rect x="900" y="150" width="120" height="66" rx="22" fill="#ff6a4a"></rect></g></svg><div class="caption">这个案例最适合做标题揭示、Logo Reveal、片头第一秒。</div>
+      </div>
+
+      <div id="case-assembly" class="scene" data-composition-id="case-assembly" data-start="13" data-duration="6.8" data-track-index="1" data-width="1920" data-height="1080">
+        <div class="copy"><div class="kicker">CASE 03 / SVG ASSEMBLY</div><h1>静态图标<br />一秒组装成片头</h1><p>提示词只描述“力量感、速度感、回弹”，剩下交给时间线。</p></div><div class="logo-stage"><svg viewBox="0 0 520 520"><path class="part part-a" d="M260 38 L470 158 L470 362 L260 482 L50 362 L50 158 Z" fill="none" stroke="#5bb8ff" stroke-width="24" stroke-linejoin="round"></path><path class="part part-b" d="M260 112 L406 196 L260 280 L114 196 Z" fill="#ff6a4a"></path><path class="part part-c" d="M114 224 L238 296 L238 424 L114 352 Z" fill="#f7f2ea"></path><path class="part part-d" d="M406 224 L282 296 L282 424 L406 352 Z" fill="#ffd166"></path><path class="part part-e" d="M260 310 L360 252 L360 336 L260 394 L160 336 L160 252 Z" fill="#44d19d"></path></svg><div class="impact-ring"></div></div>
+      </div>
+
+      <div id="case-ticker" class="scene" data-composition-id="case-ticker" data-start="19.4" data-duration="7" data-track-index="2" data-width="1920" data-height="1080">
+        <div class="copy"><div class="kicker">CASE 04 / 3D GALLERY</div><h1>把案例截图<br />变成发布会滚动墙</h1></div><div class="ticker-wrap"><div class="col col-a"><div class="tile red">Claude</div><div class="tile blue">HTML</div><div class="tile green">GSAP</div><div class="tile yellow">Render</div><div class="tile red">Claude</div><div class="tile blue">HTML</div><div class="tile green">GSAP</div><div class="tile yellow">Render</div></div><div class="col col-b"><div class="tile blue">Prompt</div><div class="tile yellow">Video</div><div class="tile red">Motion</div><div class="tile green">Case</div><div class="tile blue">Prompt</div><div class="tile yellow">Video</div><div class="tile red">Motion</div><div class="tile green">Case</div></div><div class="col col-c"><div class="tile green">UI</div><div class="tile red">Logo</div><div class="tile blue">Chat</div><div class="tile yellow">Light</div><div class="tile green">UI</div><div class="tile red">Logo</div><div class="tile blue">Chat</div><div class="tile yellow">Light</div></div></div><div class="fade top"></div><div class="fade bottom"></div>
+      </div>
+
+      <div id="case-chat" class="scene" data-composition-id="case-chat" data-start="26" data-duration="7.2" data-track-index="1" data-width="1920" data-height="1080">
+        <div class="phone"><div class="status">09:41</div><div class="chat-title">提示词生成视频</div><div class="bubble left msg-one">我只输入一句提示词，可以直接生成视频吗？</div><div class="bubble right msg-two">可以。我会写 HTML 动画、预览、再渲染成片。</div><div class="bubble left small msg-three">那给我来一个炫酷案例。</div><div class="bubble right done msg-four">已生成。</div></div><div class="copy"><div class="kicker">CASE 05 / WECHAT MOTION</div><h1>中文对话<br />也能变成动态素材</h1><p>适合放在教程里解释“用户一句话，AI 自动执行”的过程。</p></div>
+      </div>
+
+      <div id="case-outro" class="scene" data-composition-id="case-outro" data-start="33" data-duration="7" data-track-index="2" data-width="1920" data-height="1080">
+        <div class="rings"><span></span><span></span><span></span></div><div class="logo">XCYJ</div><h1>提示词不是终点<br />成片才是结果</h1><div class="stack"><div>Prompt</div><div>HTML</div><div>GSAP</div><div>Preview</div><div>Render</div></div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from("#grid", { opacity: 0, duration: 1.2, ease: "power2.out" }, 0);
+      tl.from(".chapter", { y: -24, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.15);
+      tl.from("#pulse", { scaleX: 0, transformOrigin: "left center", duration: 1, ease: "power3.out" }, 0.3);
+      tl.to("#pulse", { x: 1450, duration: 39, ease: "none" }, 0.7);
+
+      tl.to("#case-typer", { opacity: 1, duration: 0.1 }, 0);
+      tl.from("#case-typer .case-label", { y: -20, opacity: 0, duration: 0.5, ease: "power3.out" }, 0);
+      tl.from("#case-typer .prompt-card", { x: -90, opacity: 0, rotateY: -8, duration: 0.8, ease: "power3.out" }, 0.2);
+      tl.to("#case-typer .typed", { clipPath: "inset(0 0% 0 0)", duration: 1.8, ease: "steps(28)" }, 0.8);
+      tl.from("#case-typer .prompt-line.muted", { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 2.5);
+      tl.from("#case-typer .result-card", { x: 120, opacity: 0, scale: 0.92, duration: 0.8, ease: "power3.out" }, 2.9);
+      tl.from("#case-typer .mini-frame", { y: 90, opacity: 0, scale: 0.72, stagger: 0.1, duration: 0.65, ease: "back.out(1.9)" }, 3.35);
+      tl.from("#case-typer .caption", { y: 28, opacity: 0, duration: 0.65, ease: "power3.out" }, 4.25);
+      tl.to("#case-typer", { opacity: 0, scale: 1.03, duration: 0.45, ease: "power2.in" }, 6.45);
+
+      tl.to("#case-spotlight", { opacity: 1, duration: 0.1 }, 6.6);
+      tl.from("#case-spotlight .prompt-chip", { y: -24, opacity: 0, duration: 0.55, ease: "power3.out" }, 6.7);
+      tl.from("#case-spotlight .base-text", { opacity: 0, y: 42, duration: 0.65, ease: "power3.out" }, 6.95);
+      tl.from("#case-spotlight .lamp-head", { y: -180, opacity: 0, duration: 0.75, ease: "back.out(1.8)" }, 7.2);
+      tl.from("#case-spotlight .light-text", { opacity: 0, duration: 0.4, ease: "power2.out" }, 7.5);
+      tl.fromTo("#case-spotlight .lamp-group", { rotation: -24 }, { rotation: 24, duration: 1, ease: "power1.inOut", repeat: 4, yoyo: true }, 7.6);
+      tl.fromTo("#case-spotlight .lamp-head", { rotation: -24 }, { rotation: 24, duration: 1, ease: "power1.inOut", repeat: 4, yoyo: true }, 7.6);
+      tl.from("#case-spotlight .caption", { y: 28, opacity: 0, duration: 0.65, ease: "power3.out" }, 11.2);
+      tl.to("#case-spotlight", { opacity: 0, duration: 0.45, ease: "power2.in" }, 12.75);
+
+      tl.to("#case-assembly", { opacity: 1, duration: 0.1 }, 13);
+      tl.from("#case-assembly .copy", { x: -70, opacity: 0, duration: 0.75, ease: "power3.out" }, 13.1);
+      tl.from("#case-assembly .part-a", { opacity: 0, scale: 0.18, rotation: -180, duration: 1.1, ease: "elastic.out(1, 0.55)" }, 13.55);
+      tl.from("#case-assembly .part-b", { opacity: 0, x: -820, y: -260, scaleX: 0.08, scaleY: 3.4, rotation: -70, duration: 0.8, ease: "back.out(3)" }, 13.9);
+      tl.from("#case-assembly .part-c", { opacity: 0, x: 760, y: -360, scaleX: 0.08, scaleY: 3.2, rotation: 95, duration: 0.8, ease: "back.out(3)" }, 14.02);
+      tl.from("#case-assembly .part-d", { opacity: 0, x: -700, y: 420, scaleX: 0.08, scaleY: 3.2, rotation: -120, duration: 0.8, ease: "back.out(3)" }, 14.14);
+      tl.from("#case-assembly .part-e", { opacity: 0, x: 820, y: 340, scaleX: 0.08, scaleY: 3.2, rotation: 130, duration: 0.8, ease: "back.out(3)" }, 14.26);
+      tl.fromTo("#case-assembly .impact-ring", { opacity: 0.9, scale: 0.2 }, { opacity: 0, scale: 1.8, duration: 0.8, ease: "power3.out" }, 15.08);
+      tl.to("#case-assembly svg", { scale: 1.06, duration: 0.28, yoyo: true, repeat: 1, ease: "power2.inOut" }, 15.08);
+      tl.to("#case-assembly", { opacity: 0, x: -80, duration: 0.45, ease: "power2.in" }, 19.35);
+
+      tl.to("#case-ticker", { opacity: 1, duration: 0.1 }, 19.4);
+      tl.from("#case-ticker .copy", { x: -70, opacity: 0, duration: 0.75, ease: "power3.out" }, 19.45);
+      tl.from("#case-ticker .ticker-wrap", { x: 180, opacity: 0, duration: 0.9, ease: "power3.out" }, 19.65);
+      tl.from("#case-ticker .tile", { y: 120, opacity: 0, stagger: 0.035, duration: 0.5, ease: "power3.out" }, 20);
+      tl.to("#case-ticker .col-a", { y: -460, duration: 5.8, ease: "none" }, 20.3);
+      tl.to("#case-ticker .col-b", { y: 420, duration: 5.8, ease: "none" }, 20.3);
+      tl.to("#case-ticker .col-c", { y: -520, duration: 5.8, ease: "none" }, 20.3);
+      tl.to("#case-ticker", { opacity: 0, scale: 1.04, duration: 0.45, ease: "power2.in" }, 25.95);
+
+      tl.to("#case-chat", { opacity: 1, duration: 0.1 }, 26);
+      tl.from("#case-chat .phone", { x: -120, rotate: -3, opacity: 0, duration: 0.8, ease: "power3.out" }, 26.05);
+      tl.from("#case-chat .copy", { x: 90, opacity: 0, duration: 0.75, ease: "power3.out" }, 26.25);
+      tl.to("#case-chat .msg-one", { opacity: 1, y: -8, duration: 0.45, ease: "back.out(1.8)" }, 26.9);
+      tl.to("#case-chat .msg-two", { opacity: 1, y: -8, duration: 0.45, ease: "back.out(1.8)" }, 27.7);
+      tl.to("#case-chat .msg-three", { opacity: 1, y: -8, duration: 0.45, ease: "back.out(1.8)" }, 28.6);
+      tl.to("#case-chat .msg-four", { opacity: 1, y: -8, scale: 1.03, duration: 0.45, ease: "back.out(2.2)" }, 29.45);
+      tl.to("#case-chat .phone", { y: -16, duration: 1.2, yoyo: true, repeat: 2, ease: "power1.inOut" }, 30.15);
+      tl.to("#case-chat", { opacity: 0, duration: 0.45, ease: "power2.in" }, 32.75);
+
+      tl.to("#case-outro", { opacity: 1, duration: 0.1 }, 33);
+      tl.from("#case-outro .rings span", { scale: 0.2, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 33.05);
+      tl.from("#case-outro .logo", { y: -80, opacity: 0, scale: 0.4, duration: 0.75, ease: "back.out(2)" }, 33.35);
+      tl.from("#case-outro h1", { y: 60, opacity: 0, duration: 0.8, ease: "power3.out" }, 33.8);
+      tl.from("#case-outro .stack div", { y: 50, opacity: 0, stagger: 0.08, duration: 0.45, ease: "power3.out" }, 34.55);
+      tl.to("#case-outro .rings", { rotation: 24, scale: 1.06, duration: 4.8, ease: "none" }, 34.1);
+      tl.to("#case-outro .logo", { scale: 1.08, duration: 0.7, yoyo: true, repeat: 5, ease: "power1.inOut" }, 35);
+      tl.to({}, { duration: 40 }, 0);
+      window.__timelines["prompt-video-showcase"] = tl;
+    </script>
+  </body>
+</html>

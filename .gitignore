@@ -37,6 +37,7 @@ hyperframes-launches/
 **/.hyperframes/
 **/.waveform-cache/
 **/.thumbnails/
+**/.frames/
 **/.debug-studio.mjs
 .playwright-mcp/
 

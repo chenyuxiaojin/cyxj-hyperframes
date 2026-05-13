@@ -1,0 +1,59 @@
+<template id="case-spotlight-template">
+  <div class="case-spotlight-root" data-composition-id="case-spotlight" data-start="0" data-duration="6.6" data-width="1920" data-height="1080">
+    <div class="prompt-chip">“生成一个聚光灯扫过文字的 reveal 动画”</div>
+    <svg class="spot-svg" viewBox="0 0 1920 1080">
+      <defs>
+        <filter id="case-spotlight-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="18" result="blur"></feGaussianBlur>
+          <feMerge><feMergeNode in="blur"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+        </filter>
+        <mask id="case-spotlight-mask">
+          <g class="lamp-group">
+            <path d="M918 208 L1002 208 L1128 850 L792 850 Z" fill="#fff"></path>
+          </g>
+        </mask>
+      </defs>
+      <text x="960" y="548" text-anchor="middle" dominant-baseline="middle" class="base-text">PROMPT TO VIDEO</text>
+      <g mask="url(#case-spotlight-mask)">
+        <text x="960" y="548" text-anchor="middle" dominant-baseline="middle" class="light-text" filter="url(#case-spotlight-glow)">PROMPT TO VIDEO</text>
+      </g>
+      <g class="lamp-head">
+        <circle cx="960" cy="198" r="34" fill="#f7f2ea"></circle>
+        <rect x="900" y="150" width="120" height="66" rx="22" fill="#ff6a4a"></rect>
+      </g>
+    </svg>
+    <div class="caption">这个案例最适合做标题揭示、Logo Reveal、片头第一秒。</div>
+    <style>
+      .case-spotlight-root { position: absolute; inset: 0; overflow: hidden; }
+      .case-spotlight-root .prompt-chip {
+        position: absolute; left: 96px; top: 140px; padding: 18px 26px; border-radius: 999px;
+        background: rgba(247,242,234,0.1); border: 1px solid rgba(247,242,234,0.18); color: rgba(247,242,234,0.82);
+        font: 700 27px "Noto Sans SC"; z-index: 2;
+      }
+      .case-spotlight-root .spot-svg { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+      .case-spotlight-root .base-text {
+        font: 900 154px "JetBrains Mono", monospace; letter-spacing: 0; fill: rgba(247,242,234,0.19);
+      }
+      .case-spotlight-root .light-text {
+        font: 900 154px "JetBrains Mono", monospace; letter-spacing: 0; fill: #f7f2ea;
+      }
+      .case-spotlight-root .lamp-group { transform-origin: 960px 208px; }
+      .case-spotlight-root .lamp-head { transform-origin: 960px 208px; filter: drop-shadow(0 0 28px rgba(255,106,74,0.72)); }
+      .case-spotlight-root .caption { position: absolute; left: 96px; bottom: 92px; font-size: 40px; font-weight: 800; color: #f7f2ea; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from('.case-spotlight-root .prompt-chip', { y: -24, opacity: 0, duration: 0.55, ease: "power3.out" }, 0);
+      tl.from('.case-spotlight-root .base-text', { opacity: 0, y: 42, duration: 0.65, ease: "power3.out" }, 0.25);
+      tl.from('.case-spotlight-root .lamp-head', { y: -180, opacity: 0, duration: 0.75, ease: "back.out(1.8)" }, 0.6);
+      tl.from('.case-spotlight-root .light-text', { opacity: 0, duration: 0.4, ease: "power2.out" }, 0.9);
+      tl.fromTo('.case-spotlight-root .lamp-group', { rotation: -24 }, { rotation: 24, duration: 1, ease: "power1.inOut", repeat: 4, yoyo: true }, 1.0);
+      tl.fromTo('.case-spotlight-root .lamp-head', { rotation: -24 }, { rotation: 24, duration: 1, ease: "power1.inOut", repeat: 4, yoyo: true }, 1.0);
+      tl.from('.case-spotlight-root .caption', { y: 28, opacity: 0, duration: 0.65, ease: "power3.out" }, 4.6);
+      tl.to('.case-spotlight-root', { opacity: 0, duration: 0.45, ease: "power2.in" }, 6.15);
+      window.__timelines["case-spotlight"] = tl;
+    </script>
+  </div>
+</template>

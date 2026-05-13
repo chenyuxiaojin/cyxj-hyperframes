@@ -1,0 +1,33 @@
+<template id="case-outro-template">
+  <div class="case-outro-root" data-composition-id="case-outro" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+    <div class="rings"><span></span><span></span><span></span></div>
+    <div class="logo">XCYJ</div>
+    <h1>提示词不是终点<br />成片才是结果</h1>
+    <div class="stack">
+      <div>Prompt</div><div>HTML</div><div>GSAP</div><div>Preview</div><div>Render</div>
+    </div>
+    <style>
+      .case-outro-root { position: absolute; inset: 0; overflow: hidden; display: grid; place-items: center; text-align: center; }
+      .case-outro-root .rings { position: absolute; width: 720px; height: 720px; }
+      .case-outro-root .rings span { position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(91,184,255,0.28); }
+      .case-outro-root .rings span:nth-child(2) { inset: 86px; border-color: rgba(255,106,74,0.34); }
+      .case-outro-root .rings span:nth-child(3) { inset: 172px; border-color: rgba(247,242,234,0.22); }
+      .case-outro-root .logo { position: absolute; top: 230px; width: 160px; height: 160px; border-radius: 40px; display: grid; place-items: center; background: linear-gradient(135deg, #ff6a4a, #5bb8ff); color: #081019; font: 900 42px "Inter"; box-shadow: 0 30px 90px rgba(91,184,255,0.34); }
+      .case-outro-root h1 { margin: 0; color: #f7f2ea; font-size: 92px; line-height: 1.08; letter-spacing: 0; z-index: 2; }
+      .case-outro-root .stack { position: absolute; bottom: 160px; display: flex; gap: 16px; }
+      .case-outro-root .stack div { padding: 18px 24px; border-radius: 999px; color: #f7f2ea; background: rgba(247,242,234,0.1); border: 1px solid rgba(247,242,234,0.18); font: 800 20px "JetBrains Mono"; letter-spacing: 0.08em; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from('.case-outro-root .rings span', { scale: 0.2, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0);
+      tl.from('.case-outro-root .logo', { y: -80, opacity: 0, scale: 0.4, duration: 0.75, ease: "back.out(2)" }, 0.35);
+      tl.from('.case-outro-root h1', { y: 60, opacity: 0, duration: 0.8, ease: "power3.out" }, 0.8);
+      tl.from('.case-outro-root .stack div', { y: 50, opacity: 0, stagger: 0.08, duration: 0.45, ease: "power3.out" }, 1.55);
+      tl.to('.case-outro-root .rings', { rotation: 24, scale: 1.06, duration: 4.8, ease: "none" }, 1.1);
+      tl.to('.case-outro-root .logo', { scale: 1.08, duration: 0.7, yoyo: true, repeat: 5, ease: "power1.inOut" }, 2.0);
+      window.__timelines["case-outro"] = tl;
+    </script>
+  </div>
+</template>

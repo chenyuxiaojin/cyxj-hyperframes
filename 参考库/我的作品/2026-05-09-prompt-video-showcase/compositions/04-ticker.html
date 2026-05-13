@@ -1,0 +1,52 @@
+<template id="case-ticker-template">
+  <div class="case-ticker-root" data-composition-id="case-ticker" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+    <div class="copy">
+      <div class="kicker">CASE 04 / 3D GALLERY</div>
+      <h1>把案例截图<br />变成发布会滚动墙</h1>
+    </div>
+    <div class="ticker-wrap">
+      <div class="col col-a">
+        <div class="tile red">Claude</div><div class="tile blue">HTML</div><div class="tile green">GSAP</div><div class="tile yellow">Render</div>
+        <div class="tile red">Claude</div><div class="tile blue">HTML</div><div class="tile green">GSAP</div><div class="tile yellow">Render</div>
+      </div>
+      <div class="col col-b">
+        <div class="tile blue">Prompt</div><div class="tile yellow">Video</div><div class="tile red">Motion</div><div class="tile green">Case</div>
+        <div class="tile blue">Prompt</div><div class="tile yellow">Video</div><div class="tile red">Motion</div><div class="tile green">Case</div>
+      </div>
+      <div class="col col-c">
+        <div class="tile green">UI</div><div class="tile red">Logo</div><div class="tile blue">Chat</div><div class="tile yellow">Light</div>
+        <div class="tile green">UI</div><div class="tile red">Logo</div><div class="tile blue">Chat</div><div class="tile yellow">Light</div>
+      </div>
+    </div>
+    <div class="fade top"></div><div class="fade bottom"></div>
+    <style>
+      .case-ticker-root { position: absolute; inset: 0; overflow: hidden; }
+      .case-ticker-root .copy { position: absolute; left: 96px; top: 160px; z-index: 4; }
+      .case-ticker-root .kicker { font: 800 24px "JetBrains Mono"; letter-spacing: 0.14em; color: #5bb8ff; margin-bottom: 28px; }
+      .case-ticker-root h1 { margin: 0; font-size: 88px; line-height: 1.05; letter-spacing: 0; color: #f7f2ea; }
+      .case-ticker-root .ticker-wrap { position: absolute; right: 70px; top: -190px; width: 1050px; height: 1480px; display: flex; gap: 28px; transform: perspective(1000px) rotateX(18deg) rotateZ(-7deg) scale(1.04); }
+      .case-ticker-root .col { width: 320px; display: flex; flex-direction: column; gap: 28px; }
+      .case-ticker-root .tile { height: 230px; border-radius: 26px; display: grid; place-items: center; font: 900 40px "Inter"; color: #081019; box-shadow: 0 28px 70px rgba(0,0,0,0.36); border: 1px solid rgba(255,255,255,0.32); }
+      .case-ticker-root .red { background: linear-gradient(135deg, #ff6a4a, #ffd166); }
+      .case-ticker-root .blue { background: linear-gradient(135deg, #5bb8ff, #d77cff); }
+      .case-ticker-root .green { background: linear-gradient(135deg, #44d19d, #5bb8ff); }
+      .case-ticker-root .yellow { background: linear-gradient(135deg, #f7f2ea, #ffd166); }
+      .case-ticker-root .fade { position: absolute; left: 0; right: 0; height: 220px; z-index: 3; pointer-events: none; }
+      .case-ticker-root .fade.top { top: 0; background: linear-gradient(to bottom, #090b12, transparent); }
+      .case-ticker-root .fade.bottom { bottom: 0; background: linear-gradient(to top, #090b12, transparent); }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from('.case-ticker-root .copy', { x: -70, opacity: 0, duration: 0.75, ease: "power3.out" }, 0);
+      tl.from('.case-ticker-root .ticker-wrap', { x: 180, opacity: 0, duration: 0.9, ease: "power3.out" }, 0.25);
+      tl.from('.case-ticker-root .tile', { y: 120, opacity: 0, stagger: 0.035, duration: 0.5, ease: "power3.out" }, 0.55);
+      tl.to('.case-ticker-root .col-a', { y: -460, duration: 5.8, ease: "none" }, 0.9);
+      tl.to('.case-ticker-root .col-b', { y: 420, duration: 5.8, ease: "none" }, 0.9);
+      tl.to('.case-ticker-root .col-c', { y: -520, duration: 5.8, ease: "none" }, 0.9);
+      tl.to('.case-ticker-root', { opacity: 0, scale: 1.04, duration: 0.45, ease: "power2.in" }, 6.55);
+      window.__timelines["case-ticker"] = tl;
+    </script>
+  </div>
+</template>

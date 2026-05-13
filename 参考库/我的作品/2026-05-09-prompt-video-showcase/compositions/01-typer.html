@@ -1,0 +1,72 @@
+<template id="case-typer-template">
+  <div class="case-typer-root" data-composition-id="case-typer" data-start="0" data-duration="7" data-width="1920" data-height="1080">
+    <div class="case-label">CASE 01 / CLAUDE TYPER</div>
+    <div class="stage">
+      <div class="prompt-card">
+        <div class="terminal-top">
+          <span></span><span></span><span></span>
+          <b>claude-code</b>
+        </div>
+        <div class="prompt-line"><span class="caret">&gt;</span><span class="typed">帮我把这个网页变成 30 秒产品发布视频</span></div>
+        <div class="prompt-line muted"><span class="caret">✓</span>生成片头、转场、UI 展示和 Logo 落版</div>
+      </div>
+      <div class="result-card">
+        <div class="mini-frame hero"></div>
+        <div class="mini-frame one"></div>
+        <div class="mini-frame two"></div>
+        <div class="mini-frame three"></div>
+        <div class="render-badge">VIDEO RENDERED</div>
+      </div>
+    </div>
+    <div class="caption">一句提示词，不是出文案，是直接出可渲染的视频结构。</div>
+    <style>
+      .case-typer-root {
+        position: absolute; inset: 0; overflow: hidden; font-family: "Noto Sans SC", "Inter", sans-serif;
+      }
+      .case-typer-root .case-label {
+        position: absolute; left: 96px; top: 140px; font: 700 24px "JetBrains Mono"; letter-spacing: 0.16em; color: #5bb8ff;
+      }
+      .case-typer-root .stage {
+        position: absolute; inset: 210px 110px 170px 110px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 54px; align-items: center;
+      }
+      .case-typer-root .prompt-card {
+        height: 520px; padding: 34px; border-radius: 28px; background: rgba(8, 11, 20, 0.88);
+        border: 1px solid rgba(91, 184, 255, 0.35); box-shadow: 0 36px 100px rgba(0,0,0,0.5), 0 0 80px rgba(91,184,255,0.12);
+      }
+      .case-typer-root .terminal-top { display: flex; align-items: center; gap: 12px; height: 48px; color: rgba(247,242,234,0.55); font: 600 18px "JetBrains Mono"; }
+      .case-typer-root .terminal-top span { width: 14px; height: 14px; border-radius: 50%; background: #ff6a4a; }
+      .case-typer-root .terminal-top span:nth-child(2) { background: #ffd166; }
+      .case-typer-root .terminal-top span:nth-child(3) { background: #44d19d; margin-right: 18px; }
+      .case-typer-root .prompt-line { margin-top: 84px; font: 800 44px "Noto Sans SC"; line-height: 1.35; color: #f7f2ea; }
+      .case-typer-root .prompt-line.muted { margin-top: 42px; font: 700 30px "Noto Sans SC"; color: rgba(247,242,234,0.72); }
+      .case-typer-root .caret { color: #ff6a4a; margin-right: 18px; font-family: "JetBrains Mono"; }
+      .case-typer-root .typed { display: inline-block; clip-path: inset(0 100% 0 0); }
+      .case-typer-root .result-card {
+        position: relative; height: 620px; border-radius: 34px; border: 1px solid rgba(255,255,255,0.16);
+        background: linear-gradient(140deg, rgba(247,242,234,0.11), rgba(91,184,255,0.11)); overflow: hidden;
+        box-shadow: 0 44px 110px rgba(0,0,0,0.42);
+      }
+      .case-typer-root .mini-frame { position: absolute; border-radius: 22px; background: linear-gradient(135deg, #ff6a4a, #5bb8ff); box-shadow: 0 24px 60px rgba(0,0,0,0.35); }
+      .case-typer-root .mini-frame.hero { left: 80px; top: 76px; width: 500px; height: 270px; }
+      .case-typer-root .mini-frame.one { right: 70px; top: 122px; width: 250px; height: 150px; background: linear-gradient(135deg, #ffd166, #ff6a4a); }
+      .case-typer-root .mini-frame.two { left: 130px; bottom: 82px; width: 260px; height: 150px; background: linear-gradient(135deg, #44d19d, #5bb8ff); }
+      .case-typer-root .mini-frame.three { right: 92px; bottom: 72px; width: 330px; height: 190px; background: linear-gradient(135deg, #d77cff, #5bb8ff); }
+      .case-typer-root .render-badge { position: absolute; right: 46px; top: 44px; padding: 16px 22px; border-radius: 999px; background: rgba(7,10,18,0.72); color: #f7f2ea; font: 800 18px "JetBrains Mono"; letter-spacing: 0.12em; }
+      .case-typer-root .caption { position: absolute; left: 110px; bottom: 86px; font-size: 42px; font-weight: 800; color: #f7f2ea; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from('.case-typer-root .case-label', { y: -20, opacity: 0, duration: 0.5, ease: "power3.out" }, 0);
+      tl.from('.case-typer-root .prompt-card', { x: -90, opacity: 0, rotateY: -8, duration: 0.8, ease: "power3.out" }, 0.2);
+      tl.to('.case-typer-root .typed', { clipPath: "inset(0 0% 0 0)", duration: 1.8, ease: "steps(28)" }, 0.8);
+      tl.from('.case-typer-root .prompt-line.muted', { y: 24, opacity: 0, duration: 0.5, ease: "power2.out" }, 2.5);
+      tl.from('.case-typer-root .result-card', { x: 120, opacity: 0, scale: 0.92, duration: 0.8, ease: "power3.out" }, 2.9);
+      tl.from('.case-typer-root .mini-frame', { y: 90, opacity: 0, scale: 0.72, stagger: 0.1, duration: 0.65, ease: "back.out(1.9)" }, 3.35);
+      tl.from('.case-typer-root .caption', { y: 28, opacity: 0, duration: 0.65, ease: "power3.out" }, 4.25);
+      tl.to('.case-typer-root', { opacity: 0, scale: 1.03, duration: 0.45, ease: "power2.in" }, 6.45);
+      window.__timelines["case-typer"] = tl;
+    </script>
+  </div>
+</template>

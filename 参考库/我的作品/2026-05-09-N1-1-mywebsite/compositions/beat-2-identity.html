@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&family=Inter:wght@400;500;600&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px; height: 1080px; overflow: hidden;
+        background: #0A0A0A;
+      }
+      [data-composition-id="beat-2-identity"] {
+        position: relative;
+        width: 1920px; height: 1080px;
+        overflow: hidden;
+        background: #0A0A0A;
+      }
+      .b2-smoke-main {
+        position: absolute; inset: 0;
+        background-image: url("../assets/smoke-main-tiled.webp");
+        background-size: 1200px auto;
+        background-repeat: repeat;
+        opacity: 0.55;
+        z-index: 1;
+        mix-blend-mode: screen;
+      }
+      .b2-smoke-mist {
+        position: absolute; inset: 0;
+        background-image: url("../assets/smoke-mist-tiled.webp");
+        background-size: 1600px auto;
+        background-repeat: repeat;
+        opacity: 0.35;
+        z-index: 2;
+        mix-blend-mode: screen;
+      }
+      .b2-title-wrap {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        gap: 32px;
+      }
+      .b2-title {
+        font-family: "Noto Serif SC", serif;
+        font-weight: 900;
+        font-size: 220px;
+        color: #E8E8E6;
+        letter-spacing: 0.12em;
+        line-height: 1;
+        transform-origin: center;
+      }
+      .b2-tagline {
+        font-family: "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 36px;
+        color: #C7C7C7;
+        letter-spacing: 0.1em;
+        opacity: 0;
+      }
+      #b2-cube {
+        position: absolute;
+        left: 240px; top: 660px;
+        width: 280px;
+        opacity: 0;
+        z-index: 15;
+        filter: drop-shadow(0 0 40px rgba(176, 112, 255, 0.55));
+      }
+      #b2-moon {
+        position: absolute;
+        right: 280px; top: 160px;
+        width: 220px;
+        opacity: 0;
+        z-index: 15;
+        filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.5));
+      }
+      #b2-smile {
+        position: absolute;
+        right: 220px; bottom: 180px;
+        width: 240px;
+        opacity: 0;
+        z-index: 15;
+        filter: drop-shadow(0 0 40px rgba(255, 107, 179, 0.55));
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="beat-2-identity"
+      data-start="0"
+      data-duration="4"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div class="b2-smoke-main"></div>
+      <div class="b2-smoke-mist"></div>
+
+      <img id="b2-cube" src="../assets/cube.webp" alt="" />
+      <img id="b2-moon" src="../assets/moon.webp" alt="" />
+      <img id="b2-smile" src="../assets/smile.webp" alt="" />
+
+      <div class="b2-title-wrap">
+        <div class="b2-title">陈与小金</div>
+        <div class="b2-tagline">非程序员 · Claude Code Practitioner</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+
+      const tl = gsap.timeline({ paused: true, defaults: { overwrite: "auto" } });
+
+      // 大字收缩上移让位
+      tl.fromTo(".b2-title",
+        { scale: 1.0, y: 0 },
+        { scale: 0.7, y: -180, duration: 0.6, ease: "power2.inOut" },
+        0
+      );
+
+      // 副字 from below
+      tl.fromTo(".b2-tagline",
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+        0.4
+      );
+
+      // 3D icons stagger drop-in
+      tl.fromTo("#b2-cube",
+        { scale: 0.5, rotation: -8, opacity: 0 },
+        { scale: 1.0, rotation: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" },
+        1.0
+      );
+      tl.fromTo("#b2-moon",
+        { scale: 0.5, rotation: 6, opacity: 0 },
+        { scale: 1.0, rotation: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" },
+        1.2
+      );
+      tl.fromTo("#b2-smile",
+        { scale: 0.5, rotation: -4, opacity: 0 },
+        { scale: 1.0, rotation: 0, opacity: 1, duration: 0.6, ease: "back.out(1.6)" },
+        1.4
+      );
+
+      // idle 浮动 (mid-scene activity)
+      tl.to("#b2-cube", { y: -8, duration: 1.5, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.0);
+      tl.to("#b2-moon", { rotation: 3, duration: 1.8, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.0);
+      tl.to("#b2-smile", { scale: 1.04, duration: 1.6, ease: "sine.inOut", yoyo: true, repeat: 1 }, 2.0);
+
+      tl.to({}, { duration: 4 }, 0);
+
+      window.__timelines["beat-2-identity"] = tl;
+    </script>
+  </body>
+</html>

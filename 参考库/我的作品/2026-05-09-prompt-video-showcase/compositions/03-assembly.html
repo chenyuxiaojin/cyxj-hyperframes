@@ -1,0 +1,47 @@
+<template id="case-assembly-template">
+  <div class="case-assembly-root" data-composition-id="case-assembly" data-start="0" data-duration="6.8" data-width="1920" data-height="1080">
+    <div class="copy">
+      <div class="kicker">CASE 03 / SVG ASSEMBLY</div>
+      <h1>静态图标<br />一秒组装成片头</h1>
+      <p>提示词只描述“力量感、速度感、回弹”，剩下交给时间线。</p>
+    </div>
+    <div class="logo-stage">
+      <svg viewBox="0 0 520 520">
+        <path class="part part-a" d="M260 38 L470 158 L470 362 L260 482 L50 362 L50 158 Z" fill="none" stroke="#5bb8ff" stroke-width="24" stroke-linejoin="round"></path>
+        <path class="part part-b" d="M260 112 L406 196 L260 280 L114 196 Z" fill="#ff6a4a"></path>
+        <path class="part part-c" d="M114 224 L238 296 L238 424 L114 352 Z" fill="#f7f2ea"></path>
+        <path class="part part-d" d="M406 224 L282 296 L282 424 L406 352 Z" fill="#ffd166"></path>
+        <path class="part part-e" d="M260 310 L360 252 L360 336 L260 394 L160 336 L160 252 Z" fill="#44d19d"></path>
+      </svg>
+      <div class="impact-ring"></div>
+    </div>
+    <style>
+      .case-assembly-root { position: absolute; inset: 0; overflow: hidden; }
+      .case-assembly-root .copy { position: absolute; left: 100px; top: 184px; width: 720px; }
+      .case-assembly-root .kicker { font: 800 24px "JetBrains Mono"; letter-spacing: 0.14em; color: #ff6a4a; margin-bottom: 28px; }
+      .case-assembly-root h1 { margin: 0; font-size: 92px; line-height: 1.04; letter-spacing: 0; color: #f7f2ea; }
+      .case-assembly-root p { margin: 36px 0 0; font-size: 34px; line-height: 1.45; color: rgba(247,242,234,0.68); font-weight: 700; }
+      .case-assembly-root .logo-stage { position: absolute; right: 170px; top: 210px; width: 600px; height: 600px; display: grid; place-items: center; }
+      .case-assembly-root svg { width: 520px; height: 520px; overflow: visible; filter: drop-shadow(0 34px 70px rgba(0,0,0,0.45)); }
+      .case-assembly-root .part { transform-origin: 260px 260px; }
+      .case-assembly-root .impact-ring { position: absolute; width: 420px; height: 420px; border: 3px solid rgba(91,184,255,0.75); border-radius: 50%; opacity: 0; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      tl.from('.case-assembly-root .kicker', { y: -24, opacity: 0, duration: 0.5, ease: "power3.out" }, 0);
+      tl.from('.case-assembly-root h1', { y: 50, opacity: 0, duration: 0.75, ease: "power3.out" }, 0.2);
+      tl.from('.case-assembly-root p', { y: 34, opacity: 0, duration: 0.65, ease: "power3.out" }, 0.75);
+      tl.from('.case-assembly-root .part-a', { opacity: 0, scale: 0.18, rotation: -180, duration: 1.1, ease: "elastic.out(1, 0.55)" }, 0.55);
+      tl.from('.case-assembly-root .part-b', { opacity: 0, x: -820, y: -260, scaleX: 0.08, scaleY: 3.4, rotation: -70, duration: 0.8, ease: "back.out(3)" }, 0.9);
+      tl.from('.case-assembly-root .part-c', { opacity: 0, x: 760, y: -360, scaleX: 0.08, scaleY: 3.2, rotation: 95, duration: 0.8, ease: "back.out(3)" }, 1.02);
+      tl.from('.case-assembly-root .part-d', { opacity: 0, x: -700, y: 420, scaleX: 0.08, scaleY: 3.2, rotation: -120, duration: 0.8, ease: "back.out(3)" }, 1.14);
+      tl.from('.case-assembly-root .part-e', { opacity: 0, x: 820, y: 340, scaleX: 0.08, scaleY: 3.2, rotation: 130, duration: 0.8, ease: "back.out(3)" }, 1.26);
+      tl.fromTo('.case-assembly-root .impact-ring', { opacity: 0.9, scale: 0.2 }, { opacity: 0, scale: 1.8, duration: 0.8, ease: "power3.out" }, 2.08);
+      tl.to('.case-assembly-root svg', { scale: 1.06, duration: 0.28, yoyo: true, repeat: 1, ease: "power2.inOut" }, 2.08);
+      tl.to('.case-assembly-root', { opacity: 0, x: -80, duration: 0.45, ease: "power2.in" }, 6.35);
+      window.__timelines["case-assembly"] = tl;
+    </script>
+  </div>
+</template>

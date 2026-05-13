@@ -1,0 +1,39 @@
+[h1] 陈与小金
+[p] 非程序员 · Claude Code Practitioner
+[p] 用 AI 把想法变成东西
+[p] 写代码 · 做内容 · 搭工具
+[a] 联系我
+[figcaption] 抖音 · 408 粉
+[figcaption] B 站 · Lv4 · 21 条
+[figcaption] 视频号 · 主阵地
+[figcaption] 抖音 · 408 粉
+[figcaption] B 站 · Lv4 · 21 条
+[figcaption] 视频号 · 主阵地
+[h2] ABOUT ME
+[p] 我是小陈，不会写代码，但一直在用 Claude Code 做东西。写代码、做内容、搭工具，把踩过的坑和用熟的招做成视频和文章。希望我做出来的东西，能让其他非程序员也敢动手。
+[a] 联系我
+[h2] WHAT I'M UP TO
+[h3] 用 AI 写代码
+[p] 非程序员也能从 0 到 1 做出工具
+[h3] 做视频讲 Claude Code
+[p] 新功能怎么用、别踩坑
+[h3] 搭小工具给自己用
+[p] 自动化重复动作，顺手也分享出去
+[h3] 分享踩坑经验
+[p] 把学费省给看视频的人
+[h3] 和同好交流
+[p] 欢迎来抖音/B 站/视频号找我
+[p] WORKS
+[h2] PROJECTS
+[p] 三个平台，同一个人。滚一下 ↓
+[p] CLIENT
+[h3] 抖音主页
+[a] LIVE PROJECT →
+[p] CLIENT
+[h3] B 站主页
+[a] LIVE PROJECT →
+[p] PERSONAL
+[h3] 视频号
+[button] 微信搜：陈与小金
+[a] ordazbrandy737@gmail.com
+[p] © 2026 陈与小金
