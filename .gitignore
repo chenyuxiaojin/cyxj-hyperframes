@@ -41,6 +41,9 @@ hyperframes-launches/
 **/.debug-studio.mjs
 .playwright-mcp/
 
+# git worktree (各自独立 working tree，不进 main)
+.claude/worktrees/
+
 # ============================================================
 # 软链（指向 gitignored 上游，跨机器不可用，不进 git）
 # ============================================================
