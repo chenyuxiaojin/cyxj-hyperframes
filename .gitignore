@@ -34,6 +34,9 @@ hyperframes-launches/
 # ============================================================
 **/node_modules/
 **/renders/
+# 但顶层 /renders/ 是"成品大厅"软链汇总，要进 git
+!/renders/
+!/renders/**
 **/.hyperframes/
 **/.waveform-cache/
 **/.thumbnails/
