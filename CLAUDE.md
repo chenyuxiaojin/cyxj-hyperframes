@@ -77,7 +77,7 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 
 ## 必须遵守的硬约束
 
-详见 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md)（单源）。简表：
+详见 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md)（单源）。简表（§9-§11 略，去单源看完整）：
 
 1. GSAP querySelector 不能用 template literal
 2. 复制 beat html 时全局换 beat id（CSS class + GSAP selector 两处）
@@ -87,6 +87,7 @@ XCYJ（陈与小金）的 YouTube 教程视频**生产工作台**——基于 He
 6. 不要 commit `hyperframes-student-kit/` 或 `hyperframes-launches/`
 7. 大视频/音频不进 git（`.mp4 .mov .mp3 .wav .m4a` + `录屏/`）
 8. 中文字体在无头 Chromium 渲染时偶发回退（Google Fonts CDN 超时）
+12. 视觉 = 语义扩展联想，不是字幕翻译（口播关键词不能直接翻成 HTML 元素，要做 metaphor；色块占位临时可，但 PLAN.md 必须标 TODO）
 
 ## hyperframes CLI 本体在哪
 
