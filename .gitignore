@@ -77,3 +77,7 @@ templates/**/.claude/
 **/.idea/
 **/.vscode/
 *.swp
+
+# 大目录（GB 级，本地保留，不进 git）
+参考库/
+归档/
