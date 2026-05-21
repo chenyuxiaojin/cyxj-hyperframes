@@ -1,0 +1,115 @@
+<template id="sec-c-question-template">
+  <div data-composition-id="sec-c-question" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="sec-c-question"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="sec-c-question"] .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 160px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        box-sizing: border-box;
+      }
+
+      [data-composition-id="sec-c-question"] .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 112px;
+        letter-spacing: 0.005em;
+        line-height: 1.15;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-c-question"] .qmark {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 144px;
+        font-weight: 800;
+        display: inline-block;
+        opacity: 0;
+      }
+
+      [data-composition-id="sec-c-question"] .hint {
+        position: absolute;
+        bottom: 90px;
+        right: 140px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="scene-content">
+      <h1 class="headline">
+        <span>为什么这不是普通的跳槽</span><span class="qmark">？</span>
+      </h1>
+    </div>
+    <div class="hint">答案在数据里 ↓</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // t=0.3 主字砸下（scale 1.05 → 1）
+      tl.fromTo('[data-composition-id="sec-c-question"] .headline',
+        { scale: 1.05, autoAlpha: 0, y: 20 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' },
+        0.3
+      );
+
+      // t=1.2 问号 elastic 放大
+      tl.fromTo('[data-composition-id="sec-c-question"] .qmark',
+        { scale: 0.4, autoAlpha: 0 },
+        { scale: 1.15, autoAlpha: 1, duration: 0.7, ease: 'elastic.out(1, 0.45)', transformOrigin: '50% 70%' },
+        1.2
+      );
+      tl.to('[data-composition-id="sec-c-question"] .qmark',
+        { scale: 1.0, duration: 0.25, ease: 'power2.out', transformOrigin: '50% 70%' },
+        1.9
+      );
+
+      // t=2.0 hint 入场
+      tl.fromTo('[data-composition-id="sec-c-question"] .hint',
+        { x: 20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        2.0
+      );
+
+      // NO exit animations
+      window.__timelines['sec-c-question'] = tl;
+    </script>
+  </div>
+</template>

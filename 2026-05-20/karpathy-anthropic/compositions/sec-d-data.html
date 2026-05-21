@@ -1,0 +1,462 @@
+<template id="sec-d-data-template">
+  <div data-composition-id="sec-d-data" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="sec-d-data"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="sec-d-data"] .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 90px 140px 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 32px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* 标题 */
+      [data-composition-id="sec-d-data"] .chart-title {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 44px;
+        letter-spacing: 0.01em;
+        color: #2B2622;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="sec-d-data"] .chart-title .hot {
+        color: #B5563D;
+      }
+      [data-composition-id="sec-d-data"] .chart-subtitle {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 22px;
+        letter-spacing: 0.06em;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+        margin-top: -16px;
+      }
+
+      /* SVG chart 容器 */
+      [data-composition-id="sec-d-data"] .chart-wrap {
+        position: relative;
+        width: 1600px;
+        height: 600px;
+      }
+      [data-composition-id="sec-d-data"] .chart {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      /* 坐标轴 */
+      [data-composition-id="sec-d-data"] .axis-line {
+        stroke: rgba(43, 38, 34, 0.32);
+        stroke-width: 1.5;
+        fill: none;
+        opacity: 0;
+      }
+      [data-composition-id="sec-d-data"] .axis-tick {
+        stroke: rgba(43, 38, 34, 0.22);
+        stroke-width: 1;
+        fill: none;
+        opacity: 0;
+      }
+      [data-composition-id="sec-d-data"] .axis-label {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 18px;
+        font-weight: 500;
+        fill: #5A4F46;
+        opacity: 0;
+      }
+      [data-composition-id="sec-d-data"] .axis-label.year {
+        text-anchor: middle;
+      }
+      [data-composition-id="sec-d-data"] .axis-label.value {
+        text-anchor: end;
+      }
+
+      /* 网格虚线 */
+      [data-composition-id="sec-d-data"] .grid-line {
+        stroke: rgba(43, 38, 34, 0.08);
+        stroke-width: 1;
+        stroke-dasharray: 4 6;
+        fill: none;
+        opacity: 0;
+      }
+
+      /* 折线 */
+      [data-composition-id="sec-d-data"] .line-openai {
+        stroke: #2B2622;
+        stroke-width: 3.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill: none;
+      }
+      [data-composition-id="sec-d-data"] .line-anthropic {
+        stroke: #d97757;
+        stroke-width: 4;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill: none;
+        filter: drop-shadow(0 0 6px rgba(217, 119, 87, 0.4));
+      }
+
+      /* 数据点 */
+      [data-composition-id="sec-d-data"] .data-dot {
+        opacity: 0;
+      }
+      [data-composition-id="sec-d-data"] .data-dot.openai circle { fill: #2B2622; }
+      [data-composition-id="sec-d-data"] .data-dot.anthropic circle { fill: #d97757; }
+
+      /* 末端 label */
+      [data-composition-id="sec-d-data"] .end-label {
+        position: absolute;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 600;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-d-data"] .end-label.anthropic {
+        right: 0;
+        top: 100px;
+        color: #B5563D;
+        font-size: 48px;
+      }
+      [data-composition-id="sec-d-data"] .end-label.anthropic .sub {
+        display: block;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        margin-top: 4px;
+      }
+      [data-composition-id="sec-d-data"] .end-label.openai {
+        right: 0;
+        top: 200px;
+        color: #5A4F46;
+        font-size: 32px;
+      }
+      [data-composition-id="sec-d-data"] .end-label.openai .sub {
+        display: block;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        margin-top: 4px;
+        opacity: 0.7;
+      }
+
+      /* 反超 badge */
+      [data-composition-id="sec-d-data"] .reversal-badge {
+        position: absolute;
+        top: 70px;
+        left: 1370px;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 26px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: #F7F2EA;
+        color: #8b3d28;
+        border: 2px solid #8b3d28;
+        box-shadow: 0 8px 24px rgba(217, 119, 87, 0.35);
+        opacity: 0;
+        white-space: nowrap;
+        letter-spacing: 0.02em;
+      }
+
+      /* ripple（撞击瞬间冲击波）*/
+      [data-composition-id="sec-d-data"] .ripple {
+        position: absolute;
+        top: 165px;
+        left: 1413px;
+        width: 200px;
+        height: 200px;
+        margin: -100px 0 0 -100px;
+        border-radius: 50%;
+        border: 3px solid rgba(217, 119, 87, 0.85);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* 三年前对比小字（左上角）*/
+      [data-composition-id="sec-d-data"] .three-years {
+        position: absolute;
+        top: 240px;
+        left: 60px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+        line-height: 1.7;
+      }
+      [data-composition-id="sec-d-data"] .three-years .label {
+        color: #5A4F46;
+        font-size: 16px;
+        letter-spacing: 0.12em;
+        margin-bottom: 8px;
+        display: block;
+      }
+      [data-composition-id="sec-d-data"] .three-years .step .yr {
+        display: inline-block;
+        width: 110px;
+        color: #5A4F46;
+      }
+      [data-composition-id="sec-d-data"] .three-years .step .val {
+        color: #8b3d28;
+        font-weight: 700;
+      }
+      [data-composition-id="sec-d-data"] .three-years .arrow {
+        color: #5A4F46;
+        margin: 0 6px;
+      }
+
+      /* Source 标注 */
+      [data-composition-id="sec-d-data"] .source {
+        position: absolute;
+        bottom: 50px;
+        left: 60px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+      }
+
+      /* stage（screen shake 包装）*/
+      [data-composition-id="sec-d-data"] .stage {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+      }
+    </style>
+
+    <div class="stage">
+      <div class="scene-content">
+        <div class="chart-title">
+          Anthropic 在美国企业市场<span class="hot">首次反超</span> OpenAI
+        </div>
+        <div class="chart-subtitle">U.S. Enterprise AI Adoption · Monthly Share</div>
+
+        <div class="chart-wrap">
+          <svg class="chart" viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg">
+            <!-- 网格虚线（水平 4 条）-->
+            <line class="grid-line" x1="100" y1="100" x2="1500" y2="100" />
+            <line class="grid-line" x1="100" y1="200" x2="1500" y2="200" />
+            <line class="grid-line" x1="100" y1="300" x2="1500" y2="300" />
+            <line class="grid-line" x1="100" y1="400" x2="1500" y2="400" />
+
+            <!-- 坐标轴 -->
+            <line class="axis-line" x1="100" y1="500" x2="1500" y2="500" />
+            <line class="axis-line" x1="100" y1="80"  x2="100"  y2="500" />
+
+            <!-- Y 刻度 label -->
+            <text class="axis-label value" x="90" y="105">40%</text>
+            <text class="axis-label value" x="90" y="205">30%</text>
+            <text class="axis-label value" x="90" y="305">20%</text>
+            <text class="axis-label value" x="90" y="405">10%</text>
+            <text class="axis-label value" x="90" y="505">0</text>
+
+            <!-- X 刻度 label -->
+            <text class="axis-label year" x="100"  y="540">2023.6</text>
+            <text class="axis-label year" x="460"  y="540">2024.6</text>
+            <text class="axis-label year" x="720"  y="540">2025.4</text>
+            <text class="axis-label year" x="980"  y="540">2025.10</text>
+            <text class="axis-label year" x="1480" y="540">2026.5</text>
+
+            <!-- OpenAI 折线 -->
+            <path class="line-openai" d="M 100 200 L 460 180 L 720 170 L 980 165 L 1480 177" />
+
+            <!-- Anthropic 折线 -->
+            <path class="line-anthropic" d="M 100 500 L 460 470 L 720 420 L 980 300 L 1480 156" />
+
+            <!-- 数据点（末端两个）-->
+            <g class="data-dot openai">
+              <circle cx="1480" cy="177" r="9" />
+              <circle cx="1480" cy="177" r="14" fill="none" stroke="#2B2622" stroke-width="2" opacity="0.4" />
+            </g>
+            <g class="data-dot anthropic">
+              <circle cx="1480" cy="156" r="11" />
+              <circle cx="1480" cy="156" r="18" fill="none" stroke="#d97757" stroke-width="2" opacity="0.5" />
+            </g>
+          </svg>
+
+          <!-- 末端 label -->
+          <div class="end-label anthropic">
+            34.44%
+            <span class="sub">Anthropic</span>
+          </div>
+          <div class="end-label openai">
+            32.3%
+            <span class="sub">OpenAI</span>
+          </div>
+
+          <!-- 反超 badge + ripple -->
+          <div class="reversal-badge">↑ 首次反超</div>
+          <div class="ripple"></div>
+        </div>
+
+        <!-- 三年前对比 -->
+        <div class="three-years">
+          <span class="label">Anthropic · 美国企业份额</span>
+          <div class="step"><span class="yr">2023.6</span><span class="val">0.003%</span></div>
+          <div class="step"><span class="yr">2025.4</span><span class="val">7.94%</span></div>
+          <div class="step"><span class="yr">2026.5</span><span class="val">34.44%</span></div>
+        </div>
+
+        <!-- Source -->
+        <div class="source">Source: Ramp 企业 AI 采纳指数 · 5 万 + 美国企业真实消费</div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const root = '[data-composition-id="sec-d-data"]';
+
+      // t=0.0 标题 + 副标题入场
+      tl.fromTo(root + ' .chart-title',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        0.0
+      );
+      tl.fromTo(root + ' .chart-subtitle',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        0.3
+      );
+
+      // t=0.5 坐标轴 + Y 刻度 label
+      tl.to(root + ' .axis-line',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.08 },
+        0.5
+      );
+      tl.to(root + ' .axis-label.value',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.05 },
+        0.7
+      );
+
+      // t=0.9 网格虚线 + X 年份 label
+      tl.to(root + ' .grid-line',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        0.9
+      );
+      tl.to(root + ' .axis-label.year',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        1.0
+      );
+
+      // t=1.4 OpenAI 线 stroke-dashoffset 渐显
+      tl.set(root + ' .line-openai',
+        { strokeDasharray: 1450, strokeDashoffset: 1450 },
+        1.39
+      );
+      tl.to(root + ' .line-openai',
+        { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut' },
+        1.4
+      );
+
+      // t=2.3 Anthropic 线 stroke-dashoffset 渐显（更慢、更长）
+      tl.set(root + ' .line-anthropic',
+        { strokeDasharray: 1600, strokeDashoffset: 1600 },
+        2.29
+      );
+      tl.to(root + ' .line-anthropic',
+        { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' },
+        2.3
+      );
+
+      // ─── t=4.3 反超撞击瞬间（§3 同帧合成模板）───
+      const T = 4.3;
+
+      // 1) ripple scale 0.5 → 12
+      tl.fromTo(root + ' .ripple',
+        { scale: 0.5, autoAlpha: 1 },
+        { scale: 12, autoAlpha: 0, duration: 0.7, ease: 'power2.out', immediateRender: false },
+        T
+      );
+
+      // 2) screen shake（stage 抖 5 段）
+      ['+=18', '-=28', '+=22', '-=14', '+=0'].forEach((x, i) => {
+        tl.to(root + ' .stage', { x: x, duration: 0.05, ease: 'power1.inOut' }, T + i * 0.05);
+      });
+
+      // 3) Anthropic 线 glow yoyo
+      tl.to(root + ' .line-anthropic',
+        { filter: 'drop-shadow(0 0 24px rgba(217, 119, 87, 0.95))', duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        T
+      );
+
+      // 4) data-dot 弹出
+      tl.fromTo(root + ' .data-dot.anthropic',
+        { scale: 0, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'back.out(2.4)', transformOrigin: '1480px 156px' },
+        T + 0.1
+      );
+      tl.fromTo(root + ' .data-dot.openai',
+        { scale: 0, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'back.out(2.0)', transformOrigin: '1480px 177px' },
+        T + 0.15
+      );
+
+      // 5) 反超 badge 弹出
+      tl.fromTo(root + ' .reversal-badge',
+        { scale: 0, rotation: -8, autoAlpha: 0 },
+        { scale: 1, rotation: 0, autoAlpha: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: '50% 50%' },
+        T + 0.2
+      );
+
+      // ─── 撞击后续：末端 label ───
+      tl.fromTo(root + ' .end-label.anthropic',
+        { x: 30, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        T + 0.5
+      );
+      tl.fromTo(root + ' .end-label.openai',
+        { x: 30, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        T + 0.7
+      );
+
+      // t=6.0 三年前对比小字（stagger 行）
+      tl.fromTo(root + ' .three-years',
+        { x: -20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        6.0
+      );
+
+      // t=6.5 三年对比每行依次高亮（用户视线引导）
+      tl.fromTo(root + ' .three-years .step',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.55 },
+        6.5
+      );
+
+      // t=8.5 source 入场
+      tl.fromTo(root + ' .source',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        8.5
+      );
+
+      // NO exit animations
+      window.__timelines['sec-d-data'] = tl;
+    </script>
+  </div>
+</template>

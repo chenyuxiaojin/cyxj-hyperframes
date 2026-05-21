@@ -1,0 +1,189 @@
+<template id="sec-b-pivot-template">
+  <div data-composition-id="sec-b-pivot" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="sec-b-pivot"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="sec-b-pivot"] .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 140px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        box-sizing: border-box;
+      }
+
+      /* gossip chip 行（固定高度，chip 移走后不影响布局）*/
+      [data-composition-id="sec-b-pivot"] .gossip-row {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [data-composition-id="sec-b-pivot"] .gossip-chip {
+        position: relative;
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 56px;
+        letter-spacing: 0.02em;
+        padding: 22px 56px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1.5px solid rgba(43, 38, 34, 0.22);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-b-pivot"] .gossip-slash {
+        position: absolute;
+        top: 50%;
+        left: -8%;
+        width: 116%;
+        height: 80px;
+        transform: translateY(-50%);
+        overflow: visible;
+        pointer-events: none;
+      }
+      [data-composition-id="sec-b-pivot"] .gossip-slash line {
+        stroke: #B5563D;
+        stroke-width: 5;
+        stroke-linecap: round;
+        fill: none;
+      }
+
+      /* chrome 大字主字（米色底暖版 8-stop）*/
+      [data-composition-id="sec-b-pivot"] .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 128px;
+        letter-spacing: 0.005em;
+        line-height: 1.1;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+      }
+      [data-composition-id="sec-b-pivot"] .headline .hot-word {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* 副字（深棕，米色底友好）*/
+      [data-composition-id="sec-b-pivot"] .subheadline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 44px;
+        letter-spacing: 0.02em;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="sec-b-pivot"] .sub-char {
+        display: inline-block;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="scene-content">
+      <div class="gossip-row">
+        <div class="gossip-chip">
+          跳槽八卦
+          <svg class="gossip-slash" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <line x1="20" y1="60" x2="580" y2="20" />
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="headline">AI 行业最大的一次<span class="hot-word">转向</span></h1>
+
+      <p class="subheadline" aria-label="只是大多数人还没意识到">
+        <span class="sub-char">只</span><span class="sub-char">是</span><span class="sub-char">大</span><span class="sub-char">多</span><span class="sub-char">数</span><span class="sub-char">人</span><span class="sub-char">还</span><span class="sub-char">没</span><span class="sub-char">意</span><span class="sub-char">识</span><span class="sub-char">到</span>
+      </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // t=0.0 chip 入场（scale + opacity）
+      tl.fromTo('[data-composition-id="sec-b-pivot"] .gossip-chip',
+        { scale: 0.6, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.45, ease: 'back.out(1.6)' },
+        0.0
+      );
+
+      // t=0.5 斜杠划过（line stroke-dashoffset 渐现）
+      // 准备 dasharray = path length ~ 580
+      tl.set('[data-composition-id="sec-b-pivot"] .gossip-slash line',
+        { strokeDasharray: 600, strokeDashoffset: 600, autoAlpha: 1 },
+        0.49
+      );
+      tl.to('[data-composition-id="sec-b-pivot"] .gossip-slash line',
+        { strokeDashoffset: 0, duration: 0.4, ease: 'power2.in' },
+        0.5
+      );
+
+      // t=1.0 chip 微缩（被否定后退场感）
+      tl.to('[data-composition-id="sec-b-pivot"] .gossip-chip',
+        { scale: 0.92, duration: 0.3, ease: 'power2.in' },
+        1.0
+      );
+
+      // t=1.5 chip 移到右下小（layout transition：移出中央到角落）
+      tl.to('[data-composition-id="sec-b-pivot"] .gossip-chip',
+        { x: 560, y: 280, scale: 0.42, autoAlpha: 0.35, duration: 0.7, ease: 'power3.inOut' },
+        1.5
+      );
+      tl.to('[data-composition-id="sec-b-pivot"] .gossip-slash line',
+        { autoAlpha: 0.35, duration: 0.7, ease: 'power3.inOut' },
+        1.5
+      );
+
+      // t=2.6 chrome 主字砸下（scale 1.08 → 1.0 + opacity）
+      tl.fromTo('[data-composition-id="sec-b-pivot"] .headline',
+        { scale: 1.08, autoAlpha: 0, y: 20 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+        2.6
+      );
+
+      // t=4.9 副字 char stagger 入场
+      tl.fromTo('[data-composition-id="sec-b-pivot"] .subheadline',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+        4.85
+      );
+      tl.fromTo('[data-composition-id="sec-b-pivot"] .sub-char',
+        { y: 16, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        4.9
+      );
+
+      // NO exit animations — transition IS the exit
+      window.__timelines['sec-b-pivot'] = tl;
+    </script>
+  </div>
+</template>

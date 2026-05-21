@@ -1,0 +1,212 @@
+<template id="sec-e-three-questions-template">
+  <div data-composition-id="sec-e-three-questions" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="sec-e-three-questions"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="sec-e-three-questions"] .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 140px 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 110px;
+        box-sizing: border-box;
+      }
+
+      /* chip row（三个 chip 并排）*/
+      [data-composition-id="sec-e-three-questions"] .chip-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        flex-wrap: nowrap;
+      }
+      [data-composition-id="sec-e-three-questions"] .chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 32px;
+        letter-spacing: 0.02em;
+        padding: 16px 36px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1.5px solid rgba(43, 38, 34, 0.22);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-e-three-questions"] .chip.middle {
+        background: rgba(43, 38, 34, 0.10);
+        color: #2B2622;
+      }
+      [data-composition-id="sec-e-three-questions"] .chip.target {
+        background: rgba(217, 119, 87, 0.10);
+        border-color: rgba(217, 119, 87, 0.55);
+        color: #B5563D;
+        box-shadow: 0 0 0 1px rgba(217, 119, 87, 0.18), 0 4px 18px rgba(217, 119, 87, 0.18);
+      }
+      [data-composition-id="sec-e-three-questions"] .chip-arrow {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: #5A4F46;
+        opacity: 0;
+      }
+
+      /* question stack（两个问句堆叠在同一位置切换）*/
+      [data-composition-id="sec-e-three-questions"] .question-stack {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        place-items: center;
+        width: 100%;
+        min-height: 240px;
+      }
+      [data-composition-id="sec-e-three-questions"] .question-stack .q {
+        grid-column: 1;
+        grid-row: 1;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 132px;
+        letter-spacing: 0.005em;
+        line-height: 1.15;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-e-three-questions"] .question-stack .q .hot-word {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* 中间衔接小字 */
+      [data-composition-id="sec-e-three-questions"] .bridge-line {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 32px;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+        text-align: center;
+      }
+    </style>
+
+    <div class="scene-content">
+      <div class="chip-row">
+        <div class="chip">OpenAI 创始成员</div>
+        <span class="chip-arrow">→</span>
+        <div class="chip middle">这个时间点</div>
+        <span class="chip-arrow">→</span>
+        <div class="chip target">Anthropic 对手公司</div>
+      </div>
+
+      <div class="bridge-line">在 OpenAI 被反超的同一个月，去了反超它的那家</div>
+
+      <div class="question-stack">
+        <h1 class="q q1">为什么是<span class="hot-word">这个时间点</span>？</h1>
+        <h1 class="q q2">为什么是<span class="hot-word">Anthropic</span>？</h1>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      const root = '[data-composition-id="sec-e-three-questions"]';
+
+      // ─── chip row 入场（按字幕 #8/#9 节拍）───
+      // t=0.2 第 1 chip
+      tl.fromTo(root + ' .chip-row .chip:nth-child(1)',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        0.2
+      );
+      // t=0.7 第 1 → 第 2 之间箭头
+      tl.fromTo(root + ' .chip-row .chip-arrow:nth-child(2)',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.35, ease: 'power2.out' },
+        0.7
+      );
+      // t=0.9 第 2 chip
+      tl.fromTo(root + ' .chip-row .chip:nth-child(3)',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        0.9
+      );
+      // t=2.4 第 2 → 第 3 之间箭头
+      tl.fromTo(root + ' .chip-row .chip-arrow:nth-child(4)',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.35, ease: 'power2.out' },
+        2.4
+      );
+      // t=2.7 第 3 chip（带 halo 强调）
+      tl.fromTo(root + ' .chip-row .chip:nth-child(5)',
+        { y: 24, scale: 0.92, autoAlpha: 0 },
+        { y: 0, scale: 1, autoAlpha: 1, duration: 0.55, ease: 'back.out(1.8)' },
+        2.7
+      );
+      // t=3.3 target chip halo 加亮一下
+      tl.to(root + ' .chip-row .chip.target',
+        { boxShadow: '0 0 0 2px rgba(217, 119, 87, 0.55), 0 10px 32px rgba(217, 119, 87, 0.42)', duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        3.3
+      );
+
+      // ─── 中间衔接小字 ───
+      tl.fromTo(root + ' .bridge-line',
+        { y: 12, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        4.2
+      );
+
+      // ─── 问句 1：为什么是这个时间点？（t=6.3-9.0）───
+      tl.fromTo(root + ' .q1',
+        { scale: 1.06, y: 18, autoAlpha: 0 },
+        { scale: 1.0, y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
+        6.3
+      );
+
+      // ─── 问句 1 → 问句 2 切换（t=9.0）───
+      tl.to(root + ' .q1',
+        { autoAlpha: 0, duration: 0.25, ease: 'power2.in' },
+        9.0
+      );
+      tl.fromTo(root + ' .q2',
+        { scale: 1.06, autoAlpha: 0 },
+        { scale: 1.0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        9.1
+      );
+
+      // ─── 最后 fade out（N18 例外：最后一段允许 fade out）───
+      tl.to(root + ' .scene-content',
+        { autoAlpha: 0, duration: 0.4, ease: 'power2.in' },
+        10.3
+      );
+
+      window.__timelines['sec-e-three-questions'] = tl;
+    </script>
+  </div>
+</template>

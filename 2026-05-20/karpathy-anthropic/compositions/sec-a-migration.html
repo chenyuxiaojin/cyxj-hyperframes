@@ -1,0 +1,240 @@
+<template id="sec-a-migration-template">
+  <div data-composition-id="sec-a-migration" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="sec-a-migration"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="sec-a-migration"] .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 120px 160px 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 80px;
+        box-sizing: border-box;
+      }
+
+      /* 顶部推文 banner */
+      [data-composition-id="sec-a-migration"] .tweet-banner {
+        width: 540px;
+        height: auto;
+        border-radius: 18px;
+        box-shadow:
+          0 12px 32px rgba(43, 38, 34, 0.14),
+          0 0 0 1px rgba(43, 38, 34, 0.08);
+        opacity: 0;
+      }
+
+      /* 迁徙行：左 logo / 中头像 / 右 logo */
+      [data-composition-id="sec-a-migration"] .migration-row {
+        position: relative;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 120px;
+        padding: 40px 80px 0;
+      }
+
+      [data-composition-id="sec-a-migration"] .cluster {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+      [data-composition-id="sec-a-migration"] .cluster.left { justify-self: end; }
+      [data-composition-id="sec-a-migration"] .cluster.right { justify-self: start; }
+
+      [data-composition-id="sec-a-migration"] .logo {
+        width: 132px;
+        height: 132px;
+        opacity: 0;
+      }
+      [data-composition-id="sec-a-migration"] .logo.anthropic {
+        filter: drop-shadow(0 0 24px rgba(217, 119, 87, 0.55));
+      }
+
+      [data-composition-id="sec-a-migration"] .chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1px solid rgba(43, 38, 34, 0.18);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="sec-a-migration"] .chip.anthropic {
+        background: rgba(217, 119, 87, 0.10);
+        border-color: rgba(217, 119, 87, 0.55);
+        color: #9A4634;
+      }
+
+      /* Karpathy 头像 */
+      [data-composition-id="sec-a-migration"] .karpathy-photo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 16px 40px rgba(43, 38, 34, 0.28),
+          0 0 0 4px #F7F2EA,
+          0 0 0 5px rgba(43, 38, 34, 0.14);
+        opacity: 0;
+      }
+
+      /* 虚线箭头（横跨整个 row 中部，photo 下方）*/
+      [data-composition-id="sec-a-migration"] .arrow-svg {
+        position: absolute;
+        left: 50%;
+        bottom: -60px;
+        transform: translateX(-50%);
+        width: 1300px;
+        height: 80px;
+        pointer-events: none;
+        overflow: visible;
+      }
+      [data-composition-id="sec-a-migration"] .arrow-svg .dashed-line {
+        stroke: rgba(43, 38, 34, 0.32);
+        stroke-width: 2.5;
+        stroke-dasharray: 12 10;
+        fill: none;
+      }
+      [data-composition-id="sec-a-migration"] .arrow-svg .arrow-head {
+        fill: #B5563D;
+        opacity: 0;
+      }
+
+      /* 标题大字（屏幕底部，承接结论）*/
+      [data-composition-id="sec-a-migration"] .bottom-caption {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 56px;
+        letter-spacing: 0.01em;
+        color: #2B2622;
+        text-align: center;
+        opacity: 0;
+        line-height: 1.3;
+      }
+      [data-composition-id="sec-a-migration"] .bottom-caption .hot {
+        color: #B5563D;
+      }
+    </style>
+
+    <div class="scene-content">
+      <img class="tweet-banner" src="assets/tweets/joining-tweet.png" alt="Karpathy joining tweet" />
+
+      <div class="migration-row">
+        <div class="cluster left">
+          <img class="logo openai" src="assets/logos/openai.svg" alt="OpenAI" />
+          <div class="chip">创始成员 · 2015</div>
+        </div>
+
+        <img class="karpathy-photo" src="assets/portraits/karpathy-hero.png" alt="Andrej Karpathy" />
+
+        <div class="cluster right">
+          <img class="logo anthropic" src="assets/logos/anthropic.svg" alt="Anthropic" />
+          <div class="chip anthropic">2026.5.19 加入</div>
+        </div>
+
+        <svg class="arrow-svg" viewBox="0 0 1300 80" xmlns="http://www.w3.org/2000/svg">
+          <path class="dashed-line" d="M 40 40 L 1240 40" />
+          <polygon class="arrow-head" points="1240,28 1260,40 1240,52" />
+        </svg>
+      </div>
+
+      <div class="bottom-caption">
+        OpenAI 的 <span class="hot">创始成员</span> · 加入了 OpenAI 最大的 <span class="hot">竞争对手</span>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // 0.3s tweet banner 顶部下落
+      tl.fromTo('[data-composition-id="sec-a-migration"] .tweet-banner',
+        { y: -60, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        0.3
+      );
+
+      // 0.8s 左 cluster（OpenAI logo + chip）stagger
+      tl.fromTo('[data-composition-id="sec-a-migration"] .cluster.left .logo',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        0.8
+      );
+      tl.fromTo('[data-composition-id="sec-a-migration"] .cluster.left .chip',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.45, ease: 'power2.out' },
+        0.95
+      );
+
+      // 1.4s Karpathy 头像（先停在最左侧，即 OpenAI 旁边）
+      tl.fromTo('[data-composition-id="sec-a-migration"] .karpathy-photo',
+        { scale: 0, x: -260, autoAlpha: 0 },
+        { scale: 1, x: -260, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.4)' },
+        1.4
+      );
+
+      // 2.0s 右 cluster（Anthropic logo + chip）stagger
+      tl.fromTo('[data-composition-id="sec-a-migration"] .cluster.right .logo',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        2.0
+      );
+      tl.fromTo('[data-composition-id="sec-a-migration"] .cluster.right .chip',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.45, ease: 'power2.out' },
+        2.15
+      );
+
+      // 2.6s 虚线箭头 stroke-dashoffset 渐显（用 attr() tween）
+      // 用 GSAP 直接 tween SVG path 的 stroke-dashoffset
+      tl.fromTo('[data-composition-id="sec-a-migration"] .arrow-svg .dashed-line',
+        { strokeDashoffset: 1200, opacity: 0 },
+        { strokeDashoffset: 0, opacity: 1, duration: 1.0, ease: 'power2.inOut' },
+        2.6
+      );
+      tl.fromTo('[data-composition-id="sec-a-migration"] .arrow-svg .arrow-head',
+        { autoAlpha: 0, scale: 0.5 },
+        { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: '50% 50%' },
+        3.4
+      );
+
+      // 3.6s 底部 caption 入场
+      tl.fromTo('[data-composition-id="sec-a-migration"] .bottom-caption',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        3.6
+      );
+
+      // 3.8s Karpathy 头像沿虚线推进（x: -260 → 0）
+      tl.to('[data-composition-id="sec-a-migration"] .karpathy-photo',
+        { x: 0, duration: 1.5, ease: 'power2.inOut' },
+        3.8
+      );
+
+      // 5.3s 到达终点时 Anthropic logo halo 加亮（box-shadow yoyo）
+      tl.to('[data-composition-id="sec-a-migration"] .logo.anthropic',
+        { filter: 'drop-shadow(0 0 44px rgba(217, 119, 87, 0.95))', duration: 0.2, yoyo: true, repeat: 1 },
+        5.3
+      );
+
+      // NO exit animations — transition IS the exit (N18 / hyperframes scene transitions non-negotiable)
+
+      window.__timelines['sec-a-migration'] = tl;
+    </script>
+  </div>
+</template>

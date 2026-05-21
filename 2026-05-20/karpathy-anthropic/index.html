@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Karpathy 加入 Anthropic · Cold Open</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=block"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/xcyj-tokens.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #F7F2EA;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        color: #2B2622;
+      }
+
+      #root { position: relative; width: 1920px; height: 1080px; }
+
+      /* ── 全局四件套（z-index 5-8，全程显示，不遮主体内容）── */
+
+      /* 1. 透视网格（米色底专用，棕灰细线）*/
+      #global-grid {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px; height: 1080px;
+        pointer-events: none;
+        z-index: 5;
+        background-image:
+          linear-gradient(rgba(43, 38, 34, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(43, 38, 34, 0.06) 1px, transparent 1px);
+        background-size: 80px 80px;
+        opacity: 0;
+      }
+
+      /* 2. 暗角 vignette（米色底专用，深棕渐变）*/
+      #global-vignette {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px; height: 1080px;
+        pointer-events: none;
+        z-index: 6;
+        background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 35%, rgba(43, 38, 34, 0.18) 100%);
+        opacity: 0;
+      }
+
+      /* 3. crosshair 四角小十字 */
+      .crosshair {
+        position: absolute;
+        pointer-events: none;
+        z-index: 7;
+        width: 28px; height: 28px;
+        opacity: 0;
+      }
+      .crosshair::before, .crosshair::after {
+        content: "";
+        position: absolute;
+        background: rgba(43, 38, 34, 0.32);
+      }
+      .crosshair::before { left: 50%; top: 0; width: 1px; height: 28px; transform: translateX(-50%); }
+      .crosshair::after  { top: 50%; left: 0; height: 1px; width: 28px; transform: translateY(-50%); }
+      #ch-tl { top: 60px;   left: 60px; }
+      #ch-tr { top: 60px;   right: 60px; }
+      #ch-bl { bottom: 60px;left: 60px; }
+      #ch-br { bottom: 60px;right: 60px; }
+
+      /* 4. grain 颗粒（SVG turbulence）*/
+      #global-grain {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px; height: 1080px;
+        pointer-events: none;
+        z-index: 8;
+        opacity: 0;
+        mix-blend-mode: multiply;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="xcyj-karpathy-cold-open"
+      data-start="0"
+      data-duration="38"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- ── 全局四件套层 ── -->
+      <div id="global-grid"></div>
+      <div id="global-vignette"></div>
+      <div id="ch-tl" class="crosshair"></div>
+      <div id="ch-tr" class="crosshair"></div>
+      <div id="ch-bl" class="crosshair"></div>
+      <div id="ch-br" class="crosshair"></div>
+      <svg id="global-grain" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <filter id="grain-filter-root">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3" stitchTiles="stitch" />
+          <feColorMatrix values="0 0 0 0 0.17  0 0 0 0 0.15  0 0 0 0 0.13  0 0 0 0.55 0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain-filter-root)" />
+      </svg>
+
+      <!-- ── 5 SEC sub-composition 挂载（按字幕节拍）── -->
+      <div
+        id="sec-a"
+        data-composition-id="sec-a-migration"
+        data-composition-src="compositions/sec-a-migration.html"
+        data-start="0"
+        data-duration="5.6"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="sec-b"
+        data-composition-id="sec-b-pivot"
+        data-composition-src="compositions/sec-b-pivot.html"
+        data-start="5.6"
+        data-duration="7.2"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="sec-c"
+        data-composition-id="sec-c-question"
+        data-composition-src="compositions/sec-c-question.html"
+        data-start="12.8"
+        data-duration="3.3"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="sec-d"
+        data-composition-id="sec-d-data"
+        data-composition-src="compositions/sec-d-data.html"
+        data-start="16.1"
+        data-duration="11.2"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+      <div
+        id="sec-e"
+        data-composition-id="sec-e-three-questions"
+        data-composition-src="compositions/sec-e-three-questions.html"
+        data-start="27.3"
+        data-duration="10.7"
+        data-track-index="1"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      // 全局四件套入场（0-1s 渐显，全程保持，不退场）
+      tl.to('#global-grid',     { opacity: 1,    duration: 1.0, ease: 'power2.out' }, 0.0);
+      tl.to('#global-vignette', { opacity: 1,    duration: 1.2, ease: 'power2.out' }, 0.0);
+      tl.to('.crosshair',       { opacity: 1,    duration: 0.6, ease: 'power2.out', stagger: 0.08 }, 0.3);
+      tl.to('#global-grain',    { opacity: 0.10, duration: 1.5, ease: 'power2.out' }, 0.5);
+
+      // 时长锚（hyperframes 用 data-duration，timeline 长度仅参考）
+      tl.to({}, { duration: 38 }, 0);
+
+      window.__timelines['xcyj-karpathy-cold-open'] = tl;
+    </script>
+  </body>
+</html>
