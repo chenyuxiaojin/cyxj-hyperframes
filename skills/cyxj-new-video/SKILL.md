@@ -153,6 +153,24 @@ cd $DATE/<slug>/
 
 ---
 
+## 前置 0.3：真实素材 + preview 验证（两条硬约束）
+
+工作过程中**禁止两种偷懒**（2026-05-21 seg02 v1 教训）：
+
+1. **真实人物 / 真实内容（推文 / Gist / 视频列表 / 文章页）→ 抓真截图，禁 HTML mock 替代**
+   - 工具链：`grok-search`（X.com 找推文最强）或 `tavily web_search` 找 URL → `firecrawl-scrape` screenshot 模式抓图
+   - 落地：放 `assets/screenshots/` 或 `assets/tweets/`，命名清晰可识别（如 `vibe-coding-tweet.png` / `llm-wiki-gist.png` / `bili-1.png`）
+   - 为什么：HTML mock 看着像但**可信度归零**——观众一眼能看出是手绘的"X 推文样式"还是真的从 X.com 抓的。可信度直接决定视频说服力
+   - 出处：seg02 v1 教训。最初 SEC A vibe coding 推文 / SEC B LLM Wiki Gist / SEC E B 站 3 视频都是 HTML mock，用户审一眼看出，要求全部改真截图
+
+2. **motion 验证 → HF Studio preview 人眼审，禁 playwright 截图 / 禁 render mp4 验证**
+   - 工具：`npx hyperframes preview`（工程目录跑，localhost:3002），浏览器拖 scrubber 全段过
+   - 官方原话：preview 即所见即所得（What you see in the preview is exactly what will be captured during rendering）
+   - 禁止：playwright `browser_take_screenshot` 看单帧（看不出 motion）/ `hyperframes render` mp4（慢且浪费，段验证不需要）
+   - 出处：seg02 v1 教训。preview 是官方设计的人眼验证工具，单帧截图和 render mp4 都不是段验证的合理路径
+
+---
+
 ## 前置 0.5：发现 mismatch 必须回改文物（轻量纪律）
 
 工作过程中，**任何时候发现以下情况之一，停下来先回改源头文件，不准默默调整后只写进当前 PLAN**：
