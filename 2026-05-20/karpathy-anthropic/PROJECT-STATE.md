@@ -38,7 +38,7 @@
 - **进 DaVinci 的是「整片视觉层 + 口播音轨」两个文件**（不是 11 个独立段 MP4）
 - **改任何一段都要重渲整片**，方案 B 已知 trade-off
 
-**单段 draft render 仅用于开发期单段验收，不作为交付物**（详见 §4.5）。
+**段验证通过 preview 浏览器肉眼完成，不 render 单段 mp4**（详见 §4.5）。
 
 **为什么不是 11 个独立工程**（前期走过的弯路）：
 - token / 全局四件套 / 字体 fallback 不共享 → 章间有"重置感"
@@ -238,46 +238,29 @@ DaVinci 字幕轨用户自己加（§7 SRT 不渲染原则）。
 
 ## 4.5 单段 → 串联 → 整片 render 工艺（§1-§6 工艺底线）
 
-### 产物 3 类目录约定
+### 产物 2 类目录约定
 
 | 用途 | 输出 | 进 DaVinci？ |
 |---|---|---|
-| 单段开发验收 | `renders/draft/seg{NN}.mp4` | 否 |
-| 整片节奏自审 | `renders/draft/full_visual_draft.mp4` | 否 |
-| 方案 B 最终交付 | `renders/final/full_visual.{mov\|mp4}` | 是 |
+| （可选）整片节奏自审 | `renders/draft/full_visual_draft.mp4` | 否 |
+| 方案 B 最终交付 | `renders/final/full_visual.mov` 或 `.mp4` | 是 |
 
-**单段 MP4 不是交付物**（§1）。最终只有 `renders/final/full_visual.{mov|mp4}` 进 DaVinci。
+> 注：`renders/draft/` 目录在常规流程下不产生文件。preview 浏览器即验证。
 
-### 单段 draft
+### 段验证：preview 浏览器即够
 
-每写完一段立刻 render 单段 draft：
+**V1/V2/V3 验证通过 preview 浏览器肉眼完成，不需要 render mp4**。
 
-```bash
-npx hyperframes render --quality draft -c compositions/seg{NN}-{slug}.html -o renders/draft/seg{NN}.mp4
-```
+- **V1（段间过渡）**：preview 拖时间轴到段交界处看，过渡顺不顺
+- **V2（总时长无增加）**：preview 时间轴顶部显示总时长，目测对得上 SRT 总长
+- **V3（SRT 锚点对齐）**：preview 拖到下一段第一句字幕时间码（如 ch1 第一句 38.5s），看是不是该段第一帧
 
-用户审过该 mp4 才进下一步。**不要 10 段全写完才第一次 render**（§3）。
+**整片 render 全项目只做 1-2 次**：
 
-### ch0+ch1 串联 draft（必须在 ch2 之前做）
+1. （可选）所有段写完后做一次整片 draft 检查整体节奏
+2. 用户最终批准后做一次整片 high → `renders/final/full_visual.{mov|mp4}` 进 DaVinci
 
-ch1 单段验过 + commit 后**立刻**跑 ch0+ch1 串联 draft：
-
-```bash
-npx hyperframes render --quality draft -o renders/draft/full_visual_draft.mp4
-# （root 此时只挂载 seg00 + seg01；其他段还没写，可暂时注释掉）
-```
-
-**3 条强制验证项，任何一条不通过都不准进 ch2**：
-
-- **[V1] transition 视觉只覆盖 0.6-1.2s**（用 ffprobe 看具体帧或肉眼检查）
-- **[V2] root 总时长没有增加**：`ch0 段长 + ch1 段长 = full_visual_draft.mp4 总时长`，误差 < 0.5s
-  - 检查：`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 renders/draft/full_visual_draft.mp4`
-  - 期望：38 + 112 = 150.0s ± 0.5s
-- **[V3] seg01 仍按 SRT 锚点紧接 seg00**：
-  1. 打开 `字幕/加入之后.srt` 找 seg01 的第一条字幕（按 §3 表 ch1 是字幕条 12-46，所以第 12 条），记下开始时间码（例如 `00:00:38,500 --> ...` → 38.5s）
-  2. 截那一帧：`ffmpeg -ss 38.5 -i renders/draft/full_visual_draft.mp4 -frames:v 1 debug-shots/v3-check-frame.png`
-  3. 肉眼比对：**应该正好是 seg01 第一画面的开始**，不是 seg00 末尾，也不是 seg01 已播 1s
-  4. 误差 ±0.5s 内通过（若漂掉就回查：是否有 transition 串联结构延长 / 段长计算错 / seg00 没用 tl.set 撑满）
+**不需要**：单段 render mp4 / ffmpeg concat / ffmpeg 抓帧 / ffprobe 查时长。preview 已经够。
 
 ### 整片 render 前
 
@@ -302,16 +285,15 @@ npx hyperframes render --quality high -o renders/final/full_visual.{mov|mp4}
 
 ### 4 步硬规则（缺一步不准开下一段）
 
-1. **单段 draft 验过**：用户审过 `renders/draft/seg{NN}.mp4`
+1. **preview 验过**：用户在 preview 浏览器里看过本段，认可。**不要求产出 `renders/draft/seg{NN}.mp4`。preview 即验证。**
 2. **commit**：
    ```bash
    git add -A
-   git commit -m "seg{NN} {主题} 完成 + 单段 draft 验过"
+   git commit -m "seg{NN} {主题} 完成 + preview 验过"
    ```
    **commit body 必须包含**：
    - 段长（SEGMENT_DURATION 值）
    - 形态（cutaway / overlay / transition / chapter-card）
-   - 是否需要串联 draft 验证（仅 ch0+ch1 必做）
    - 用户审过的关键反馈（如适用）
 3. **串联 draft + 3 条验证项**：**仅 ch0+ch1 这次必做**（见 §4.5），其他段视用户决定
 4. **切换新对话开下一段**：用户开新对话，agent 从本文件 + `git log` + 上一段 `PLAN-seg{NN}.md` 重建上下文
