@@ -1,0 +1,1432 @@
+<template id="seg01-renwu-template">
+  <div data-composition-id="seg01-renwu" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="seg01-renwu"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="seg01-renwu"] .sec {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+
+      /* ============================================================
+       * === SEC A · 人物名片（0-17s）                                ===
+       * ============================================================ */
+      [data-composition-id="seg01-renwu"] .sec-a .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 100px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        box-sizing: border-box;
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-a .karpathy-photo {
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 16px 40px rgba(43, 38, 34, 0.28),
+          0 0 0 5px #F7F2EA,
+          0 0 0 6px rgba(43, 38, 34, 0.18);
+        opacity: 0;
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-a .name-headline {
+        font-family: "Inter", "Noto Sans SC", sans-serif;
+        font-weight: 700;
+        font-size: 120px;
+        letter-spacing: 0.005em;
+        line-height: 1.1;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-a .name-sub {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 500;
+        font-size: 44px;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-a .name-sub .sub-char {
+        display: inline-block;
+        opacity: 0;
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-a .role-row {
+        display: flex;
+        flex-direction: row;
+        gap: 28px;
+        margin-top: 16px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-a .role-chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 32px;
+        letter-spacing: 0.02em;
+        padding: 16px 36px;
+        border-radius: 999px;
+        background: rgba(217, 119, 87, 0.10);
+        border: 1.5px solid rgba(217, 119, 87, 0.55);
+        color: #9A4634;
+        opacity: 0;
+        white-space: nowrap;
+      }
+
+      /* ============================================================
+       * === SEC TIMELINE · 履历列车（17-106s，跨段连续）            ===
+       * === 包含字幕 18-43 / 原 PLAN 的 SEC B + C + D 三段           ===
+       * ============================================================ */
+
+      /* 上半屏 overlay 区（zoom-in 时刻：Stanford / CS231N cluster / Tesla / 灰圈 / Eureka / Anthropic）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stage {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 1920px;
+        height: 480px;
+        pointer-events: none;
+      }
+
+      /* 下半屏 timeline 区（水平时间线 + 8 站 + Karpathy 头像）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .timeline-stage {
+        position: absolute;
+        bottom: 100px;
+        left: 110px;
+        right: 110px;
+        height: 360px;
+      }
+
+      /* 水平基线（SVG）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .baseline-svg {
+        position: absolute;
+        bottom: 130px;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        overflow: visible;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .baseline-svg .baseline {
+        stroke: rgba(43, 38, 34, 0.28);
+        stroke-width: 2.5;
+        stroke-dasharray: 14 10;
+        fill: none;
+      }
+
+      /* 站点容器（8 站均匀分布）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .stations {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 320px;
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-timeline .station {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        opacity: 0;
+      }
+
+      /* 站点点（圆点）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .dot {
+        position: absolute;
+        bottom: 125px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #2B2622;
+        box-shadow: 0 0 0 4px #F7F2EA, 0 0 0 5px rgba(43, 38, 34, 0.18);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station.background .dot {
+        background: rgba(43, 38, 34, 0.32);
+        box-shadow: 0 0 0 3px #F7F2EA;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station.terminal .dot {
+        background: #d97757;
+        box-shadow: 0 0 0 5px #F7F2EA, 0 0 0 6px rgba(217, 119, 87, 0.45);
+      }
+
+      /* logo 区（上）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .logo-wrap {
+        position: absolute;
+        bottom: 165px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .logo {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: brightness(0) saturate(100%) invert(28%) sepia(8%) saturate(700%) hue-rotate(8deg) brightness(95%) contrast(90%);
+        /* monochrome 棕色系（接近 #5A4F46）*/
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station.background .logo {
+        opacity: 0.45;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station.terminal .logo {
+        filter: none;
+      }
+      /* Eureka 用 PNG 位图，monochrome filter 会把它变黑方块。单独取消 filter，原色显示 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .station[data-station="eureka"] .logo {
+        filter: none;
+      }
+
+      /* 年份 + chip 区（下）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .year {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        color: #5A4F46;
+        margin-top: 12px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .name-chip {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        color: #5A4F46;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1px solid rgba(43, 38, 34, 0.18);
+        white-space: nowrap;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .station.terminal .name-chip {
+        background: rgba(217, 119, 87, 0.10);
+        border-color: rgba(217, 119, 87, 0.55);
+        color: #9A4634;
+        font-weight: 600;
+      }
+
+      /* Karpathy 头像（沿时间线移动）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .karpathy-photo {
+        position: absolute;
+        bottom: 50px;
+        left: 0;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 12px 28px rgba(43, 38, 34, 0.26),
+          0 0 0 4px #F7F2EA,
+          0 0 0 5px rgba(217, 119, 87, 0.55);
+        opacity: 0;
+        z-index: 3;
+      }
+
+      /* ====== overlays（上半屏 zoom-in 时刻）====== */
+
+      /* overlay 通用容器 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* SEC B overlay 1: Stanford zoom-in (李飞飞) */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 70px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .text-col {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 18px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 60px;
+        letter-spacing: 0.005em;
+        color: #2B2622;
+        text-align: right;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .headline .hot {
+        color: #1e6fb5;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .info-row {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .info-chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 22px;
+        font-weight: 500;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: rgba(30, 111, 181, 0.08);
+        border: 1.5px solid rgba(30, 111, 181, 0.4);
+        color: #1e6fb5;
+        white-space: nowrap;
+      }
+      /* 导师头像卡（feifei.jpg）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .mentor-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .mentor-photo {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 10px 24px rgba(43, 38, 34, 0.24),
+          0 0 0 4px #F7F2EA,
+          0 0 0 5px rgba(30, 111, 181, 0.55);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .mentor-label {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e6fb5;
+        letter-spacing: 0.04em;
+        text-align: center;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-stanford .mentor-label .role {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.10em;
+        margin-top: 2px;
+      }
+
+      /* SEC B overlay 2: OpenAI 创始成员 + CS231N cluster */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-top: 30px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 52px;
+        color: #2B2622;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .headline .hot {
+        color: #B5563D;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .subtitle {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.04em;
+        margin-bottom: 16px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster-wrap {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 60px;
+        align-items: center;
+        padding: 0 40px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster {
+        display: grid;
+        gap: 5px;
+        align-self: end;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster.left {
+        grid-template-columns: repeat(30, 7px);
+        grid-template-rows: repeat(5, 7px);
+        justify-self: end;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster.right {
+        grid-template-columns: repeat(30, 7px);
+        grid-template-rows: repeat(25, 7px);
+        justify-self: start;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster.left .dot {
+        background: rgba(43, 38, 34, 0.42);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .cluster.right .dot {
+        background: #d97757;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .arrow-mid {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 56px;
+        font-weight: 700;
+        color: #5A4F46;
+        opacity: 0;
+        align-self: center;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .label-row {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 60px;
+        margin-top: 14px;
+        padding: 0 40px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .label-num {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 36px;
+        font-weight: 700;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .label-num.left {
+        color: #5A4F46;
+        justify-self: end;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .label-num.right {
+        color: #B5563D;
+        justify-self: start;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-cs231n .badge-5x {
+        position: absolute;
+        top: 30px;
+        right: 280px;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 26px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: #F7F2EA;
+        color: #8b3d28;
+        border: 2px solid #8b3d28;
+        box-shadow: 0 8px 24px rgba(217, 119, 87, 0.35);
+        opacity: 0;
+        white-space: nowrap;
+        letter-spacing: 0.02em;
+      }
+
+      /* SEC C overlay 3: Tesla "5 年" 大字 + Karpathy/Musk 汇报关系 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .label {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 26px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.04em;
+      }
+      /* 汇报关系图（Karpathy → 箭头 → Musk）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .report-relation {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        margin: 4px 0 8px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .person-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .person-photo {
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 8px 20px rgba(43, 38, 34, 0.22),
+          0 0 0 3px #F7F2EA,
+          0 0 0 4px rgba(43, 38, 34, 0.18);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .person-card.musk .person-photo {
+        box-shadow:
+          0 8px 20px rgba(43, 38, 34, 0.22),
+          0 0 0 3px #F7F2EA,
+          0 0 0 4px rgba(140, 60, 40, 0.42);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .person-name {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2B2622;
+        letter-spacing: 0.04em;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .person-role {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.10em;
+        text-transform: uppercase;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .report-arrow {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 15px;
+        font-weight: 600;
+        color: #5A4F46;
+        padding: 8px 14px;
+        border: 1.5px dashed rgba(43, 38, 34, 0.32);
+        border-radius: 999px;
+        white-space: nowrap;
+        letter-spacing: 0.08em;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .number {
+        font-family: "Inter", "Noto Sans SC", sans-serif;
+        font-weight: 800;
+        font-size: 180px;
+        letter-spacing: -0.02em;
+        line-height: 0.9;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 30%,
+          #6b5a4d 60%,
+          #2B2622 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-tesla .sub {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: #5A4F46;
+      }
+
+      /* SEC C overlay 4: 灰虚线圈中性事实标注 + Altman 罢免/回归新闻档案 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle {
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1480px;
+        height: 440px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .circle-col {
+        position: relative;
+        width: 620px;
+        height: 380px;
+        flex-shrink: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .circle-svg {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .circle-svg ellipse {
+        stroke: rgba(43, 38, 34, 0.42);
+        stroke-width: 2;
+        stroke-dasharray: 10 8;
+        fill: none;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .note {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        text-align: center;
+        padding: 0 50px;
+        width: calc(100% - 100px);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .note .line {
+        opacity: 0;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 20px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.04em;
+        margin-bottom: 14px;
+        line-height: 1.4;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .note .line.date {
+        font-size: 22px;
+        font-weight: 700;
+        color: #2B2622;
+        letter-spacing: 0.06em;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .note .line.context {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      /* 新闻档案叠层（右侧）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-stack {
+        position: relative;
+        width: 700px;
+        height: 400px;
+        flex-shrink: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-card {
+        position: absolute;
+        border-radius: 8px;
+        box-shadow:
+          0 18px 36px rgba(43, 38, 34, 0.30),
+          0 0 0 1px rgba(43, 38, 34, 0.12);
+        opacity: 0;
+        overflow: hidden;
+        background: #F7F2EA;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-card.fired {
+        top: 0;
+        left: 0;
+        width: 460px;
+        transform: rotate(-3.5deg);
+        z-index: 1;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-card.return {
+        top: 60px;
+        left: 220px;
+        width: 460px;
+        transform: rotate(2.8deg);
+        z-index: 2;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-card img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-stamp {
+        position: absolute;
+        bottom: -12px;
+        right: -10px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 6px 12px;
+        border-radius: 4px;
+        background: #8b3d28;
+        color: #F7F2EA;
+        letter-spacing: 0.10em;
+        z-index: 3;
+        white-space: nowrap;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-greycircle .news-card.return .news-stamp {
+        background: #1e6fb5;
+      }
+
+      /* SEC D overlay 5: Eureka chip 详情 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-eureka {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-eureka .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 48px;
+        color: #2B2622;
+        text-align: center;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-eureka .quote {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-size: 32px;
+        font-weight: 500;
+        font-style: italic;
+        color: #5A4F46;
+        text-align: center;
+        padding: 12px 36px;
+        border-left: 4px solid #B5563D;
+        background: rgba(217, 119, 87, 0.05);
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-eureka .status {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 18px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.06em;
+        opacity: 0.8;
+      }
+
+      /* SEC D overlay 6: Anthropic 终点 burst */
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-anthropic {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-anthropic .kicker {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 22px;
+        font-weight: 600;
+        color: #5A4F46;
+        letter-spacing: 0.12em;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-anthropic .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 76px;
+        letter-spacing: 0.005em;
+        line-height: 1.1;
+        text-align: center;
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      [data-composition-id="seg01-renwu"] .sec-timeline .overlay-anthropic .detail-chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-size: 26px;
+        font-weight: 500;
+        padding: 14px 30px;
+        border-radius: 999px;
+        background: rgba(217, 119, 87, 0.10);
+        border: 1.5px solid rgba(217, 119, 87, 0.55);
+        color: #9A4634;
+        white-space: nowrap;
+      }
+
+      /* Anthropic terminal halo burst（叠在站点位置）*/
+      [data-composition-id="seg01-renwu"] .sec-timeline .anthropic-burst {
+        position: absolute;
+        bottom: 215px;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        margin-right: -85px;
+        border-radius: 50%;
+        border: 3px solid rgba(217, 119, 87, 0.85);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* 全站点扫一遍的 highlight 用 class 控制 */
+      [data-composition-id="seg01-renwu"] .sec-timeline .station .dot.sweep-active {
+        background: #d97757;
+        box-shadow: 0 0 0 5px #F7F2EA, 0 0 0 6px rgba(217, 119, 87, 0.55);
+      }
+
+      /* ============================================================
+       * === SEC E · 收束过渡（106-112s）                             ===
+       * ============================================================ */
+      [data-composition-id="seg01-renwu"] .sec-e .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 200px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        box-sizing: border-box;
+      }
+
+      [data-composition-id="seg01-renwu"] .sec-e .closing-headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 120px;
+        letter-spacing: 0.005em;
+        line-height: 1.15;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+      }
+      [data-composition-id="seg01-renwu"] .sec-e .closing-headline .hot-word {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      [data-composition-id="seg01-renwu"] .sec-e .closing-hint {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 22px;
+        font-weight: 500;
+        color: #5A4F46;
+        letter-spacing: 0.10em;
+        opacity: 0;
+        margin-top: 30px;
+      }
+    </style>
+
+    <!-- ============================================================
+     * === SEC A · 人物名片（字幕 12-17）                           ===
+     * ============================================================ -->
+    <div class="sec sec-a">
+      <div class="scene-content">
+        <img class="karpathy-photo" src="assets/portraits/karpathy-hero.png" alt="Andrej Karpathy" />
+        <h1 class="name-headline">Andrej Karpathy</h1>
+        <p class="name-sub" aria-label="安德烈·卡帕西">
+          <span class="sub-char">安</span><span class="sub-char">德</span><span class="sub-char">烈</span><span class="sub-char">·</span><span class="sub-char">卡</span><span class="sub-char">帕</span><span class="sub-char">西</span>
+        </p>
+        <div class="role-row">
+          <div class="role-chip">AI 教学 GOAT</div>
+          <div class="role-chip">AI 布道者</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     * === SEC TIMELINE · 履历列车（字幕 18-43，跨原 PLAN B/C/D）  ===
+     * ============================================================ -->
+    <div class="sec sec-timeline">
+
+      <!-- 上半屏 overlay 区 -->
+      <div class="overlay-stage">
+
+        <!-- overlay 1: Stanford zoom-in（字幕 19-20）-->
+        <div class="overlay overlay-stanford">
+          <div class="text-col">
+            <div class="headline">Stanford 博士 · 导师 <span class="hot">李飞飞</span></div>
+            <div class="info-row">
+              <div class="info-chip">Vision Lab · 2011-2015</div>
+              <div class="info-chip">Connecting Images and Natural Language</div>
+            </div>
+          </div>
+          <div class="mentor-card">
+            <img class="mentor-photo" src="assets/portraits/feifei.jpg" alt="Fei-Fei Li" />
+            <div class="mentor-label">Prof. Fei-Fei Li<span class="role">CS Vision · ImageNet</span></div>
+          </div>
+        </div>
+
+        <!-- overlay 2: OpenAI 创始成员 + CS231N cluster（字幕 18, 21-28）-->
+        <div class="overlay overlay-cs231n">
+          <div class="headline">CS231N · 卷积神经网络 <span class="hot">两年扩 5x</span></div>
+          <div class="subtitle">他在 OpenAI 创始那年同时在 Stanford 开课</div>
+          <div class="cluster-wrap">
+            <div class="cluster left">
+              <!-- 5 行 × 30 列 = 150 灰点 -->
+            </div>
+            <div class="arrow-mid">→</div>
+            <div class="cluster right">
+              <!-- 25 行 × 30 列 = 750 亮橙点 -->
+            </div>
+          </div>
+          <div class="label-row">
+            <div class="label-num left">150</div>
+            <div></div>
+            <div class="label-num right">750</div>
+          </div>
+          <div class="badge-5x">↑ 5x in 2 yrs</div>
+        </div>
+
+        <!-- overlay 3: Tesla · Karpathy → Musk 汇报关系 + 5 年大字（字幕 29-30）-->
+        <div class="overlay overlay-tesla">
+          <div class="label">Tesla · Director of AI · 2017.6 - 2022.7</div>
+          <div class="report-relation">
+            <div class="person-card karpathy">
+              <img class="person-photo" src="assets/portraits/karpathy.png" alt="Karpathy" />
+              <div class="person-name">Karpathy</div>
+              <div class="person-role">Director of AI</div>
+            </div>
+            <div class="report-arrow">直接向 Musk 汇报 ▶</div>
+            <div class="person-card musk">
+              <img class="person-photo" src="assets/portraits/musk.jpg" alt="Elon Musk" />
+              <div class="person-name">Elon Musk</div>
+              <div class="person-role">Tesla CEO</div>
+            </div>
+          </div>
+          <div class="number">5 年</div>
+          <div class="sub">第一次离开 OpenAI</div>
+        </div>
+
+        <!-- overlay 4: 灰虚线圈中性事实标注 + Altman 新闻档案（字幕 33-38）-->
+        <div class="overlay overlay-greycircle">
+          <div class="circle-col">
+            <svg class="circle-svg" viewBox="0 0 620 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <ellipse cx="310" cy="190" rx="280" ry="160" />
+            </svg>
+            <div class="note">
+              <div class="line date">2023.11 → 2024.2</div>
+              <div class="line context">OpenAI 动荡期</div>
+              <div class="line">Sam Altman 短暂被罢免后火速回归</div>
+              <div class="line">卡帕西本人否认相关</div>
+            </div>
+          </div>
+          <div class="news-stack">
+            <div class="news-card fired">
+              <img src="assets/news/altman-fired-techcrunch.png" alt="Sam Altman ousted - TechCrunch 2023-11-17" />
+              <div class="news-stamp">11.17 · 罢免</div>
+            </div>
+            <div class="news-card return">
+              <img src="assets/news/altman-return-theverge.png" alt="Sam Altman returns - The Verge 2023-11-22" />
+              <div class="news-stamp">11.22 · 回归</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- overlay 5: Eureka chip 详情（字幕 39-41）-->
+        <div class="overlay overlay-eureka">
+          <div class="headline">Eureka Labs · AI 教育实验室</div>
+          <div class="quote">让任何人都能够学会任何东西</div>
+          <div class="status">— 当前状态：暂停 · 创始人原话「等以后会重新做」—</div>
+        </div>
+
+        <!-- overlay 6: Anthropic 终点 burst（字幕 42-43）-->
+        <div class="overlay overlay-anthropic">
+          <div class="kicker">2026.5.19 · 昨天</div>
+          <div class="headline">加入 Anthropic 预训练团队</div>
+          <div class="detail-chip">A 社专门新建子团队 · Nick Joseph 麾下</div>
+        </div>
+
+      </div>
+
+      <!-- 下半屏 timeline 区 -->
+      <div class="timeline-stage">
+
+        <!-- 水平基线 -->
+        <svg class="baseline-svg" viewBox="0 0 1700 8" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <line class="baseline" x1="40" y1="4" x2="1660" y2="4" />
+        </svg>
+
+        <!-- 8 站点 grid -->
+        <div class="stations">
+          <div class="station background" data-station="utoronto">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/utoronto.svg" alt="多伦多大学" /></div>
+            <div class="dot"></div>
+            <div class="year">2005</div>
+            <div class="name-chip">多伦多大学</div>
+          </div>
+          <div class="station background" data-station="ubc">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/ubc.svg" alt="UBC" /></div>
+            <div class="dot"></div>
+            <div class="year">2009</div>
+            <div class="name-chip">UBC</div>
+          </div>
+          <div class="station" data-station="stanford">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/stanford.svg" alt="Stanford" /></div>
+            <div class="dot"></div>
+            <div class="year">2011</div>
+            <div class="name-chip">Stanford</div>
+          </div>
+          <div class="station" data-station="openai-v1">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/openai.svg" alt="OpenAI" /></div>
+            <div class="dot"></div>
+            <div class="year">2015</div>
+            <div class="name-chip">OpenAI · 创始成员</div>
+          </div>
+          <div class="station" data-station="tesla">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/tesla.svg" alt="Tesla" /></div>
+            <div class="dot"></div>
+            <div class="year">2017</div>
+            <div class="name-chip">Tesla</div>
+          </div>
+          <div class="station" data-station="openai-v2">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/openai.svg" alt="OpenAI" /></div>
+            <div class="dot"></div>
+            <div class="year">2023</div>
+            <div class="name-chip">回 OpenAI</div>
+          </div>
+          <div class="station" data-station="eureka">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/eureka.png" alt="Eureka Labs" /></div>
+            <div class="dot"></div>
+            <div class="year">2024</div>
+            <div class="name-chip">Eureka Labs</div>
+          </div>
+          <div class="station terminal" data-station="anthropic">
+            <div class="logo-wrap"><img class="logo" src="assets/logos/anthropic.svg" alt="Anthropic" /></div>
+            <div class="dot"></div>
+            <div class="year">2026.5</div>
+            <div class="name-chip">Anthropic</div>
+          </div>
+        </div>
+
+        <!-- Karpathy 头像（沿时间线移动）-->
+        <img class="karpathy-photo" src="assets/portraits/karpathy.png" alt="Andrej Karpathy" />
+
+        <!-- Anthropic terminal burst -->
+        <div class="anthropic-burst"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ============================================================
+     * === SEC E · 收束过渡（106-112s · 字幕 44-46）              ===
+     * ============================================================ -->
+    <div class="sec sec-e">
+      <div class="scene-content">
+        <h1 class="closing-headline">真正让他出圈的，是<span class="hot-word">两个词</span></h1>
+        <div class="closing-hint">↓ 下一段：vibe coding · LLM Wiki</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const SEGMENT_DURATION = 112.0;
+      const root = '[data-composition-id="seg01-renwu"]';
+
+      // ─── 动态生成 CS231N cluster 灰点 + 亮橙点 ───
+      (function () {
+        const leftCluster = document.querySelector(root + ' .overlay-cs231n .cluster.left');
+        const rightCluster = document.querySelector(root + ' .overlay-cs231n .cluster.right');
+        if (leftCluster && leftCluster.children.length === 0) {
+          for (let i = 0; i < 150; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            leftCluster.appendChild(d);
+          }
+        }
+        if (rightCluster && rightCluster.children.length === 0) {
+          for (let i = 0; i < 750; i++) {
+            const d = document.createElement('div');
+            d.className = 'dot';
+            rightCluster.appendChild(d);
+          }
+        }
+      })();
+
+      const tl = gsap.timeline({ paused: true });
+
+      // 初始：sec-timeline / sec-e 全 autoAlpha 0；overlays 也 autoAlpha 0
+      tl.set(root + ' .sec-timeline', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-e', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-timeline .overlay', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-timeline .anthropic-burst', { autoAlpha: 0 }, 0);
+
+      // ============================================================
+      // === 字幕对位 ANCHOR 时间码（v2 审计 2026-05-21）              ===
+      // === 段内时间 = SRT 时间 - 38.166s (seg00 段长)                ===
+      // === 所有 GSAP offset 直接用绝对段内时间，方便后续对位维护      ===
+      // === 真源：字幕/加入之后.srt 第 12-46 条                         ===
+      // ============================================================
+
+      // ============================================================
+      // === SEC A · 人物名片（字幕 12-17, 段内 0.0-17.13）            ===
+      // ============================================================
+
+      // t=0.0 头像 scale up（字幕 12 起 0.0：先认识一下这个人）
+      tl.fromTo(root + ' .sec-a .karpathy-photo',
+        { scale: 0, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.7, ease: 'back.out(1.5)' },
+        0.0
+      );
+
+      // t=0.8 chrome 大字（字幕 13 起 3.5：他叫做安德烈卡帕西，提前 2s 引入视觉）
+      tl.fromTo(root + ' .sec-a .name-headline',
+        { scale: 1.05, autoAlpha: 0, y: 16 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+        0.8
+      );
+
+      // t=1.5 name-sub char stagger（字幕 13 中段：安德烈卡帕西）
+      tl.fromTo(root + ' .sec-a .name-sub',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.3 },
+        1.5
+      );
+      tl.fromTo(root + ' .sec-a .name-sub .sub-char',
+        { y: 14, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        1.55
+      );
+
+      // t=12.7 role chip "AI 教学 GOAT"（字幕 16 起 12.9：现代AI教学的GOAT）
+      tl.fromTo(root + ' .sec-a .role-chip:nth-child(1)',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'back.out(1.6)' },
+        12.7
+      );
+      // t=15.2 role chip "AI 布道者"（字幕 17 起 15.4：AI教学的布道者）
+      tl.fromTo(root + ' .sec-a .role-chip:nth-child(2)',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'back.out(1.6)' },
+        15.2
+      );
+
+      // t=16.8 SEC A 退场 fade out（字幕 17 结 17.13 前 0.3s 开始）
+      tl.to(root + ' .sec-a',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        16.8
+      );
+
+      // ─── SEC A → SEC TIMELINE 切换（t = 17.2，字幕 18 起 17.534 前 0.3s）───
+      tl.set(root + ' .sec-timeline', { autoAlpha: 1 }, 17.2);
+
+      // ============================================================
+      // === SEC TIMELINE · 履历列车（字幕 18-43, 段内 17.5-105.3）   ===
+      // === 不再用 B 偏移，直接绝对段内时间                            ===
+      // ============================================================
+
+      // ─── 时间线基线 stroke 渐显（字幕 18 起 17.534 前 0.13s 提前画线）───
+      tl.set(root + ' .sec-timeline .baseline-svg .baseline',
+        { strokeDasharray: 1620, strokeDashoffset: 1620 },
+        17.39
+      );
+      tl.to(root + ' .sec-timeline .baseline-svg .baseline',
+        { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' },
+        17.4
+      );
+
+      // ─── 8 站点依次 stagger 入场（17.5-19.6, 字幕 18 整段讲述时铺底）───
+      tl.fromTo(root + ' .sec-timeline .station',
+        { y: 18, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.45, ease: 'power3.out', stagger: 0.18 },
+        17.5
+      );
+      // 入场后立刻把 background 站压暗到 0.3
+      tl.to(root + ' .sec-timeline .station.background',
+        { autoAlpha: 0.3, duration: 0.4, ease: 'power2.inOut' },
+        19.4
+      );
+
+      // ─── Karpathy 头像出场（Stanford 站位置）───
+      // timeline-stage 宽度 = 1920 - 220 = 1700px，grid 8 列均匀 = 212.5px/列
+      // 第 i 站中心 x = (i - 0.5) * 212.5
+      // head 宽 110px → translateX 目标 = 中心 x - 55（中心对齐）
+      // Stanford (i=3): 531.25 - 55 = 476.25
+      // OpenAI v1 (i=4): 743.75 - 55 = 688.75
+      // Tesla (i=5): 956.25 - 55 = 901.25
+      // OpenAI v2 (i=6): 1168.75 - 55 = 1113.75
+      // Eureka (i=7): 1381.25 - 55 = 1326.25
+      // Anthropic (i=8): 1593.75 - 55 = 1538.75
+      tl.fromTo(root + ' .sec-timeline .karpathy-photo',
+        { scale: 0, autoAlpha: 0, x: 476.25 },
+        { scale: 1, autoAlpha: 1, x: 476.25, duration: 0.55, ease: 'back.out(1.6)' },
+        21.3  // 字幕 19 起 21.834 前 0.5s 提前 scale up
+      );
+
+      // ============================================================
+      // === overlay 1: Stanford zoom-in + 李飞飞头像（字幕 19-20 = 21.83-25.73）
+      // ============================================================
+      tl.fromTo(root + ' .sec-timeline .overlay-stanford',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        21.8  // 字幕 19 起 21.834
+      );
+      // 李飞飞头像入场（字幕 20 起 24.633 "导师是李飞飞" 前 0.2s）
+      tl.fromTo(root + ' .sec-timeline .overlay-stanford .mentor-card',
+        { scale: 0.7, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.6)' },
+        24.4
+      );
+      // 字幕 20 结 25.733，提前 0.3s 开始 fade out
+      tl.to(root + ' .sec-timeline .overlay-stanford',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        25.4
+      );
+
+      // ─── 头像从 Stanford → OpenAI v1（字幕 21 起 25.933 略后）───
+      tl.to(root + ' .sec-timeline .karpathy-photo',
+        { x: 688.75, duration: 1.5, ease: 'power2.inOut' },
+        26.0  // 字幕 21 "2015 年 OpenAI 成立"
+      );
+
+      // ============================================================
+      // === overlay 2: OpenAI 创始 + CS231N cluster
+      // === 字幕 22-28 = 29.77-50.00（cs231n 主体）；标题 27 起提前铺底
+      // ============================================================
+      // 标题铺底（字幕 22 起 29.77 前 2s 进入，让"第一批研究员"画面已就位）
+      tl.fromTo(root + ' .sec-timeline .overlay-cs231n',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        27.7
+      );
+
+      // 150 灰点 cluster stagger 入场（字幕 25 起 39.034 前 1s 铺底）
+      tl.to(root + ' .sec-timeline .overlay-cs231n .cluster.left .dot',
+        { autoAlpha: 1, duration: 0.3, ease: 'power2.out', stagger: { each: 0.005, from: 'random' } },
+        38.0
+      );
+      // 150 label 出现（字幕 26 起 41.633 前 0.6s）
+      tl.fromTo(root + ' .sec-timeline .overlay-cs231n .label-num.left',
+        { y: 10, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power3.out' },
+        41.0
+      );
+
+      // 箭头浮现
+      tl.fromTo(root + ' .sec-timeline .overlay-cs231n .arrow-mid',
+        { x: -20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        41.4
+      );
+
+      // 750 亮橙点 stagger 入场（字幕 26 "150 → 两年后 750"，起 41.633）
+      tl.to(root + ' .sec-timeline .overlay-cs231n .cluster.right .dot',
+        { autoAlpha: 1, duration: 0.3, ease: 'power2.out', stagger: { each: 0.005, from: 'random' } },
+        41.7  // 字幕 26 起 41.633 略后
+      );
+      // 750 label 出现（duration 字幕 26 末段）
+      tl.fromTo(root + ' .sec-timeline .overlay-cs231n .label-num.right',
+        { y: 10, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power3.out' },
+        43.5
+      );
+
+      // 5x badge 弹出（字幕 26 结 44.433 前 0.4s 弹）
+      tl.fromTo(root + ' .sec-timeline .overlay-cs231n .badge-5x',
+        { scale: 0, rotation: -6, autoAlpha: 0 },
+        { scale: 1, rotation: 0, autoAlpha: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: '50% 50%' },
+        44.0
+      );
+
+      // 字幕 28 结 50.000 前 0.2s 开始退场
+      tl.to(root + ' .sec-timeline .overlay-cs231n',
+        { autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' },
+        49.8
+      );
+
+      // ─── 头像从 OpenAI v1 → Tesla（字幕 29 起 50.534 前 0.23s）───
+      tl.to(root + ' .sec-timeline .karpathy-photo',
+        { x: 901.25, duration: 1.5, ease: 'power2.inOut' },
+        50.3  // 字幕 29 "2017.6 Tesla 向 Musk 汇报"
+      );
+
+      // ============================================================
+      // === overlay 3: Tesla 汇报关系 + "5 年"（字幕 29-30 = 50.53-58.23）
+      // ============================================================
+      tl.fromTo(root + ' .sec-timeline .overlay-tesla',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        50.5  // 字幕 29 起 50.534
+      );
+      // Karpathy 头像入场（字幕 29 起后 0.4s "他被挖到特斯拉"）
+      tl.fromTo(root + ' .sec-timeline .overlay-tesla .person-card.karpathy',
+        { scale: 0.7, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.55, ease: 'back.out(1.6)' },
+        51.0
+      );
+      // 报告关系箭头（字幕 29 中段："直接向马斯克汇报"）
+      tl.fromTo(root + ' .sec-timeline .overlay-tesla .report-arrow',
+        { x: -20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        52.3
+      );
+      // Musk 头像入场（"汇报"词落地时撞击）
+      tl.fromTo(root + ' .sec-timeline .overlay-tesla .person-card.musk',
+        { scale: 0.7, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.55, ease: 'back.out(1.8)' },
+        53.0
+      );
+      // "5 年" 大字 scale 撞击（字幕 30 起 55.367 "做了五年多"）
+      tl.fromTo(root + ' .sec-timeline .overlay-tesla .number',
+        { scale: 1.15 },
+        { scale: 1.0, duration: 0.8, ease: 'power3.out' },
+        55.3
+      );
+      // 字幕 30 结 58.234 前 0.2s 开始退场
+      tl.to(root + ' .sec-timeline .overlay-tesla',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        58.0
+      );
+
+      // ─── 头像从 Tesla → OpenAI v2（字幕 31 起 58.734 前 0.23s）───
+      tl.to(root + ' .sec-timeline .karpathy-photo',
+        { x: 1113.75, duration: 1.5, ease: 'power2.inOut' },
+        58.5  // 字幕 31 "2023.2 回到 OpenAI"
+      );
+
+      // ============================================================
+      // === overlay 4: 灰虚线圈中性事实标注                          ===
+      // === 字幕 33-38 = 67.97-86.87（"Altman 罢免动荡期"段）       ===
+      // ============================================================
+      tl.fromTo(root + ' .sec-timeline .overlay-greycircle',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.3 },
+        67.5  // 字幕 33 起 67.967 前 0.47s
+      );
+
+      // 灰虚线圈 stroke 渐显（1.5s）
+      tl.set(root + ' .sec-timeline .overlay-greycircle .circle-svg ellipse',
+        { strokeDasharray: 2100, strokeDashoffset: 2100 },
+        67.49
+      );
+      tl.to(root + ' .sec-timeline .overlay-greycircle .circle-svg ellipse',
+        { strokeDashoffset: 0, duration: 1.5, ease: 'power2.inOut' },
+        67.6
+      );
+
+      // 圈内 4 行 stagger 入场（字幕 33-36 节奏）
+      tl.fromTo(root + ' .sec-timeline .overlay-greycircle .note .line',
+        { y: 14, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out', stagger: 1.0 },
+        69.5
+      );
+
+      // TechCrunch "罢免" 新闻档案入场（字幕 34 起 71.467 "2023年11月短暂被罢免之后"）
+      tl.fromTo(root + ' .sec-timeline .overlay-greycircle .news-card.fired',
+        { y: 30, autoAlpha: 0, rotation: -8 },
+        { y: 0, autoAlpha: 1, rotation: -3.5, duration: 0.7, ease: 'back.out(1.4)' },
+        71.5
+      );
+
+      // The Verge "回归" 新闻档案入场（字幕 35 起 75.300 "又火速回归"）
+      tl.fromTo(root + ' .sec-timeline .overlay-greycircle .news-card.return',
+        { y: 30, autoAlpha: 0, rotation: 8 },
+        { y: 0, autoAlpha: 1, rotation: 2.8, duration: 0.7, ease: 'back.out(1.4)' },
+        75.3
+      );
+
+      // 字幕 38 结 86.867 前 0.37s 开始退场
+      tl.to(root + ' .sec-timeline .overlay-greycircle',
+        { autoAlpha: 0, duration: 0.7, ease: 'power2.inOut' },
+        86.5
+      );
+
+      // ─── 头像从 OpenAI v2 → Eureka（字幕 39 起 87.567 前 0.57s）───
+      tl.to(root + ' .sec-timeline .karpathy-photo',
+        { x: 1326.25, duration: 1.5, ease: 'power2.inOut' },
+        87.0  // 字幕 39 "第四站 2024.7"
+      );
+
+      // ============================================================
+      // === overlay 5: Eureka chip 详情（字幕 39-41 = 87.57-96.90）  ===
+      // ============================================================
+      tl.fromTo(root + ' .sec-timeline .overlay-eureka',
+        { y: 18, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        87.5  // 字幕 39 起 87.567
+      );
+      // 字幕 41 结 96.900 前 0.4s 开始退场
+      tl.to(root + ' .sec-timeline .overlay-eureka',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        96.5
+      );
+
+      // ─── 头像从 Eureka → Anthropic（字幕 42 起 97.067 前 0.07s）───
+      tl.to(root + ' .sec-timeline .karpathy-photo',
+        { x: 1538.75, duration: 1.5, ease: 'power2.inOut' },
+        97.0  // 字幕 42 "5.19 加入 A 社"
+      );
+
+      // ============================================================
+      // === overlay 6: Anthropic 终点 burst（字幕 42-43 = 97.07-105.27）
+      // ============================================================
+
+      // Anthropic 站 logo halo 加亮 yoyo
+      tl.to(root + ' .sec-timeline .station.terminal .logo',
+        { filter: 'drop-shadow(0 0 28px rgba(217, 119, 87, 0.95))', duration: 0.4, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        97.5
+      );
+
+      // Anthropic burst ripple
+      tl.fromTo(root + ' .sec-timeline .anthropic-burst',
+        { scale: 0.5, autoAlpha: 1 },
+        { scale: 5, autoAlpha: 0, duration: 0.9, ease: 'power2.out' },
+        97.5
+      );
+
+      // overlay 6 fade in
+      tl.fromTo(root + ' .sec-timeline .overlay-anthropic',
+        { y: 18, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+        98.0
+      );
+
+      // 字幕 43 结 105.267 前 0.77s 开始退场
+      tl.to(root + ' .sec-timeline .overlay-anthropic',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        104.5
+      );
+
+      // 8 站全亮 sweep（每站 0.15s stagger 高亮再回归）
+      tl.to(root + ' .sec-timeline .station .dot',
+        { boxShadow: '0 0 0 6px #F7F2EA, 0 0 0 8px rgba(217, 119, 87, 0.75)', duration: 0.2, stagger: 0.15, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        104.8
+      );
+
+      // SEC TIMELINE 整段 fade out（字幕 43 结 105.267 后 0.03s）
+      tl.to(root + ' .sec-timeline',
+        { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut' },
+        105.3
+      );
+
+      // ─── SEC TIMELINE → SEC E 切换（字幕 44 起 105.433 前 0.03s）───
+      tl.set(root + ' .sec-e', { autoAlpha: 1 }, 105.4);
+
+      // ============================================================
+      // === SEC E · 收束过渡（字幕 44-46 = 105.43-112.67）           ===
+      // ============================================================
+
+      // chrome 大字砸下（字幕 44 起 105.433 后 0.07s）
+      tl.fromTo(root + ' .sec-e .closing-headline',
+        { scale: 1.06, autoAlpha: 0, y: 18 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' },
+        105.5
+      );
+
+      // hint 入场（字幕 45 起 108.100 略前）
+      tl.fromTo(root + ' .sec-e .closing-hint',
+        { y: 12, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        108.0
+      );
+
+      // ─── 段末：不写 exit 动画（§hyperframes Scene Transitions Non-Negotiable）───
+      // SEC E hold 到段末 112.0；root timeline hard cut 到 seg02
+
+      // ─── SEGMENT_DURATION 撑满（§3.5 §10）───
+      tl.set({}, {}, SEGMENT_DURATION);
+
+      window.__timelines['seg01-renwu'] = tl;
+    </script>
+  </div>
+</template>
