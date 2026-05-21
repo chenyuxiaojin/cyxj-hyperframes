@@ -54,7 +54,7 @@
 |---|---|---|---|---|---|---|---|---|---|
 | seg00 | ch0 cold-open | 0:00 | 0:38 | 38s | 1-11 | OpenAI 创始成员→对手 + 数据反超 + 三连问 | cutaway | 🟢 v3 审计通过 | `e6e2f21` |
 | seg01 | ch1 人物 | 0:38 | 2:30 | 112s | 12-46 | Karpathy 是谁 / 李飞飞 / CS231N / 4 段履历 / Eureka | cutaway | 🟢 v4 字幕对位 + 真人头像 + 新闻档案 | `0fcc9ed` |
-| seg02 | ch2 概念 | 2:30 | 3:50 | 80s | 47-71 | vibe coding + LLM Wiki = "让模型用得更好" | cutaway | ⬜ todo | — |
+| seg02 | ch2 概念 | 2:30 | 3:50 | 80s | 47-71 | vibe coding 短讲 (22s, 字幕 47-53) + LLM Wiki 详讲 (58s, 字幕 54-71) | cutaway | ⬜ todo | — |
 | seg03 | ch3 momentum | 3:50 | 5:21 | 91s | 72-103 | A 社采纳率 0.003%→7.94%→34.4% + 5.4 联手黑石/高盛 | cutaway | ⬜ todo | — |
 | seg04 | ch4 wrapper | 5:21 | 8:42 | 201s | 104-176 | 套壳从贬义到产品 + 洋葱图 + 主持稿例子 | cutaway | ⬜ todo | — |
 | seg05 | ch5 merge | 8:42 | 11:14 | 152s | 178-230 | 卡帕西用 Agent 训模型 + Anthropic 创始团队来自 OpenAI | cutaway | ⬜ todo | — |
