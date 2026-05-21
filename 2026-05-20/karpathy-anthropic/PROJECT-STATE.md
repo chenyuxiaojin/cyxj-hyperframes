@@ -1,5 +1,7 @@
 # PROJECT-STATE — karpathy-anthropic 整片状态
 
+> ⚠️ **SRT 仅作切点 + 时长锚点，不渲染为屏幕字幕；字幕由 DaVinci 加；HF 不做字幕。**（§7 工艺底线）
+
 > **新对话切过来必读这份文档**。先读本文件再动手任何工作。
 > 本文件是项目状态单源，任何 PLAN / commit / 工程改动后都要同步更新这里。
 
@@ -26,14 +28,17 @@
 
 ---
 
-## 2. 整片拓扑（方案 B · 19-tips 同款）
+## 2. 整片拓扑（方案 B · 重定义）
 
-**一个 hyperframes 工程，所有章作为 sub-composition，一次 render 出整片 mp4。**
+**单工程统一管理 + root timeline 串起 11 段。最终交付 = HF 整片一次性 render 出的完整视觉层。**
 
 - `index.html` = 21:32 (1292s) root，1920×1080，30fps
-- `compositions/ch{N}-*.html` = 每章 1 个 sub-composition
+- `compositions/seg{NN}-{slug}.html` = 每段 1 个 sub-composition（seg00 = cold-open，seg10 = outro；保留 ch0-ch8 作为主题别名）
 - 全局四件套（grid / vignette / grain / crosshair）+ DNA token 全片共享
-- 达芬奇里只导入这 1 个整片 mp4 + 加你的口播 + 加你的字幕轨
+- **进 DaVinci 的是「整片视觉层 + 口播音轨」两个文件**（不是 11 个独立段 MP4）
+- **改任何一段都要重渲整片**，方案 B 已知 trade-off
+
+**单段 draft render 仅用于开发期单段验收，不作为交付物**（详见 §4.5）。
 
 **为什么不是 11 个独立工程**（前期走过的弯路）：
 - token / 全局四件套 / 字体 fallback 不共享 → 章间有"重置感"
@@ -45,23 +50,151 @@
 
 ## 3. 11 段拆分表（字幕节奏定的，非旧 outline）
 
-| 章 | 时间 | 字幕条 | 时长 | 主题 | 状态 | Commit |
-|---|---|---|---|---|---|---|
-| ch0 cold-open | 0:00-0:38 | 1-11 | 38s | OpenAI 创始成员→对手 + 数据反超 + 三连问 | 🟡 v2 完成待审计 | `e6e2f21` |
-| ch1 人物 | 0:38-2:30 | 12-46 | 112s | Karpathy 是谁 / 李飞飞 / CS231N / 4 段履历 / Eureka | ⬜ todo | — |
-| ch2 概念 | 2:30-3:50 | 47-71 | 80s | vibe coding + LLM Wiki = "让模型用得更好" | ⬜ todo | — |
-| ch3 momentum | 3:50-5:21 | 72-103 | 91s | A 社采纳率 0.003%→7.94%→34.4% + 5.4 联手黑石/高盛 | ⬜ todo | — |
-| ch4 wrapper | 5:21-8:42 | 104-176 | 200s | 套壳从贬义到产品 + 洋葱图 + 主持稿例子 | ⬜ todo | — |
-| ch5 merge | 8:42-11:14 | 178-230 | 152s | 卡帕西用 Agent 训模型 + Anthropic 创始团队来自 OpenAI | ⬜ todo | — |
-| ch6 汇流 | 11:14-14:00 | 231-309 | 167s | 三组对位（Wiki↔Memory / vibe↔CC / Eureka↔Academy）殊途同归 | ⬜ todo | — |
-| ch7-1 预测 1 | 14:00-16:00 | 310-340 | 120s | 上下文集市（skill+工作流+评测打包） | ⬜ todo | — |
-| ch7-2 预测 2 | 16:00-17:37 | 341-372 | 97s | Goal 风格命令（从"做这一步"到"达成这状态"） | ⬜ todo | — |
-| ch7-3 预测 3 | 17:37-19:24 | 373-417 | 107s | 非开发者打包工具（自媒体人脑里的判断打包共享） | ⬜ todo | — |
-| ch8 outro | 19:24-21:32 | 418-450 | 128s | 套壳是产品 + Antigravity 2.0 砍 IDE + 北京交流 | ⬜ todo | — |
+| seg | ch | 起点 | 终点 | 段长 | 字幕条 | 主题 | 形态 | 状态 | Commit |
+|---|---|---|---|---|---|---|---|---|---|
+| seg00 | ch0 cold-open | 0:00 | 0:38 | 38s | 1-11 | OpenAI 创始成员→对手 + 数据反超 + 三连问 | cutaway | 🟢 v3 审计通过 | `e6e2f21` |
+| seg01 | ch1 人物 | 0:38 | 2:30 | 112s | 12-46 | Karpathy 是谁 / 李飞飞 / CS231N / 4 段履历 / Eureka | cutaway | ⬜ todo | — |
+| seg02 | ch2 概念 | 2:30 | 3:50 | 80s | 47-71 | vibe coding + LLM Wiki = "让模型用得更好" | cutaway | ⬜ todo | — |
+| seg03 | ch3 momentum | 3:50 | 5:21 | 91s | 72-103 | A 社采纳率 0.003%→7.94%→34.4% + 5.4 联手黑石/高盛 | cutaway | ⬜ todo | — |
+| seg04 | ch4 wrapper | 5:21 | 8:42 | 201s | 104-176 | 套壳从贬义到产品 + 洋葱图 + 主持稿例子 | cutaway | ⬜ todo | — |
+| seg05 | ch5 merge | 8:42 | 11:14 | 152s | 178-230 | 卡帕西用 Agent 训模型 + Anthropic 创始团队来自 OpenAI | cutaway | ⬜ todo | — |
+| seg06 | ch6 汇流 | 11:14 | 14:00 | 166s | 231-309 | 三组对位（Wiki↔Memory / vibe↔CC / Eureka↔Academy）殊途同归 | cutaway | ⬜ todo | — |
+| seg07 | ch7-1 预测 1 | 14:00 | 16:00 | 120s | 310-340 | 上下文集市（skill+工作流+评测打包） | cutaway | ⬜ todo | — |
+| seg08 | ch7-2 预测 2 | 16:00 | 17:37 | 97s | 341-372 | Goal 风格命令（从"做这一步"到"达成这状态"） | cutaway | ⬜ todo | — |
+| seg09 | ch7-3 预测 3 | 17:37 | 19:24 | 107s | 373-417 | 非开发者打包工具（自媒体人脑里的判断打包共享） | cutaway | ⬜ todo | — |
+| seg10 | ch8 outro | 19:24 | 21:32 | 128s | 418-450 | 套壳是产品 + Antigravity 2.0 砍 IDE + 北京交流 | cutaway | ⬜ todo | — |
 
-**总时长**：1292s = 21:32 ✓
+**总时长**：38+112+80+91+201+152+166+120+97+107+128 = **1292s = 21:32** ✓（机械可检；SEGMENT_DURATION 一律取段长列）
+
+**注**：seg04 段长 201s（5:21→8:42 = 201s，旧表写 200s 是约整误差）；seg06 段长 166s（11:14→14:00 = 166s，旧表写 167s 是约整误差）；其余 9 段段长跟旧表一致。**起点 / 终点的精度按 SRT 真源校准** —— 写 PLAN-seg{NN} 时打开 `字幕/加入之后.srt` 查该段第一条字幕的开始时间码，作为该段在全片的起点真值。
 
 **状态图例**：⬜ todo / 🟡 进行中或待审计 / 🟢 完成 / 🔴 阻塞
+
+**形态字段**：当前 11 段**全部 `cutaway`**（用户 2026-05-21 确认，全片不出镜 talking head）。
+
+**画中画（PIP）补充**：用户后续如想要画中画效果（人物缩到角落），**在 DaVinci 时间线层面做**（用户口播视频缩放叠到角落），**HF 这边不变**，整片仍按 cutaway 输出整片 MP4。只有当某段真的需要 HF 输出叠层物件（不是用户头像，是其他需要透明背景的视觉元素）才把该段改成 `overlay` 形态。详见 §3.6。
+
+---
+
+## 3.5 段命名 + 时间约定（§8 §10 工艺底线）
+
+### 段文件命名
+
+- `compositions/seg{NN}-{slug}.html`：seg00 = cold-open，seg10 = outro
+- 保留 ch0-ch8 作为主题别名（PLAN 文件名 / commit 消息可用）
+
+### 段内时间从 0 起算
+
+- **每段 HTML 内部 GSAP timeline 一律从 0 起算**
+- **段 HTML 禁止出现全片时间码**（如不准写 "// 这段在全片 0:38 处"）
+- 全片绝对时间码**只在本文件 §3 表一处单源**
+- index.html 顶层段间用 `data-start="seg{NN}"` 相对时序衔接（具体语法参考 hyperframes skill）
+
+### timeline 必须撑满段长（官方 common-mistakes 写法）
+
+```js
+// 段顶部（每段都写）
+const SEGMENT_DURATION = 112.0;  // 等于本段段长（取 §3 表「段长」列，不是「终点」列！）
+
+// ... 段中间所有 timeline 动画 ...
+
+// 段末尾（每段都写）
+tl.set({}, {}, SEGMENT_DURATION);  // 零时长 tween 在 SEGMENT_DURATION 位置，强制 timeline 撑到该时长
+window.__timelines["seg{NN}-{slug}"] = tl;  // 注册到全局，串联时 root 能拿到
+```
+
+- **`SEGMENT_DURATION` 一律取段长，不得取终点**（终点是全片绝对时间码，段内禁出现）
+- `tl.set({}, {})` 零时长零目标，无运行时开销
+- 不需要 helper 函数；常量名 `SEGMENT_DURATION` 固定就足够 grep 检查 11 段总和 = 1292.0s
+- 官方出处：`packages/core/common-mistakes.md` "Composition Duration Shorter Than Video"（在 `hyperframes-student-kit/` 上游仓库内）
+
+---
+
+## 3.6 段形态分类（§11 工艺底线）
+
+**每段必须标注形态**，抽模板按形态各抽一个，不要一个模板套所有：
+
+| 形态 | 描述 | 最终输出 |
+|---|---|---|
+| `cutaway` | 整屏动画段（如 ch0 cold-open，全屏视觉化讲故事） | MP4 |
+| `overlay` | HF 这边输出**透明背景的叠层视觉物件**（不是 talking head，而是要叠在 DaVinci 视频上的动效元素） | alpha MOV |
+| `transition` / `chapter-card` | 极简短段（章节卡 / 转场） | 短 MP4 或 alpha MOV |
+
+### 画中画（PIP）说明
+
+**画中画 ≠ overlay 形态**。如果用户想要"人物缩到角落"效果（PIP）：
+
+- ✅ 在 **DaVinci** 时间线上做：HF 输出整片 MP4 作为下层 → DaVinci 加用户的口播视频缩放叠到角落 → 字幕轨
+- ❌ 不在 HF 里做 PIP：HF 不知道用户口播视频源，做不出来
+
+所以**有 PIP 不等于要 alpha MOV**。只有当 HF 这边要输出"独立的叠层物件"（比如某段需要一个 HF 渲染的箭头 / 标签 / 注解叠到口播视频上）才需要 alpha MOV。
+
+### 当前状态（2026-05-21 确认）
+
+**11 段全部 `cutaway`**。后续如某段需要 HF 输出叠层物件，把该段改成 `overlay`。
+
+### 形态决定 §3.8 最终交付格式
+
+- 11 段里有任何 `overlay` 段 → 整片最终必须 alpha MOV
+- 11 段全部 `cutaway` → 整片可用 MP4（**当前默认路径**）
+- 形态归类时机：写 INTEGRAL-RHYTHM-MAP.md 时跟用户确认一次性定下，回填本文件 §3 表
+
+---
+
+## 3.7 段间转场实现选项 + 裁短规则（§9 工艺底线）
+
+### 实现选项（按优先级）
+
+1. **选项 1（优先）—— hard cut**：节奏自然降 / 场景大变。零成本零延长。**默认走这条**
+2. **选项 2 —— 段自己呼吸**（非出场转场）：段头 0.3s 淡入、段尾 0.3s 淡出。这是段自己 timeline 内部的事，**计入 SEGMENT_DURATION，不增加全片时长**
+3. **选项 3 —— 手写短 overlay 转场**：index.html 顶层手写 0.6-1.2s GSAP 动画（不依赖 catalog block），放更高 track 覆盖交界。需要重转场效果时用
+4. **选项 4（少用）—— fork catalog block**：复制 whip-pan / flash-through-white / cinematic-zoom 的 HTML 到本工程 `compositions/transitions/`，改它内部 GSAP timeline 到 0.6-1.2s
+
+### 绝对禁止
+
+- **不准** 在 index.html 顶层 `data-composition-src` 直接引用 catalog 4s 转场 block（whip-pan / flash-through-white / cinematic-zoom）然后期待它变短——**做不到**
+- 直接引用 catalog 4s block 会让 10 个交界 × 4s = **加长 40s**，破坏 SRT 锚点导致 DaVinci 漂
+
+### 裁短规则（关键事实）
+
+- **不得只改父级 `data-duration` 就认为裁短成功**——nested composition 的实际 duration 由**它内部 GSAP timeline** 决定，父级 `data-duration` 不能覆盖
+- 真正裁短只能：
+  - 选项 4：fork 到本工程 `compositions/transitions/`，改它内部 GSAP timeline 到 0.6-1.2s
+  - wrapper 裁切：CSS overflow + opacity timeline 强制截断（复杂少用）
+  - **直接 hard cut 或手写短转场（推荐默认）**
+
+### 默认策略
+
+默认走选项 1 + 2。选项 3 / 4 只在 INTEGRAL-RHYTHM-MAP.md 段间转场表里明确标注"需要重转场效果"的交界才用。
+
+---
+
+## 3.8 最终交付格式决策（§2 工艺底线）
+
+### 决策标准
+
+- 11 段里有任何 `overlay` 形态段 → **整片最终 alpha MOV**（`renders/final/full_visual.mov`）
+- 11 段全部 `cutaway` 形态 → **整片可用 MP4**（`renders/final/full_visual.mp4`）
+
+### 决策时机
+
+**延后到整片 draft 做完之后再定**（用户 2026-05-21 决定）。原因：
+- 11 段全部 cutaway 的话默认走 MP4 路径
+- 但最终选哪个取决于整片 draft 看下来的实际效果（用户原话："等导出的时候再定，这主要取决于最终导出的效果"）
+- 整片 draft 完成 + 用户审过后才在本节回填最终决策
+
+**当前默认**：MP4（基于 11 段全 cutaway 的当前形态分类）
+
+**触发切换 alpha MOV 的条件**：
+- 任何一段形态从 cutaway 改成 overlay（HF 需要输出叠层物件）
+- 整片 draft 看下来用户想要更灵活的后期合成空间
+
+### 进 DaVinci 的两个文件
+
+1. `renders/final/full_visual.{mov|mp4}` —— HF 整片一次性 render 出的视觉层
+2. 用户的口播音轨（用户在 DaVinci 时间线里加，不在 HF 工程里）
+
+DaVinci 字幕轨用户自己加（§7 SRT 不渲染原则）。
 
 ---
 
@@ -100,6 +233,186 @@
 - N17 米色底文字色 contrast 不够，用深色 variant
 - N18 SEC/章末禁 exit 动画，最后一段例外
 - N19 commit 节奏：一段 preview 通过 → 立即 commit
+
+---
+
+## 4.5 单段 → 串联 → 整片 render 工艺（§1-§6 工艺底线）
+
+### 产物 3 类目录约定
+
+| 用途 | 输出 | 进 DaVinci？ |
+|---|---|---|
+| 单段开发验收 | `renders/draft/seg{NN}.mp4` | 否 |
+| 整片节奏自审 | `renders/draft/full_visual_draft.mp4` | 否 |
+| 方案 B 最终交付 | `renders/final/full_visual.{mov\|mp4}` | 是 |
+
+**单段 MP4 不是交付物**（§1）。最终只有 `renders/final/full_visual.{mov|mp4}` 进 DaVinci。
+
+### 单段 draft
+
+每写完一段立刻 render 单段 draft：
+
+```bash
+npx hyperframes render --quality draft -c compositions/seg{NN}-{slug}.html -o renders/draft/seg{NN}.mp4
+```
+
+用户审过该 mp4 才进下一步。**不要 10 段全写完才第一次 render**（§3）。
+
+### ch0+ch1 串联 draft（必须在 ch2 之前做）
+
+ch1 单段验过 + commit 后**立刻**跑 ch0+ch1 串联 draft：
+
+```bash
+npx hyperframes render --quality draft -o renders/draft/full_visual_draft.mp4
+# （root 此时只挂载 seg00 + seg01；其他段还没写，可暂时注释掉）
+```
+
+**3 条强制验证项，任何一条不通过都不准进 ch2**：
+
+- **[V1] transition 视觉只覆盖 0.6-1.2s**（用 ffprobe 看具体帧或肉眼检查）
+- **[V2] root 总时长没有增加**：`ch0 段长 + ch1 段长 = full_visual_draft.mp4 总时长`，误差 < 0.5s
+  - 检查：`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 renders/draft/full_visual_draft.mp4`
+  - 期望：38 + 112 = 150.0s ± 0.5s
+- **[V3] seg01 仍按 SRT 锚点紧接 seg00**：
+  1. 打开 `字幕/加入之后.srt` 找 seg01 的第一条字幕（按 §3 表 ch1 是字幕条 12-46，所以第 12 条），记下开始时间码（例如 `00:00:38,500 --> ...` → 38.5s）
+  2. 截那一帧：`ffmpeg -ss 38.5 -i renders/draft/full_visual_draft.mp4 -frames:v 1 debug-shots/v3-check-frame.png`
+  3. 肉眼比对：**应该正好是 seg01 第一画面的开始**，不是 seg00 末尾，也不是 seg01 已播 1s
+  4. 误差 ±0.5s 内通过（若漂掉就回查：是否有 transition 串联结构延长 / 段长计算错 / seg00 没用 tl.set 撑满）
+
+### 整片 render 前
+
+- **必须 stop preview tab**（§5；HARD §11；10+ sub-composition 远超内存阈值）
+- 第一次 render 用 draft（§6；38760 帧 high 太长）
+- 整片 draft 通过 + 用户验过后才考虑 high quality
+
+### 最终交付
+
+整片一次性 render：
+
+```bash
+npx hyperframes render --quality high -o renders/final/full_visual.{mov|mp4}
+# 格式按 §3.8 决策（有 overlay 段用 mov alpha；全 cutaway 可用 mp4）
+```
+
+进 DaVinci 加口播音轨 + 字幕轨。
+
+---
+
+## 4.6 每段闭环节奏（§12 工艺底线）
+
+### 4 步硬规则（缺一步不准开下一段）
+
+1. **单段 draft 验过**：用户审过 `renders/draft/seg{NN}.mp4`
+2. **commit**：
+   ```bash
+   git add -A
+   git commit -m "seg{NN} {主题} 完成 + 单段 draft 验过"
+   ```
+   **commit body 必须包含**：
+   - 段长（SEGMENT_DURATION 值）
+   - 形态（cutaway / overlay / transition / chapter-card）
+   - 是否需要串联 draft 验证（仅 ch0+ch1 必做）
+   - 用户审过的关键反馈（如适用）
+3. **串联 draft + 3 条验证项**：**仅 ch0+ch1 这次必做**（见 §4.5），其他段视用户决定
+4. **切换新对话开下一段**：用户开新对话，agent 从本文件 + `git log` + 上一段 `PLAN-seg{NN}.md` 重建上下文
+
+### 为什么强制切对话
+
+context window 会累积——agent 写完 ch2 时已经带着 ch0+ch1+ch2 的全部对话历史，写 ch3 时早期指令（"用 SEGMENT_DURATION 常量"、"段间默认 hard cut"、"全片时间码只在 PROJECT-STATE"）的权重被稀释，agent 容易跑偏。
+
+新对话从文物重建 = 强制 agent 每次 ch{N} 都从本文件第一行读起，工艺底线每次都新鲜。
+
+这就是为什么 §7-§10 强调"全片绝对时间码只在 PROJECT-STATE.md 一处单源"——**文物跨 session，对话历史不跨**。
+
+---
+
+## 4.7 写 PLAN-seg{NN} 前的资料搜集 SOP（§13 工艺底线）
+
+写 `PLAN-seg{NN}-{slug}.md` 之前，agent 必须按本段形态 + 主题做 4 类检索，并在 PLAN 顶部写一节「§13 资料台账」记录用到了什么。**不写台账不准动 PLAN 正文**。
+
+### 4 类检索
+
+1. **官方文档**：
+   - grep `docs/OFFICIAL_DOCS_VALUE_INDEX.md`，按本段涉及的 catalog block / 视觉技法挑 ⭐⭐⭐ 必读 + 相关 ⭐⭐
+   - 读 `docs/hyperframes-official/` 对应文件
+   - 列出读了哪些页 + 每页提取了什么写法
+
+2. **参考工程**：
+   - grep `docs/REFERENCE_INDEX.md` 第 1 节「完整工程」，按本段形态找 2-3 个相关工程
+   - 打开它们的 `compositions/*.html` 看**真实写法**（不是看文档怎么说，是看真实工程怎么写）
+   - 重点参考：本工程 `compositions/seg00-*.html`（cold-open 已完成，是黄金范本）
+   - 列出参考了哪些工程的哪些 composition + 复用了什么写法
+
+3. **零件复用**：
+   - `ls templates/components/`：仓库根已抽零件（如 cc-window 终端 UI），能用就用不要重写
+   - `ls` 本工程 `compositions/components/`（如有）：本工程已用过的零件
+   - 列出本段会复用哪些零件
+
+4. **catalog**：
+   - grep `templates/catalog.json`，按本段需要的视觉效果（数据图 / 叠层 / 装饰 / 转场）找候选 block
+   - 列出候选 block 名 + 是否在本段使用 + 使用方式（直接引用 / fork / 不用）
+
+### 资料台账格式（写在 PLAN-seg{NN}.md 顶部）
+
+```markdown
+## §13 资料台账
+
+### 官方文档
+- 读了：[页面 1]，提取：[用得上的写法]
+- 读了：[页面 2]，提取：[用得上的写法]
+
+### 参考工程
+- 参考 `compositions/seg00-*.html`：复用 chrome 大字 + 反超撞击模板
+- 参考 `videos/2026-05-04-claude-19-tips/compositions/XX.html`：借鉴履历列车节奏
+
+### 零件复用
+- 用 `templates/components/cc-window/`：终端 UI
+- 用本工程已有 `compositions/components/XX`：[零件名]
+
+### catalog 候选
+- flowchart：用于履历列车（fork 不直接引用）
+- data-chart：候选未使用
+```
+
+### 为什么强制这一步
+
+- 前置 0（cyxj-new-video skill `[BLOCKING]`）只触发读官方 skill。**skill 是规则，不是范例**
+- 范例在 `videos/` 真实工程里、零件在 `templates/components/`、文档在 `docs/hyperframes-official/`
+- agent 凭训练数据 + skill 写出来的是「通用 HF 写法」；加上参考工程 + 零件 + 文档才是「小陈频道的具体写法」
+- cold-open 7 个翻车（N13-N19）发生在前置 0 加入之前 —— 前置 0 解决规则层，没解决"agent 不知道你之前怎么写过类似的"（范例层）。§4.7 就是补范例层
+- **不查 = 重新发明轮子 = 跟 cold-open 不一致 = 11 段做出 11 种风格**
+
+---
+
+## 4.8 执行简化原则（13 条工艺是上限不是下限）
+
+13 条工艺底线**不是每段必填的检查表**。实际执行分层：
+
+| 层级 | 适用工艺 | 触发时机 |
+|---|---|---|
+| 每段必做（最小集合） | §7（SRT 真源）/ §8（段内时间从 0）/ §10（SEGMENT_DURATION + tl.set）/ §12.a-b（draft 验过 + commit） | 每段都做 |
+| 关键节点必做 | §4（ch0+ch1 串联）/ §5（render 前关 preview）/ §12.c（串联 3 条验证） | 触发条件成立时 |
+| 每段建议做 | §13 资料台账 | 每段建议；若本段明显是已做过形态的复刻，可简化为"复用 seg00 + 复用 cc-window"一行 |
+| 首段对齐时定一次即可 | §9（段间默认 hard cut）/ §11（形态归类）/ §3.8（最终格式） | 写 INTEGRAL-RHYTHM-MAP.md / seg01 PLAN 时定一次 |
+| 每段切对话 | §12.d | 每段闭环最后一步，强制 |
+
+### 每段 PLAN 顶部声明
+
+每段开工时 agent 自己判断本段实际需要哪些条款，**在 `PLAN-seg{NN}.md` 顶部用一行写明**：
+
+```
+本段适用 §X / §Y / §Z，其余依默认
+```
+
+例如 seg01：
+
+```
+本段适用 §7 / §8 / §10 / §11 / §12 / §13；段间转场依默认（§9 hard cut）；最终格式延后定（§3.8）
+```
+
+### ch3 做完后回看清理
+
+13 条里哪几条从来没救过事？哪几条每段都触发但都是空跑？哪几条真的防住翻车？删前两类，保留第三类。3 个段做完是合理的样本量做这次清理。回看后更新本文件 §4.8 表。
 
 ---
 
