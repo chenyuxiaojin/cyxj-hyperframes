@@ -1,0 +1,1217 @@
+<template id="ch0-cold-open-template">
+  <div data-composition-id="ch0-cold-open" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="ch0-cold-open"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: transparent;
+      }
+      [data-composition-id="ch0-cold-open"] .sec {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+
+      /* ============================================================
+       * === SEC A · 迁徙（0-5.6s）                                 ===
+       * ============================================================ */
+      [data-composition-id="ch0-cold-open"] .sec-a .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 120px 160px 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 80px;
+        box-sizing: border-box;
+      }
+
+      /* 顶部推文 banner */
+      [data-composition-id="ch0-cold-open"] .sec-a .tweet-banner {
+        width: 540px;
+        height: auto;
+        border-radius: 18px;
+        box-shadow:
+          0 12px 32px rgba(43, 38, 34, 0.14),
+          0 0 0 1px rgba(43, 38, 34, 0.08);
+        opacity: 0;
+      }
+
+      /* 迁徙行：左 logo / 中头像 / 右 logo */
+      [data-composition-id="ch0-cold-open"] .sec-a .migration-row {
+        position: relative;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 120px;
+        padding: 40px 80px 0;
+      }
+
+      [data-composition-id="ch0-cold-open"] .sec-a .cluster {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .cluster.left { justify-self: end; }
+      [data-composition-id="ch0-cold-open"] .sec-a .cluster.right { justify-self: start; }
+
+      [data-composition-id="ch0-cold-open"] .sec-a .logo {
+        width: 132px;
+        height: 132px;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .logo.anthropic {
+        filter: drop-shadow(0 0 24px rgba(217, 119, 87, 0.55));
+      }
+
+      [data-composition-id="ch0-cold-open"] .sec-a .chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 0.04em;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1px solid rgba(43, 38, 34, 0.18);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .chip.anthropic {
+        background: rgba(217, 119, 87, 0.10);
+        border-color: rgba(217, 119, 87, 0.55);
+        color: #9A4634;
+      }
+
+      /* Karpathy 头像 */
+      [data-composition-id="ch0-cold-open"] .sec-a .karpathy-photo {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        box-shadow:
+          0 16px 40px rgba(43, 38, 34, 0.28),
+          0 0 0 4px #F7F2EA,
+          0 0 0 5px rgba(43, 38, 34, 0.14);
+        opacity: 0;
+      }
+
+      /* 虚线箭头（横跨整个 row 中部，photo 下方）*/
+      [data-composition-id="ch0-cold-open"] .sec-a .arrow-svg {
+        position: absolute;
+        left: 50%;
+        bottom: -60px;
+        transform: translateX(-50%);
+        width: 1300px;
+        height: 80px;
+        pointer-events: none;
+        overflow: visible;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .arrow-svg .dashed-line {
+        stroke: rgba(43, 38, 34, 0.32);
+        stroke-width: 2.5;
+        stroke-dasharray: 12 10;
+        fill: none;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .arrow-svg .arrow-head {
+        fill: #B5563D;
+        opacity: 0;
+      }
+
+      /* 标题大字（屏幕底部，承接结论）*/
+      [data-composition-id="ch0-cold-open"] .sec-a .bottom-caption {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 56px;
+        letter-spacing: 0.01em;
+        color: #2B2622;
+        text-align: center;
+        opacity: 0;
+        line-height: 1.3;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-a .bottom-caption .hot {
+        color: #B5563D;
+      }
+
+      /* ============================================================
+       * === SEC B · 否定+转向（5.6-12.8s）                          ===
+       * ============================================================ */
+      [data-composition-id="ch0-cold-open"] .sec-b .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 140px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        box-sizing: border-box;
+      }
+
+      /* gossip chip 行（固定高度，chip 移走后不影响布局）*/
+      [data-composition-id="ch0-cold-open"] .sec-b .gossip-row {
+        position: relative;
+        width: 100%;
+        height: 140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-b .gossip-chip {
+        position: relative;
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 56px;
+        letter-spacing: 0.02em;
+        padding: 22px 56px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1.5px solid rgba(43, 38, 34, 0.22);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-b .gossip-slash {
+        position: absolute;
+        top: 50%;
+        left: -8%;
+        width: 116%;
+        height: 80px;
+        transform: translateY(-50%);
+        overflow: visible;
+        pointer-events: none;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-b .gossip-slash line {
+        stroke: #B5563D;
+        stroke-width: 5;
+        stroke-linecap: round;
+        fill: none;
+      }
+
+      /* chrome 大字主字（米色底暖版 8-stop）*/
+      [data-composition-id="ch0-cold-open"] .sec-b .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 128px;
+        letter-spacing: 0.005em;
+        line-height: 1.1;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-b .headline .hot-word {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* 副字（深棕，米色底友好）*/
+      [data-composition-id="ch0-cold-open"] .sec-b .subheadline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 44px;
+        letter-spacing: 0.02em;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-b .sub-char {
+        display: inline-block;
+        opacity: 0;
+      }
+
+      /* ============================================================
+       * === SEC C · 自问（12.8-16.1s）                              ===
+       * ============================================================ */
+      [data-composition-id="ch0-cold-open"] .sec-c .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 160px 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 40px;
+        box-sizing: border-box;
+      }
+
+      [data-composition-id="ch0-cold-open"] .sec-c .headline {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 112px;
+        letter-spacing: 0.005em;
+        line-height: 1.15;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-c .qmark {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 144px;
+        font-weight: 800;
+        display: inline-block;
+        opacity: 0;
+      }
+
+      [data-composition-id="ch0-cold-open"] .sec-c .hint {
+        position: absolute;
+        bottom: 90px;
+        right: 140px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        opacity: 0;
+      }
+
+      /* ============================================================
+       * === SEC D · 数据反超折线图（16.1-27.3s）                    ===
+       * ============================================================ */
+      [data-composition-id="ch0-cold-open"] .sec-d .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 90px 140px 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 32px;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* 标题 */
+      [data-composition-id="ch0-cold-open"] .sec-d .chart-title {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 600;
+        font-size: 44px;
+        letter-spacing: 0.01em;
+        color: #2B2622;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .chart-title .hot {
+        color: #B5563D;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .chart-subtitle {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 400;
+        font-size: 22px;
+        letter-spacing: 0.06em;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+        margin-top: -16px;
+      }
+
+      /* SVG chart 容器 */
+      [data-composition-id="ch0-cold-open"] .sec-d .chart-wrap {
+        position: relative;
+        width: 1600px;
+        height: 600px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .chart {
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      /* 坐标轴 */
+      [data-composition-id="ch0-cold-open"] .sec-d .axis-line {
+        stroke: rgba(43, 38, 34, 0.32);
+        stroke-width: 1.5;
+        fill: none;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .axis-tick {
+        stroke: rgba(43, 38, 34, 0.22);
+        stroke-width: 1;
+        fill: none;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .axis-label {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 18px;
+        font-weight: 500;
+        fill: #5A4F46;
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .axis-label.year {
+        text-anchor: middle;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .axis-label.value {
+        text-anchor: end;
+      }
+
+      /* 网格虚线 */
+      [data-composition-id="ch0-cold-open"] .sec-d .grid-line {
+        stroke: rgba(43, 38, 34, 0.08);
+        stroke-width: 1;
+        stroke-dasharray: 4 6;
+        fill: none;
+        opacity: 0;
+      }
+
+      /* 折线 */
+      [data-composition-id="ch0-cold-open"] .sec-d .line-openai {
+        stroke: #2B2622;
+        stroke-width: 3.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill: none;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .line-anthropic {
+        stroke: #d97757;
+        stroke-width: 4;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        fill: none;
+        filter: drop-shadow(0 0 6px rgba(217, 119, 87, 0.4));
+      }
+
+      /* 数据点 */
+      [data-composition-id="ch0-cold-open"] .sec-d .data-dot {
+        opacity: 0;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .data-dot.openai circle { fill: #2B2622; }
+      [data-composition-id="ch0-cold-open"] .sec-d .data-dot.anthropic circle { fill: #d97757; }
+
+      /* 末端 label */
+      [data-composition-id="ch0-cold-open"] .sec-d .end-label {
+        position: absolute;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-weight: 600;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .end-label.anthropic {
+        right: 0;
+        top: 100px;
+        color: #B5563D;
+        font-size: 48px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .end-label.anthropic .sub {
+        display: block;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        margin-top: 4px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .end-label.openai {
+        right: 0;
+        top: 200px;
+        color: #5A4F46;
+        font-size: 32px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .end-label.openai .sub {
+        display: block;
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: #5A4F46;
+        margin-top: 4px;
+        opacity: 0.7;
+      }
+
+      /* 反超 badge */
+      [data-composition-id="ch0-cold-open"] .sec-d .reversal-badge {
+        position: absolute;
+        top: 70px;
+        left: 1370px;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 26px;
+        padding: 10px 22px;
+        border-radius: 999px;
+        background: #F7F2EA;
+        color: #8b3d28;
+        border: 2px solid #8b3d28;
+        box-shadow: 0 8px 24px rgba(217, 119, 87, 0.35);
+        opacity: 0;
+        white-space: nowrap;
+        letter-spacing: 0.02em;
+      }
+
+      /* ripple（撞击瞬间冲击波）*/
+      [data-composition-id="ch0-cold-open"] .sec-d .ripple {
+        position: absolute;
+        top: 165px;
+        left: 1413px;
+        width: 200px;
+        height: 200px;
+        margin: -100px 0 0 -100px;
+        border-radius: 50%;
+        border: 3px solid rgba(217, 119, 87, 0.85);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* 三年前对比小字（左上角）*/
+      [data-composition-id="ch0-cold-open"] .sec-d .three-years {
+        position: absolute;
+        top: 240px;
+        left: 60px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 22px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+        line-height: 1.7;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .three-years .label {
+        color: #5A4F46;
+        font-size: 16px;
+        letter-spacing: 0.12em;
+        margin-bottom: 8px;
+        display: block;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .three-years .step .yr {
+        display: inline-block;
+        width: 110px;
+        color: #5A4F46;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .three-years .step .val {
+        color: #8b3d28;
+        font-weight: 700;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .three-years .arrow {
+        color: #5A4F46;
+        margin: 0 6px;
+      }
+
+      /* Source 标注 */
+      [data-composition-id="ch0-cold-open"] .sec-d .source {
+        position: absolute;
+        bottom: 50px;
+        left: 60px;
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+      }
+
+      /* stage（screen shake 包装）*/
+      [data-composition-id="ch0-cold-open"] .sec-d .stage {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+      }
+
+      /* ============================================================
+       * === SEC E · 三连问（27.3-38s）                              ===
+       * ============================================================ */
+      [data-composition-id="ch0-cold-open"] .sec-e .scene-content {
+        width: 100%;
+        height: 100%;
+        padding: 140px 160px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 110px;
+        box-sizing: border-box;
+      }
+
+      /* chip row（三个 chip 并排）*/
+      [data-composition-id="ch0-cold-open"] .sec-e .chip-row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 28px;
+        flex-wrap: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .chip {
+        font-family: "Inter", "Noto Sans SC", system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 32px;
+        letter-spacing: 0.02em;
+        padding: 16px 36px;
+        border-radius: 999px;
+        background: rgba(43, 38, 34, 0.05);
+        border: 1.5px solid rgba(43, 38, 34, 0.22);
+        color: #5A4F46;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .chip.middle {
+        background: rgba(43, 38, 34, 0.10);
+        color: #2B2622;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .chip.target {
+        background: rgba(217, 119, 87, 0.10);
+        border-color: rgba(217, 119, 87, 0.55);
+        color: #B5563D;
+        box-shadow: 0 0 0 1px rgba(217, 119, 87, 0.18), 0 4px 18px rgba(217, 119, 87, 0.18);
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .chip-arrow {
+        font-family: "Inter", system-ui, sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+        color: #5A4F46;
+        opacity: 0;
+      }
+
+      /* question stack（两个问句堆叠在同一位置切换）*/
+      [data-composition-id="ch0-cold-open"] .sec-e .question-stack {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        place-items: center;
+        width: 100%;
+        min-height: 240px;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .question-stack .q {
+        grid-column: 1;
+        grid-row: 1;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 700;
+        font-size: 132px;
+        letter-spacing: 0.005em;
+        line-height: 1.15;
+        text-align: center;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%,
+          #4a3d33 16%,
+          #6b5a4d 32%,
+          #8b7563 50%,
+          #6b5a4d 66%,
+          #4a3d33 82%,
+          #2B2622 94%,
+          #1a1612 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-e .question-stack .q .hot-word {
+        background-image: linear-gradient(180deg, #d97757 0%, #B5563D 60%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* 中间衔接小字 */
+      [data-composition-id="ch0-cold-open"] .sec-e .bridge-line {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 32px;
+        letter-spacing: 0.04em;
+        color: #5A4F46;
+        opacity: 0;
+        text-align: center;
+      }
+    </style>
+
+    <!-- ============================================================
+     * === SEC A · 迁徙                                             ===
+     * ============================================================ -->
+    <div class="sec sec-a">
+      <div class="scene-content">
+        <img class="tweet-banner" src="assets/tweets/joining-tweet.png" alt="Karpathy joining tweet" />
+
+        <div class="migration-row">
+          <div class="cluster left">
+            <img class="logo openai" src="assets/logos/openai.svg" alt="OpenAI" />
+            <div class="chip">创始成员 · 2015</div>
+          </div>
+
+          <img class="karpathy-photo" src="assets/portraits/karpathy-hero.png" alt="Andrej Karpathy" />
+
+          <div class="cluster right">
+            <img class="logo anthropic" src="assets/logos/anthropic.svg" alt="Anthropic" />
+            <div class="chip anthropic">2026.5.19 加入</div>
+          </div>
+
+          <svg class="arrow-svg" viewBox="0 0 1300 80" xmlns="http://www.w3.org/2000/svg">
+            <path class="dashed-line" d="M 40 40 L 1240 40" />
+            <polygon class="arrow-head" points="1240,28 1260,40 1240,52" />
+          </svg>
+        </div>
+
+        <div class="bottom-caption">
+          OpenAI 的 <span class="hot">创始成员</span> · 加入了 OpenAI 最大的 <span class="hot">竞争对手</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     * === SEC B · 否定+转向                                        ===
+     * ============================================================ -->
+    <div class="sec sec-b">
+      <div class="scene-content">
+        <div class="gossip-row">
+          <div class="gossip-chip">
+            跳槽八卦
+            <svg class="gossip-slash" viewBox="0 0 600 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <line x1="20" y1="60" x2="580" y2="20" />
+            </svg>
+          </div>
+        </div>
+
+        <h1 class="headline">AI 行业最大的一次<span class="hot-word">转向</span></h1>
+
+        <p class="subheadline" aria-label="只是大多数人还没意识到">
+          <span class="sub-char">只</span><span class="sub-char">是</span><span class="sub-char">大</span><span class="sub-char">多</span><span class="sub-char">数</span><span class="sub-char">人</span><span class="sub-char">还</span><span class="sub-char">没</span><span class="sub-char">意</span><span class="sub-char">识</span><span class="sub-char">到</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     * === SEC C · 自问                                             ===
+     * ============================================================ -->
+    <div class="sec sec-c">
+      <div class="scene-content">
+        <h1 class="headline">
+          <span>为什么这不是普通的跳槽</span><span class="qmark">？</span>
+        </h1>
+      </div>
+      <div class="hint">答案在数据里 ↓</div>
+    </div>
+
+    <!-- ============================================================
+     * === SEC D · 数据反超折线图                                   ===
+     * ============================================================ -->
+    <div class="sec sec-d">
+      <div class="stage">
+        <div class="scene-content">
+          <div class="chart-title">
+            Anthropic 在美国企业市场<span class="hot">首次反超</span> OpenAI
+          </div>
+          <div class="chart-subtitle">U.S. Enterprise AI Adoption · Monthly Share</div>
+
+          <div class="chart-wrap">
+            <svg class="chart" viewBox="0 0 1600 600" xmlns="http://www.w3.org/2000/svg">
+              <!-- 网格虚线（水平 4 条）-->
+              <line class="grid-line" x1="100" y1="100" x2="1500" y2="100" />
+              <line class="grid-line" x1="100" y1="200" x2="1500" y2="200" />
+              <line class="grid-line" x1="100" y1="300" x2="1500" y2="300" />
+              <line class="grid-line" x1="100" y1="400" x2="1500" y2="400" />
+
+              <!-- 坐标轴 -->
+              <line class="axis-line" x1="100" y1="500" x2="1500" y2="500" />
+              <line class="axis-line" x1="100" y1="80"  x2="100"  y2="500" />
+
+              <!-- Y 刻度 label -->
+              <text class="axis-label value" x="90" y="105">40%</text>
+              <text class="axis-label value" x="90" y="205">30%</text>
+              <text class="axis-label value" x="90" y="305">20%</text>
+              <text class="axis-label value" x="90" y="405">10%</text>
+              <text class="axis-label value" x="90" y="505">0</text>
+
+              <!-- X 刻度 label -->
+              <text class="axis-label year" x="100"  y="540">2023.6</text>
+              <text class="axis-label year" x="460"  y="540">2024.6</text>
+              <text class="axis-label year" x="720"  y="540">2025.4</text>
+              <text class="axis-label year" x="980"  y="540">2025.10</text>
+              <text class="axis-label year" x="1480" y="540">2026.5</text>
+
+              <!-- OpenAI 折线 -->
+              <path class="line-openai" d="M 100 200 L 460 180 L 720 170 L 980 165 L 1480 177" />
+
+              <!-- Anthropic 折线 -->
+              <path class="line-anthropic" d="M 100 500 L 460 470 L 720 420 L 980 300 L 1480 156" />
+
+              <!-- 数据点（末端两个）-->
+              <g class="data-dot openai">
+                <circle cx="1480" cy="177" r="9" />
+                <circle cx="1480" cy="177" r="14" fill="none" stroke="#2B2622" stroke-width="2" opacity="0.4" />
+              </g>
+              <g class="data-dot anthropic">
+                <circle cx="1480" cy="156" r="11" />
+                <circle cx="1480" cy="156" r="18" fill="none" stroke="#d97757" stroke-width="2" opacity="0.5" />
+              </g>
+            </svg>
+
+            <!-- 末端 label -->
+            <div class="end-label anthropic">
+              34.44%
+              <span class="sub">Anthropic</span>
+            </div>
+            <div class="end-label openai">
+              32.3%
+              <span class="sub">OpenAI</span>
+            </div>
+
+            <!-- 反超 badge + ripple -->
+            <div class="reversal-badge">↑ 首次反超</div>
+            <div class="ripple"></div>
+          </div>
+
+          <!-- 三年前对比 -->
+          <div class="three-years">
+            <span class="label">Anthropic · 美国企业份额</span>
+            <div class="step"><span class="yr">2023.6</span><span class="val">0.003%</span></div>
+            <div class="step"><span class="yr">2025.4</span><span class="val">7.94%</span></div>
+            <div class="step"><span class="yr">2026.5</span><span class="val">34.44%</span></div>
+          </div>
+
+          <!-- Source -->
+          <div class="source">Source: Ramp 企业 AI 采纳指数 · 5 万 + 美国企业真实消费</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+     * === SEC E · 三连问                                           ===
+     * ============================================================ -->
+    <div class="sec sec-e">
+      <div class="scene-content">
+        <div class="chip-row">
+          <div class="chip">OpenAI 创始成员</div>
+          <span class="chip-arrow">→</span>
+          <div class="chip middle">这个时间点</div>
+          <span class="chip-arrow">→</span>
+          <div class="chip target">Anthropic 对手公司</div>
+        </div>
+
+        <div class="bridge-line">在 OpenAI 被反超的同一个月，去了反超它的那家</div>
+
+        <div class="question-stack">
+          <h1 class="q q1">为什么是<span class="hot-word">这个时间点</span>？</h1>
+          <h1 class="q q2">为什么是<span class="hot-word">Anthropic</span>？</h1>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const root = '[data-composition-id="ch0-cold-open"]';
+
+      // 初始：SEC B/C/D/E 全 autoAlpha 0（SEC A 默认显示）
+      tl.set(root + ' .sec-b', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-c', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-d', { autoAlpha: 0 }, 0);
+      tl.set(root + ' .sec-e', { autoAlpha: 0 }, 0);
+
+      // ============================================================
+      // === SEC A timeline（base offset = 0）                       ===
+      // ============================================================
+
+      // 0.3s tweet banner 顶部下落
+      tl.fromTo(root + ' .sec-a .tweet-banner',
+        { y: -60, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' },
+        0.3
+      );
+
+      // 0.8s 左 cluster（OpenAI logo + chip）stagger
+      tl.fromTo(root + ' .sec-a .cluster.left .logo',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        0.8
+      );
+      tl.fromTo(root + ' .sec-a .cluster.left .chip',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.45, ease: 'power2.out' },
+        0.95
+      );
+
+      // 1.4s Karpathy 头像（先停在最左侧，即 OpenAI 旁边）
+      tl.fromTo(root + ' .sec-a .karpathy-photo',
+        { scale: 0, x: -260, autoAlpha: 0 },
+        { scale: 1, x: -260, autoAlpha: 1, duration: 0.6, ease: 'back.out(1.4)' },
+        1.4
+      );
+
+      // 2.0s 右 cluster（Anthropic logo + chip）stagger
+      tl.fromTo(root + ' .sec-a .cluster.right .logo',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        2.0
+      );
+      tl.fromTo(root + ' .sec-a .cluster.right .chip',
+        { y: 20, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.45, ease: 'power2.out' },
+        2.15
+      );
+
+      // 2.6s 虚线箭头 stroke-dashoffset 渐显
+      tl.fromTo(root + ' .sec-a .arrow-svg .dashed-line',
+        { strokeDashoffset: 1200, opacity: 0 },
+        { strokeDashoffset: 0, opacity: 1, duration: 1.0, ease: 'power2.inOut' },
+        2.6
+      );
+      tl.fromTo(root + ' .sec-a .arrow-svg .arrow-head',
+        { autoAlpha: 0, scale: 0.5 },
+        { autoAlpha: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)', transformOrigin: '50% 50%' },
+        3.4
+      );
+
+      // 3.6s 底部 caption 入场
+      tl.fromTo(root + ' .sec-a .bottom-caption',
+        { y: 30, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        3.6
+      );
+
+      // 3.8s Karpathy 头像沿虚线推进（x: -260 → 0）
+      tl.to(root + ' .sec-a .karpathy-photo',
+        { x: 0, duration: 1.5, ease: 'power2.inOut' },
+        3.8
+      );
+
+      // 5.3s 到达终点时 Anthropic logo halo 加亮（box-shadow yoyo）
+      tl.to(root + ' .sec-a .logo.anthropic',
+        { filter: 'drop-shadow(0 0 44px rgba(217, 119, 87, 0.95))', duration: 0.2, yoyo: true, repeat: 1 },
+        5.3
+      );
+
+      // ─── SEC A → SEC B 切换（master t = 5.6）───
+      tl.set(root + ' .sec-a', { autoAlpha: 0 }, 5.6);
+      tl.set(root + ' .sec-b', { autoAlpha: 1 }, 5.6);
+
+      // ============================================================
+      // === SEC B timeline（base offset = 5.6）                     ===
+      // ============================================================
+
+      // t=0.0 chip 入场（scale + opacity）
+      tl.fromTo(root + ' .sec-b .gossip-chip',
+        { scale: 0.6, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.45, ease: 'back.out(1.6)' },
+        5.6 + 0.0
+      );
+
+      // t=0.5 斜杠划过（line stroke-dashoffset 渐现）
+      tl.set(root + ' .sec-b .gossip-slash line',
+        { strokeDasharray: 600, strokeDashoffset: 600, autoAlpha: 1 },
+        5.6 + 0.49
+      );
+      tl.to(root + ' .sec-b .gossip-slash line',
+        { strokeDashoffset: 0, duration: 0.4, ease: 'power2.in' },
+        5.6 + 0.5
+      );
+
+      // t=1.0 chip 微缩（被否定后退场感）
+      tl.to(root + ' .sec-b .gossip-chip',
+        { scale: 0.92, duration: 0.3, ease: 'power2.in' },
+        5.6 + 1.0
+      );
+
+      // t=1.5 chip 移到右下小（layout transition：移出中央到角落）
+      tl.to(root + ' .sec-b .gossip-chip',
+        { x: 560, y: 280, scale: 0.42, autoAlpha: 0.35, duration: 0.7, ease: 'power3.inOut' },
+        5.6 + 1.5
+      );
+      tl.to(root + ' .sec-b .gossip-slash line',
+        { autoAlpha: 0.35, duration: 0.7, ease: 'power3.inOut' },
+        5.6 + 1.5
+      );
+
+      // t=2.6 chrome 主字砸下（scale 1.08 → 1.0 + opacity）
+      tl.fromTo(root + ' .sec-b .headline',
+        { scale: 1.08, autoAlpha: 0, y: 20 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+        5.6 + 2.6
+      );
+
+      // t=4.9 副字 char stagger 入场
+      tl.fromTo(root + ' .sec-b .subheadline',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+        5.6 + 4.85
+      );
+      tl.fromTo(root + ' .sec-b .sub-char',
+        { y: 16, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        5.6 + 4.9
+      );
+
+      // ─── SEC B → SEC C 切换（master t = 12.8）───
+      tl.set(root + ' .sec-b', { autoAlpha: 0 }, 12.8);
+      tl.set(root + ' .sec-c', { autoAlpha: 1 }, 12.8);
+
+      // ============================================================
+      // === SEC C timeline（base offset = 12.8）                    ===
+      // ============================================================
+
+      // t=0.3 主字砸下（scale 1.05 → 1）
+      tl.fromTo(root + ' .sec-c .headline',
+        { scale: 1.05, autoAlpha: 0, y: 20 },
+        { scale: 1.0, autoAlpha: 1, y: 0, duration: 0.85, ease: 'power3.out' },
+        12.8 + 0.3
+      );
+
+      // t=1.2 问号 elastic 放大
+      tl.fromTo(root + ' .sec-c .qmark',
+        { scale: 0.4, autoAlpha: 0 },
+        { scale: 1.15, autoAlpha: 1, duration: 0.7, ease: 'elastic.out(1, 0.45)', transformOrigin: '50% 70%' },
+        12.8 + 1.2
+      );
+      tl.to(root + ' .sec-c .qmark',
+        { scale: 1.0, duration: 0.25, ease: 'power2.out', transformOrigin: '50% 70%' },
+        12.8 + 1.9
+      );
+
+      // t=2.0 hint 入场
+      tl.fromTo(root + ' .sec-c .hint',
+        { x: 20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        12.8 + 2.0
+      );
+
+      // ─── SEC C → SEC D 切换（master t = 16.1）───
+      tl.set(root + ' .sec-c', { autoAlpha: 0 }, 16.1);
+      tl.set(root + ' .sec-d', { autoAlpha: 1 }, 16.1);
+
+      // ============================================================
+      // === SEC D timeline（base offset = 16.1）                    ===
+      // ============================================================
+
+      // t=0.0 标题 + 副标题入场
+      tl.fromTo(root + ' .sec-d .chart-title',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        16.1 + 0.0
+      );
+      tl.fromTo(root + ' .sec-d .chart-subtitle',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        16.1 + 0.3
+      );
+
+      // t=0.5 坐标轴 + Y 刻度 label
+      tl.to(root + ' .sec-d .axis-line',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.08 },
+        16.1 + 0.5
+      );
+      tl.to(root + ' .sec-d .axis-label.value',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.05 },
+        16.1 + 0.7
+      );
+
+      // t=0.9 网格虚线 + X 年份 label
+      tl.to(root + ' .sec-d .grid-line',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        16.1 + 0.9
+      );
+      tl.to(root + ' .sec-d .axis-label.year',
+        { autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.06 },
+        16.1 + 1.0
+      );
+
+      // t=1.4 OpenAI 线 stroke-dashoffset 渐显
+      tl.set(root + ' .sec-d .line-openai',
+        { strokeDasharray: 1450, strokeDashoffset: 1450 },
+        16.1 + 1.39
+      );
+      tl.to(root + ' .sec-d .line-openai',
+        { strokeDashoffset: 0, duration: 1.0, ease: 'power2.inOut' },
+        16.1 + 1.4
+      );
+
+      // t=2.3 Anthropic 线 stroke-dashoffset 渐显（更慢、更长）
+      tl.set(root + ' .sec-d .line-anthropic',
+        { strokeDasharray: 1600, strokeDashoffset: 1600 },
+        16.1 + 2.29
+      );
+      tl.to(root + ' .sec-d .line-anthropic',
+        { strokeDashoffset: 0, duration: 2.0, ease: 'power2.inOut' },
+        16.1 + 2.3
+      );
+
+      // ─── t=4.3 反超撞击瞬间（§3 同帧合成模板，master t = 20.4）───
+      const T = 16.1 + 4.3;
+
+      // 1) ripple scale 0.5 → 12
+      tl.fromTo(root + ' .sec-d .ripple',
+        { scale: 0.5, autoAlpha: 1 },
+        { scale: 12, autoAlpha: 0, duration: 0.7, ease: 'power2.out', immediateRender: false },
+        T
+      );
+
+      // 2) screen shake（stage 抖 5 段）
+      ['+=18', '-=28', '+=22', '-=14', '+=0'].forEach((x, i) => {
+        tl.to(root + ' .sec-d .stage', { x: x, duration: 0.05, ease: 'power1.inOut' }, T + i * 0.05);
+      });
+
+      // 3) Anthropic 线 glow yoyo
+      tl.to(root + ' .sec-d .line-anthropic',
+        { filter: 'drop-shadow(0 0 24px rgba(217, 119, 87, 0.95))', duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        T
+      );
+
+      // 4) data-dot 弹出
+      tl.fromTo(root + ' .sec-d .data-dot.anthropic',
+        { scale: 0, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'back.out(2.4)', transformOrigin: '1480px 156px' },
+        T + 0.1
+      );
+      tl.fromTo(root + ' .sec-d .data-dot.openai',
+        { scale: 0, autoAlpha: 0 },
+        { scale: 1, autoAlpha: 1, duration: 0.4, ease: 'back.out(2.0)', transformOrigin: '1480px 177px' },
+        T + 0.15
+      );
+
+      // 5) 反超 badge 弹出
+      tl.fromTo(root + ' .sec-d .reversal-badge',
+        { scale: 0, rotation: -8, autoAlpha: 0 },
+        { scale: 1, rotation: 0, autoAlpha: 1, duration: 0.5, ease: 'back.out(2.2)', transformOrigin: '50% 50%' },
+        T + 0.2
+      );
+
+      // ─── 撞击后续：末端 label ───
+      tl.fromTo(root + ' .sec-d .end-label.anthropic',
+        { x: 30, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        T + 0.5
+      );
+      tl.fromTo(root + ' .sec-d .end-label.openai',
+        { x: 30, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        T + 0.7
+      );
+
+      // t=6.0 三年前对比小字（stagger 行）
+      tl.fromTo(root + ' .sec-d .three-years',
+        { x: -20, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        16.1 + 6.0
+      );
+
+      // t=6.5 三年对比每行依次高亮（用户视线引导）
+      tl.fromTo(root + ' .sec-d .three-years .step',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.4, ease: 'power2.out', stagger: 0.55 },
+        16.1 + 6.5
+      );
+
+      // t=8.5 source 入场
+      tl.fromTo(root + ' .sec-d .source',
+        { autoAlpha: 0 },
+        { autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        16.1 + 8.5
+      );
+
+      // ─── SEC D → SEC E 切换（master t = 27.3）───
+      tl.set(root + ' .sec-d', { autoAlpha: 0 }, 27.3);
+      tl.set(root + ' .sec-e', { autoAlpha: 1 }, 27.3);
+
+      // ============================================================
+      // === SEC E timeline（base offset = 27.3）                    ===
+      // ============================================================
+
+      // ─── chip row 入场（按字幕 #8/#9 节拍）───
+      // t=0.2 第 1 chip
+      tl.fromTo(root + ' .sec-e .chip-row .chip:nth-child(1)',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        27.3 + 0.2
+      );
+      // t=0.7 第 1 → 第 2 之间箭头
+      tl.fromTo(root + ' .sec-e .chip-row .chip-arrow:nth-child(2)',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.35, ease: 'power2.out' },
+        27.3 + 0.7
+      );
+      // t=0.9 第 2 chip
+      tl.fromTo(root + ' .sec-e .chip-row .chip:nth-child(3)',
+        { y: 24, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power2.out' },
+        27.3 + 0.9
+      );
+      // t=2.4 第 2 → 第 3 之间箭头
+      tl.fromTo(root + ' .sec-e .chip-row .chip-arrow:nth-child(4)',
+        { x: -10, autoAlpha: 0 },
+        { x: 0, autoAlpha: 1, duration: 0.35, ease: 'power2.out' },
+        27.3 + 2.4
+      );
+      // t=2.7 第 3 chip（带 halo 强调）
+      tl.fromTo(root + ' .sec-e .chip-row .chip:nth-child(5)',
+        { y: 24, scale: 0.92, autoAlpha: 0 },
+        { y: 0, scale: 1, autoAlpha: 1, duration: 0.55, ease: 'back.out(1.8)' },
+        27.3 + 2.7
+      );
+      // t=3.3 target chip halo 加亮一下
+      tl.to(root + ' .sec-e .chip-row .chip.target',
+        { boxShadow: '0 0 0 2px rgba(217, 119, 87, 0.55), 0 10px 32px rgba(217, 119, 87, 0.42)', duration: 0.3, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+        27.3 + 3.3
+      );
+
+      // ─── 中间衔接小字 ───
+      tl.fromTo(root + ' .sec-e .bridge-line',
+        { y: 12, autoAlpha: 0 },
+        { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' },
+        27.3 + 4.2
+      );
+
+      // ─── 问句 1：为什么是这个时间点？（t=6.3-9.0）───
+      tl.fromTo(root + ' .sec-e .q1',
+        { scale: 1.06, y: 18, autoAlpha: 0 },
+        { scale: 1.0, y: 0, autoAlpha: 1, duration: 0.85, ease: 'power3.out' },
+        27.3 + 6.3
+      );
+
+      // ─── 问句 1 → 问句 2 切换（t=9.0）───
+      tl.to(root + ' .sec-e .q1',
+        { autoAlpha: 0, duration: 0.25, ease: 'power2.in' },
+        27.3 + 9.0
+      );
+      tl.fromTo(root + ' .sec-e .q2',
+        { scale: 1.06, autoAlpha: 0 },
+        { scale: 1.0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' },
+        27.3 + 9.1
+      );
+
+      // ─── 最后 fade out（N18 例外：cold-open 最后段允许 fade out）───
+      tl.to(root + ' .sec-e .scene-content',
+        { autoAlpha: 0, duration: 0.4, ease: 'power2.in' },
+        27.3 + 10.3
+      );
+
+      window.__timelines['ch0-cold-open'] = tl;
+    </script>
+  </div>
+</template>

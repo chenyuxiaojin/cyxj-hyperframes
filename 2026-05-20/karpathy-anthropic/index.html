@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <title>Karpathy 加入 Anthropic · Cold Open</title>
+    <title>Karpathy 加入 Anthropic · 全片</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=block"
@@ -85,9 +85,9 @@
   <body>
     <div
       id="root"
-      data-composition-id="xcyj-karpathy-cold-open"
+      data-composition-id="xcyj-karpathy-anthropic"
       data-start="0"
-      data-duration="38"
+      data-duration="1292"
       data-width="1920"
       data-height="1080"
     >
@@ -106,57 +106,27 @@
         <rect width="100%" height="100%" filter="url(#grain-filter-root)" />
       </svg>
 
-      <!-- ── 5 SEC sub-composition 挂载（按字幕节拍）── -->
+      <!-- ── 章节挂载（按字幕节拍，21:32 全片）── -->
       <div
-        id="sec-a"
-        data-composition-id="sec-a-migration"
-        data-composition-src="compositions/sec-a-migration.html"
+        class="clip"
+        id="ch0-cold-open"
+        data-composition-id="ch0-cold-open"
+        data-composition-src="compositions/ch0-cold-open.html"
         data-start="0"
-        data-duration="5.6"
+        data-duration="38"
         data-track-index="1"
         data-width="1920"
         data-height="1080"
       ></div>
-      <div
-        id="sec-b"
-        data-composition-id="sec-b-pivot"
-        data-composition-src="compositions/sec-b-pivot.html"
-        data-start="5.6"
-        data-duration="7.2"
-        data-track-index="1"
-        data-width="1920"
-        data-height="1080"
-      ></div>
-      <div
-        id="sec-c"
-        data-composition-id="sec-c-question"
-        data-composition-src="compositions/sec-c-question.html"
-        data-start="12.8"
-        data-duration="3.3"
-        data-track-index="1"
-        data-width="1920"
-        data-height="1080"
-      ></div>
-      <div
-        id="sec-d"
-        data-composition-id="sec-d-data"
-        data-composition-src="compositions/sec-d-data.html"
-        data-start="16.1"
-        data-duration="11.2"
-        data-track-index="1"
-        data-width="1920"
-        data-height="1080"
-      ></div>
-      <div
-        id="sec-e"
-        data-composition-id="sec-e-three-questions"
-        data-composition-src="compositions/sec-e-three-questions.html"
-        data-start="27.3"
-        data-duration="10.7"
-        data-track-index="1"
-        data-width="1920"
-        data-height="1080"
-      ></div>
+
+      <!-- ch1 人物介绍 (0:38-2:30, 字幕 12-46) 占位 -->
+      <!-- ch2 概念：vibe coding + LLM Wiki (2:30-3:50, 字幕 47-71) 占位 -->
+      <!-- ch3 占位 -->
+      <!-- ch4 占位 -->
+      <!-- ch5 占位 -->
+      <!-- ch6 占位 -->
+      <!-- ch7 占位 -->
+      <!-- ch8 outro 占位 -->
     </div>
 
     <script>
@@ -169,10 +139,10 @@
       tl.to('.crosshair',       { opacity: 1,    duration: 0.6, ease: 'power2.out', stagger: 0.08 }, 0.3);
       tl.to('#global-grain',    { opacity: 0.10, duration: 1.5, ease: 'power2.out' }, 0.5);
 
-      // 时长锚（hyperframes 用 data-duration，timeline 长度仅参考）
-      tl.to({}, { duration: 38 }, 0);
+      // 时长锚（21:32 = 1292s，hyperframes 用 data-duration，timeline 长度仅参考）
+      tl.set({}, {}, 1292);
 
-      window.__timelines['xcyj-karpathy-cold-open'] = tl;
+      window.__timelines['xcyj-karpathy-anthropic'] = tl;
     </script>
   </body>
 </html>
