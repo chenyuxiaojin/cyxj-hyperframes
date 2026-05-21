@@ -9,14 +9,16 @@
 
 ## DNA 对照表（强制产出物）
 
-> 本工程**没有视觉参考图**（用户没有提供截图，只提供了 Nate Herk 的文字逐字稿）。
-> 所以"参考素材有但 DNA 拒绝"栏目主要空白；"DNA 必须有"是核心约束源。
+> 初版没有用户提供的视觉参考图，只有 Nate Herk 的文字逐字稿。
+> 2026-05-21 起，按段补充官方视觉参考；seg04 已抓取 Cursor / Perplexity / Claude Code / MCP 官方页面截图，放在 `参考图/seg04-official-visuals/`。
+> 后续每段如涉及具体产品 / 官方概念，优先补官方视觉参考，再写 composition。
 
 ### 参考素材里**有**但 DNA **拒绝**的元素
 
 | 元素 | 出现在 | 为什么拒绝 |
 |---|---|---|
-| （无视觉参考图，留空。如果后续用户补 1-2 张参考截图，此栏要重填） | — | — |
+| Cursor / Claude Code 官方页面偏白底文档风 | `参考图/seg04-official-visuals/` | 可借结构，不借原始白底；本片仍保持暖米色 + 四件套 |
+| 官网大面积纯产品截图 | `01-cursor-home.png` / `03-claude-code-overview.png` | 只借“真实 UI 物件关系”，不直接整张贴进画面，避免变成截图堆砌 |
 
 ### DNA **必须**有但参考素材**没有**的元素（核心约束源）
 
@@ -58,6 +60,7 @@
 4. **硬约束**：`docs/HARD_CONSTRAINTS.md`（写 beat 前必读全文）
 5. **风格借鉴方法论**：`docs/STYLE_BORROW_PLAYBOOK.md`
 6. **长工程拓扑**：`videos/2026-05-04-claude-19-tips-hf/`（参考拓扑，不 cp）
+7. **seg04 官方视觉参考**：`参考图/seg04-official-visuals/`（Cursor / Perplexity / Claude Code / MCP 官方页面截图；具体用法见 `PLAN-seg04-ch4-wrapper.md`）
 
 ---
 
