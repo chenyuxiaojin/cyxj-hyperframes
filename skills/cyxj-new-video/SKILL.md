@@ -151,6 +151,35 @@ cd $DATE/<slug>/
 
 写 sub-composition 一律走前置 0 → 前置 1 → 前置 2 → 前置 3 顺序，不准跳过。
 
+---
+
+## 前置 0.5：发现 mismatch 必须回改文物（轻量纪律）
+
+工作过程中，**任何时候发现以下情况之一，停下来先回改源头文件，不准默默调整后只写进当前 PLAN**：
+
+1. **SRT 真源 vs PROJECT-STATE / INTEGRAL-RHYTHM-MAP 衍生描述不一致**
+   （例：读 SRT 发现 ch2 实际口播跟 RHYTHM-MAP 卡片描述对不上）
+   → 真源胜。改 PROJECT-STATE.md §3 表 + RHYTHM-MAP 对应卡片，commit，再继续
+
+2. **PROJECT-STATE 里某条工艺底线在当前段实操不合理**
+   （例：§9 默认 hard cut，但本段进高潮真的需要 1.2s 重转场）
+   → 在 PLAN-seg{NN} 顶部写「§X 例外（仅本段）」一行说明；如果连续 2 段都触发例外，回改 §X 本身
+
+3. **PROJECT-STATE 里某段拓扑/形态归类发现不对**
+   （例：seg06 写到一半发现该是 overlay 不是 cutaway）
+   → 改 PROJECT-STATE.md §3 表形态列 + RHYTHM-MAP 第 1 部分节奏曲线 + 第 2 部分卡片，commit，再继续
+
+**判断要不要回改的标准：影响范围 > 当前段就回改，只影响当前段就 PLAN 里写**。
+
+例：seg02 实际口播没有 context engineering → 以后任何人读 PROJECT-STATE / RHYTHM-MAP 都会被误导 → 必须回改
+例：seg02 决定某条字幕用红色 highlight → 只影响 seg02 视觉 → PLAN-seg02 里写就行
+
+回改时 commit message 模板：
+`fix(plan): {改了什么} - 出处 seg{NN}`
+commit body 写一行"为什么改 / 同步改了哪些下游文件"。
+
+---
+
 **前置 1：DNA 自检 5 题（跳过阶段 D 时强制跑）**：
 1. 读 `MY_VISUAL_DNA.md` 末尾 "## 自检清单" 5 题
 2. 对照本工程 `index.html` / theme.css / 各 beat HTML 逐题答 yes/no
