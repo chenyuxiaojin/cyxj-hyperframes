@@ -135,6 +135,22 @@ cd $DATE/<slug>/
 
 > ⚠️ **如果 A1 第 4 题答 "我有参考素材"，先走阶段 D 再回到 A6**（D2 已含 DNA 自检，可跳过本步第 1 项）。
 
+**🔴 前置 0：动手写 composition HTML 之前**[BLOCKING]**必须调三个官方 skill**（2026-05-21 教训沉淀）：
+
+| skill | 干什么 |
+|---|---|
+| `Skill: hyperframes` | composition 结构 + Scene Transitions Non-Negotiable 硬规则 + Layout Before Animation + Visual Identity Gate + WCAG validate + animation-map QA |
+| `Skill: hyperframes-registry` | catalog blocks 是 demo 模板（fork 改造用），不是参数化即插即用零件 |
+| `Skill: gsap` | 时间线 + position parameter（`"<"`, `">"`, `"<0.2"`）+ autoAlpha + 相对值 + labels |
+
+**为什么硬规定**：2026-05-20 karpathy-anthropic cold-open 第一稿因为只调了 cyxj-new-video，没调上述三个，结果：
+1. 写了 hyperframes skill 明文禁止的 SEC 末尾 exit 动画（"NEVER use exit animations except final scene. The transition IS the exit."）
+2. 大量 absolute positioning 违反 "Layout Before Animation"（应 padding flex）
+3. 用绝对秒数没用相对时序，改时长要逐个手算偏移
+4. 误以为 catalog block 是参数化零件，盲推荐"装 4 个 block 替换手撸"，装完才发现都是 demo（fork 用，不直接调）
+
+写 sub-composition 一律走前置 0 → 前置 1 → 前置 2 → 前置 3 顺序，不准跳过。
+
 **前置 1：DNA 自检 5 题（跳过阶段 D 时强制跑）**：
 1. 读 `MY_VISUAL_DNA.md` 末尾 "## 自检清单" 5 题
 2. 对照本工程 `index.html` / theme.css / 各 beat HTML 逐题答 yes/no
@@ -152,16 +168,33 @@ cd $DATE/<slug>/
 用户提供文案后，改 `compositions/*.html`：每个 beat 的 headline、card name、列表项等。
 **严格遵守 [`docs/HARD_CONSTRAINTS.md`](../../../docs/HARD_CONSTRAINTS.md)（仓库单源，8 条）**：核心是 GSAP querySelector 硬编码 / 复制 beat 全局换 id / 中文 Whisper 用 `whisper-cli` / `npx hyperframes` 必须在工程目录 / 不 commit 上游目录 / 大视频不进 git。**改 compositions/*.html 前必读全文。**
 
-### A7. lint → preview → render
+### A7. lint → preview → commit → render
 
 ```bash
 npx hyperframes lint                                                    # 必须 0 errors
+npx hyperframes validate                                                # WCAG contrast 必须 0 warnings (docs/HARD_CONSTRAINTS.md §17)
 npx hyperframes preview                                                 # 在浏览器看
+# ── 用户审 preview 通过 → 立即 commit ──
+git add <工程>/                                                          # commit 本段所有工程文件 + brief 改动
+git commit -m "feat(videos): <slug> <段> v1 - 完整可 render"
+# ── commit 后才允许 render ──
 npx hyperframes render --quality draft --output renders/draft.mp4       # 草稿
 npx hyperframes render --quality standard --output renders/final.mp4    # 成片
 ```
 
 每一步出错都暂停问用户，不要硬跑。
+
+**🔴 commit 节奏硬规则**（docs/HARD_CONSTRAINTS.md §19）：
+- 一段 preview 通过 → **立即 commit**（不等"整片完成"才提）
+- 收到反馈改完一轮 → commit `iterate(videos): <slug> <段> v2 - <主要变化>`
+- 遇到通用 bug fix → 独立 commit
+- 沉淀新硬约束到 HARD_CONSTRAINTS.md → 独立 commit
+- **为什么硬规则**：2026-05-21 cold-open 工作做了一整天没 commit，效果不达预期切换新对话时差点丢工作 / 新对话踩同样坑。每段 commit 让回滚 + 切换 session 零成本。
+
+**🔴 debug 截图禁止仓库根**：
+- playwright/preview 截图必须存 `<工程>/debug-shots/`（已 gitignore）或 `/tmp/`
+- 截图前 `cd` 进工程目录 或 显式给 `filename: '<工程>/debug-shots/v1-secA.png'`
+- 仓库根 `.gitignore` 拦截 `/*.png`，但仍要养成习惯避免路径写错
 
 ---
 
