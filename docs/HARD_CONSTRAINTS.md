@@ -3,7 +3,12 @@
 > **这是仓库的单源真相**。CLAUDE.md / AGENTS.md / README.md / TEMPLATE_USAGE.md / 各模板 README / cyxj-new-video skill 都不再重复完整规则，全部指向本文件。
 > 修改任何一条，**只改这一处**。
 
-每条都来自实战翻车记录，不是理论建议。
+约束分两层：
+
+- **§1–§19 本仓库实战坑**：每条来自 XCYJ 工程里至少一次翻车记录。中文 / 视觉 / 工作流场景沉淀。
+- **§20–§30 官方非可商量底线**：来自上游 `skills/hyperframes/SKILL.md` + Mintlify docs（同步 2026-05-22 / hyperframes@0.6.33）。违反 = composition broken（capture engine 边界），跟有没有踩坑无关。
+
+理论上的"最佳实践"不算硬约束——只有「实战翻车」或「官方非可商量」才进本文件。
 
 ---
 
@@ -395,6 +400,273 @@ tl.to('.sec-b', { opacity: 1, duration: 0.3 }, 6.0);
 
 ---
 
+> **以下 §20–§30 是上游 HyperFrames 官方非可商量底线**。来自 `skills/hyperframes/SKILL.md` + Mintlify docs（同步日期 2026-05-22 / hyperframes@0.6.33）。违反 = composition 直接 broken（capture engine 边界），与本仓库有没有踩过这个坑无关。
+
+---
+
+## 20. `repeat: -1` 在任何 timeline 或 tween 上都禁止
+
+```js
+// ❌ infinite repeat 让 capture engine 永远拿不到 finite frame count
+gsap.to('.spinner', { rotation: 360, duration: 1, repeat: -1 });
+
+// ✅ 算出有限循环次数 = ceil(总时长 / 单 cycle 时长) - 1
+const cycles = Math.ceil(totalDuration / 1) - 1;
+gsap.to('.spinner', { rotation: 360, duration: 1, repeat: cycles });
+```
+
+**为什么**：HyperFrames 是 seek-driven 不是 clock-driven —— engine 调 `tl.progress(t / duration)` 逐帧 scrub，需要确定的 `duration`。`repeat: -1` 把 duration 推到 Infinity，frame count 算不出来，capture 卡死或丢帧。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` "Never do" #8 + Non-negotiable："`repeat: -1`: Infinite-repeat timelines break the capture engine."
+
+---
+
+## 21. 禁 `Math.random()` / `Date.now()` / 任何 wall-clock 依赖
+
+```js
+// ❌ 每次 capture 同一帧拿到不同随机值，render 不可复现
+const x = Math.random() * 100;
+const ts = Date.now();
+
+// ✅ 用 seeded PRNG（mulberry32 最简单）
+function mulberry32(seed) {
+  return function () {
+    let t = (seed += 0x6d2b79f5);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+const rng = mulberry32(42); // 同一 seed → 同一序列
+const x = rng() * 100;
+```
+
+**为什么**：render = 同一 composition 在 capture engine 里跑无数次（worker pool / 重试 / docker 复渲）。`Math.random()` 每次给不同值 → 同一秒的同一帧两次 capture 出不同像素 → encoder 看到的不是 deterministic frame sequence。**Determinism 是 capture engine 的硬契约**。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Non-negotiable："Deterministic: No `Math.random()`, `Date.now()`, or time-based logic. Use a seeded PRNG if you need pseudo-random values (e.g. mulberry32)."
+
+**关联本仓库**：MY_MOTION_NOTES.md §11 提到 onUpdate 里 new mulberry32 closure 每帧重建（性能坑）——同样用 mulberry32，但解决的是另一类问题。
+
+---
+
+## 22. 同步构建 timeline，禁 async / await / setTimeout / Promise
+
+```js
+// ❌ engine 在 page load 后立刻同步读 window.__timelines，async 还没 resolve
+async function buildTl() {
+  const data = await fetch('/data.json').then((r) => r.json());
+  const tl = gsap.timeline({ paused: true });
+  tl.to('.title', { text: data.title });
+  window.__timelines['main'] = tl; // engine 已经 capture 一阵了
+}
+buildTl();
+
+// ❌ setTimeout 同理
+setTimeout(() => {
+  window.__timelines['main'] = tl;
+}, 100);
+
+// ✅ 同步执行
+const tl = gsap.timeline({ paused: true });
+// ... 全部 .to / .from / .set 同步加完
+window.__timelines['main'] = tl;
+```
+
+**为什么**：engine 在 page load 完成后**同步**读 `window.__timelines` —— 如果 key 不存在或值还没绑定，那个 composition 被当成 0 时长跳过。Fonts 是 compiler 内嵌的，不需要等 `document.fonts.ready`；数据应该 inline 写死，不要 fetch。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Non-negotiable："Synchronous timeline construction: Never build timelines inside `async/await`, `setTimeout`, or Promises." + Never do #9。
+
+---
+
+## 23. 禁 animate `<video>` element 自身的 dimensions
+
+```html
+<!-- ❌ 直接动 video 的 scale / width / height -->
+<video id="clip-a" class="clip" data-start="0" src="..."></video>
+<script>
+  tl.to('#clip-a', { scale: 1.5, width: '120%' }, 0);
+</script>
+
+<!-- ✅ 用 non-timed wrapper 包，动 wrapper -->
+<div id="clip-a-wrap">
+  <video class="clip" data-start="0" src="..."></video>
+</div>
+<script>
+  tl.to('#clip-a-wrap', { scale: 1.5 }, 0);
+</script>
+```
+
+**为什么**：engine 用 Chrome 的 `HeadlessExperimental.beginFrame` 抓帧 —— video element 自己的 transform 跟 capture pipeline 的视频解码同步会错位，丢帧 / 撕裂 / 黑屏。包一层 div 让 video 保持原始尺寸，只动外层 transform。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #5："Animate video element dimensions — animate a wrapper div."（lint 会直接 error）
+
+---
+
+## 24. 禁调媒体 `play()` / `pause()` / `currentTime` —— framework owns playback
+
+```js
+// ❌ 永远不要在 composition script 里手动控制媒体
+videoEl.play();
+audioEl.pause();
+videoEl.currentTime = 5;
+
+// ✅ 让 framework 管。需要 trim 用 data-media-start，需要音量用 data-volume
+//   <video class="clip" data-start="3" data-media-start="10" data-volume="0.5">
+```
+
+**为什么**：engine 是 seek-driven —— 每帧调 `videoEl.fastSeek(targetTime)` 而不是 play。手动 play 会让 video 元素进入 "playing" 状态，跟 seek 模式冲突，渲出来要么超前要么 freeze。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #6 + Non-negotiable："Do NOT animate `visibility`, `display`, or call `video.play()`/`audio.play()`."
+
+---
+
+## 25. 禁 `<br>` 在内容文本，用 `max-width` 自动换行
+
+```html
+<!-- ❌ 手动断行，改字体 / 缩放 / 翻译就崩 -->
+<h1 class="headline">让你的工具<br />真正听你的</h1>
+
+<!-- ✅ 用 max-width 让浏览器自然换行 -->
+<h1 class="headline">让你的工具真正听你的</h1>
+<style>
+  .headline {
+    max-width: 12ch;
+  } /* 中文按字符控制 */
+</style>
+```
+
+**例外**：display title（短标语、海报字、3 字以内的 logotype）允许故意 `<br>` 拆字。**正文 / 字幕 / 列表项 / 卡片内容禁止**。
+
+**为什么**：换字体后字宽变化、换语言（中→英）单词长度变化、scale animation 改尺寸 —— 硬 `<br>` 会出现孤儿字 / 断在错误语义单元 / 布局崩溃。`max-width` 让排版自适应。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #11："Use `<br>` in content text — let text wrap via `max-width` (exception: short deliberate display titles)."
+
+---
+
+## 26. 禁 `gsap.set()` 用于后续 scene 的元素，用 `tl.set(selector, vars, timePos)`
+
+```js
+// ❌ page load 时 scene-2 的元素还没在 DOM，gsap.set 找不到节点
+gsap.set('.scene-2 .card', { opacity: 0 });
+tl.from('.scene-2 .card', { y: 50 }, 5.0);
+
+// ✅ 把初始 state 写进 timeline 的特定时间点
+tl.set('.scene-2 .card', { opacity: 0 }, 5.0);
+tl.from('.scene-2 .card', { y: 50 }, 5.0);
+```
+
+**为什么**：HyperFrames 的 `class="clip"` lifecycle 是按 `data-start` 在那个时间点才把元素挂进 active layer —— page load 瞬间 scene-2 还在 DOM 外。`gsap.set('.scene-2 .card')` 此刻 querySelector 拿到 0 节点，noop；scene-2 进入后已经没机会再 set 初始 state。
+
+**为什么 `tl.set(selector, vars, timePos)` 行**：timeline 里的 `.set()` 是 scrub 到 timePos 时才执行，那时元素已经在 DOM。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #10："Use `gsap.set()` on clip elements from later scenes — they don't exist in the DOM at page load. Use `tl.set(selector, vars, timePosition)` inside the timeline instead."
+
+---
+
+## 27. video 不当 audio 用：muted+playsinline video + 独立 `<audio>` 自己 track
+
+```html
+<!-- ❌ 一个带音的 video 同时管画面和声音 -->
+<video class="clip" data-start="0" src="screencast-with-audio.mp4"></video>
+
+<!-- ✅ 拆开：muted video 在视频 track，audio 走自己的 track -->
+<video class="clip" data-start="0" data-track-index="1"
+       muted playsinline src="screencast.mp4"></video>
+<audio data-start="0" data-track-index="2"
+       src="screencast-audio.m4a"></audio>
+<!-- 注意：audio 不加 class="clip" -->
+```
+
+**为什么**：engine seek-driven 渲视频帧，但音频是 FFmpeg 在 encode 阶段按 timeline 时间轴拼进去 —— video element 自己的音轨在 capture 时被 Chrome `muted` 强制吃掉，最后 mp4 里听不到声音。`<audio>` 必须独立元素 + 独立 track + **不加 `class="clip"`**（`class="clip"` 是视觉生命周期，audio 没有视觉）。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #2 + #4 + HTML schema reference："`<audio>` (no `class=\"clip\"`)"。
+
+---
+
+## 28. video 不嵌在 timed div 里，用 non-timed wrapper
+
+```html
+<!-- ❌ video 在带 data-start 的 div 里 -->
+<div class="clip" data-start="0" data-duration="10" data-track-index="1">
+  <video src="..."></video>
+</div>
+
+<!-- ✅ 父级是普通 div（没有 data-start），video 自己带 timed attrs -->
+<div class="video-frame">
+  <!-- 没 class="clip"，没 data-start -->
+  <video class="clip" data-start="0" data-track-index="1"
+         muted playsinline src="..."></video>
+</div>
+```
+
+**为什么**：lifecycle 双重计算冲突 —— 外层 timed div 在 t=0 才挂进 active layer，内层 video 也在 t=0 才被 engine 接管 seek。两个 lifecycle 谁先谁后未定义，video 可能首帧黑屏 / 抢拍。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #3："Nest video inside a timed div — use a non-timed wrapper."
+
+---
+
+## 29. 禁用废弃属性 `data-layer` / `data-end`，用 `data-track-index` / `data-duration`
+
+```html
+<!-- ❌ v0 老属性，lint error -->
+<div class="clip" data-start="0" data-end="5" data-layer="1">
+
+<!-- ✅ 当前 schema -->
+<div class="clip" data-start="0" data-duration="5" data-track-index="1">
+```
+
+| 老 | 新 | 区别 |
+|---|---|---|
+| `data-end` | `data-duration` | 老是绝对时刻，新是相对时长（更易复用 + 模板化） |
+| `data-layer` | `data-track-index` | 老控 z-order，新只控 track 占位；**z-order 改用 CSS `z-index`** |
+
+**为什么 split**：v0 把"什么时候出现"和"叠在第几层"耦合在 `data-layer` 里 —— 但同一条 track 上多个 clip 不能重叠，跟 z-order 是两件事。新 schema 解耦：`data-track-index` 管"不能跟谁同时存在"，CSS `z-index` 管"叠在谁上面"。
+
+**来源**：官方 `skills/hyperframes/SKILL.md` Never do #4 + HTML schema reference："`data-track-index`: Integer; clips on the same track cannot overlap. Does **not** control z-order — use CSS `z-index`."
+
+---
+
+## 30. 顶层 `index.html` 的 root 不要 `<template>` wrapper —— 只 sub-composition 才用
+
+```html
+<!-- ❌ 顶层 index.html 包 template 会破坏 standalone 渲染 -->
+<template>
+  <div id="root" data-composition-id="my-video" data-start="0">...</div>
+</template>
+
+<!-- ✅ 顶层就是裸 div -->
+<div id="root" data-composition-id="my-video"
+     data-start="0" data-width="1920" data-height="1080">
+  ...
+</div>
+```
+
+**Sub-composition 例外**：`compositions/<name>.html` 这种被 `data-composition-src` 引用的子合成文件**必须**包 `<template>`：
+
+```html
+<!-- compositions/beat-1-hook.html -->
+<template>
+  <style>
+    [data-composition-id='beat-1-hook'] .b1-card {
+      /* ... */
+    }
+  </style>
+  <div data-composition-id="beat-1-hook">...</div>
+  <script>
+    /* ... */
+    window.__timelines['beat-1-hook'] = tl;
+  </script>
+</template>
+```
+
+**为什么**：`<template>` 元素在 DOM 里 inert（不渲染、子节点不进 active document）。顶层 index.html 套 template = 整个 video 都 inert，render 出空白。sub-composition 包 template 是因为父级用 `data-composition-src` 加载它时**手动**把 template content clone 出来注入 —— 必须 template 才能不被 browser 直接渲染两次。
+
+**关联本仓库 §9（bundler strip 内层 wrapper）**：sub-composition 包 template + 内层 `<div data-composition-id="X">`，bundler 把内层 div strip 掉但保留 template content + 外层 scene-layer 自动带 `data-composition-id` 属性 → 所以 CSS / GSAP selector 用 `[data-composition-id="X"]` 而不是 `#X`。
+
+**来源**：官方 Mintlify docs Composition Model："Root composition (no `<template>` wrapper at the top level — that breaks rendering for the standalone `index.html`)" + 本仓库 §9。
+
+---
+
 ## 维护
 
 新增/修改硬约束时：
@@ -402,4 +674,8 @@ tl.to('.sec-b', { opacity: 1, duration: 0.3 }, 6.0);
 2. 不需要同步任何其他文件——它们都指向本文件
 3. 如果是给 cyxj-new-video skill 用，确认 SKILL.md 末尾还指向本文件
 
-新增的判定标准：**至少有 1 次实战翻车记录**。理论上的"最佳实践"不算硬约束。
+新增判定标准（二选一）：
+- 进 **§1–§19（本仓库实战坑）**：至少 1 次本仓库实战翻车记录。理论"最佳实践"不算。
+- 进 **§20–§30（官方非可商量底线）**：官方明文 non-negotiable —— 引用 `skills/hyperframes/SKILL.md` 原话或 Mintlify docs 链接。新增时标注来源。
+
+§20–§30 跟上游同步节奏：发现 hyperframes 升级新增 non-negotiable 时同步补。当前对齐到 **hyperframes@0.6.33 + Mintlify docs 2026-05-22 快照**。下次同步时间：随 hyperframes 0.7.x 发版重审一次。
