@@ -1,0 +1,1491 @@
+<template id="seg10-outro-template">
+  <div data-composition-id="seg10-outro" data-width="1920" data-height="1080">
+    <style>
+      [data-composition-id="seg10-outro"] {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        background: #F7F2EA;
+        color: #2B2622;
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+      }
+      [data-composition-id="seg10-outro"] .sec {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+      }
+      [data-composition-id="seg10-outro"] .scene-content {
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+      }
+
+      /* ── 通用字效（复用 seg09） ── */
+      [data-composition-id="seg10-outro"] .chrome {
+        font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-weight: 800;
+        letter-spacing: 0.005em;
+        line-height: 1.05;
+        background-image: linear-gradient(180deg,
+          #2B2622 0%, #4a3d33 18%, #806c5b 43%, #c8aa8f 52%, #6b5a4d 67%, #2B2622 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+      }
+      [data-composition-id="seg10-outro"] .hot {
+        background-image: linear-gradient(180deg, #f5b39a 0%, #d97757 48%, #8b3d28 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        filter: drop-shadow(0 0 18px rgba(217, 119, 87, 0.32));
+      }
+      [data-composition-id="seg10-outro"] .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+      [data-composition-id="seg10-outro"] .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 999px;
+        border: 1.5px solid rgba(217, 119, 87, 0.48);
+        background: rgba(217, 119, 87, 0.10);
+        color: #9A4634;
+        font-weight: 650;
+        white-space: nowrap;
+        padding: 0 18px;
+        height: 36px;
+        font-size: 18px;
+      }
+      [data-composition-id="seg10-outro"] .chip.gray {
+        border-color: rgba(90, 79, 70, 0.28);
+        background: rgba(90, 79, 70, 0.06);
+        color: #5A4F46;
+      }
+      [data-composition-id="seg10-outro"] .chip.hot-solid {
+        border-color: rgba(155, 70, 52, 0.95);
+        background: #9A4634;
+        color: #FFF7EE;
+      }
+      [data-composition-id="seg10-outro"] .chip.lg {
+        height: 44px;
+        font-size: 20px;
+        padding: 0 22px;
+      }
+
+      /* ── marker-sweep（复用 seg09） ── */
+      [data-composition-id="seg10-outro"] .marker-sweep-wrap {
+        position: absolute;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      [data-composition-id="seg10-outro"] .marker-sweep {
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg,
+          transparent 0%,
+          rgba(217, 119, 87, 0.25) 30%,
+          rgba(217, 119, 87, 0.45) 50%,
+          rgba(217, 119, 87, 0.25) 70%,
+          transparent 100%);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+
+      /* ═════════════════ SEC A · 结论钉位 (0-6.93s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-a {
+        opacity: 1;
+      }
+      /* 中央 chrome 中字「套壳，才是产品」120px */
+      [data-composition-id="seg10-outro"] .a-headline {
+        position: absolute;
+        top: 380px;
+        left: 50%;
+        margin-left: -700px;
+        width: 1400px;
+        text-align: center;
+        font-size: 120px;
+        font-weight: 900;
+        line-height: 1.1;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      /* 底部 mini 三卡 */
+      [data-composition-id="seg10-outro"] .a-mini-row {
+        position: absolute;
+        top: 760px;
+        left: 50%;
+        margin-left: -640px;
+        width: 1280px;
+        display: flex;
+        gap: 48px;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .a-mini-card {
+        width: 380px;
+        height: 110px;
+        background: #F7F2EA;
+        border: 1.5px solid rgba(217, 119, 87, 0.55);
+        border-radius: 16px;
+        padding: 18px 22px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        box-shadow: 0 8px 24px rgba(43, 38, 34, 0.06);
+        position: relative;
+      }
+      [data-composition-id="seg10-outro"] .a-mini-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 16px;
+        font-weight: 700;
+        color: #9A4634;
+        letter-spacing: 0.1em;
+      }
+      [data-composition-id="seg10-outro"] .a-mini-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #2B2622;
+        line-height: 1.2;
+      }
+      [data-composition-id="seg10-outro"] .a-mini-halo {
+        position: absolute;
+        top: -16px;
+        left: -16px;
+        width: calc(100% + 32px);
+        height: calc(100% + 32px);
+        border-radius: 22px;
+        background: radial-gradient(closest-side, rgba(217, 119, 87, 0.22), rgba(217, 119, 87, 0));
+        pointer-events: none;
+        opacity: 0;
+        filter: blur(4px);
+      }
+      /* 上方副标 chip */
+      [data-composition-id="seg10-outro"] .a-pre-chip {
+        position: absolute;
+        top: 290px;
+        left: 50%;
+        margin-left: -150px;
+        width: 300px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+
+      /* ═════════════════ SEC B · Antigravity 2.0 (6.93-27.9s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-b {
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .b-title {
+        position: absolute;
+        top: 110px;
+        left: 90px;
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1.15;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .b-subchip {
+        position: absolute;
+        top: 240px;
+        left: 90px;
+        opacity: 0;
+      }
+      /* 左侧 IDE 1.0 旧卡 */
+      [data-composition-id="seg10-outro"] .b-old-card {
+        position: absolute;
+        top: 360px;
+        left: 110px;
+        width: 600px;
+        height: 480px;
+        background: #F7F2EA;
+        border: 1.5px solid rgba(90, 79, 70, 0.32);
+        border-radius: 20px;
+        padding: 36px 40px;
+        box-sizing: border-box;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .b-old-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        font-weight: 700;
+        color: #806c5b;
+        letter-spacing: 0.12em;
+      }
+      [data-composition-id="seg10-outro"] .b-old-headline {
+        margin-top: 14px;
+        font-size: 56px;
+        font-weight: 900;
+        color: #5A4F46;
+        line-height: 1.1;
+      }
+      [data-composition-id="seg10-outro"] .b-old-ide-mock {
+        margin-top: 28px;
+        width: 100%;
+        height: 240px;
+        border: 1px solid rgba(90, 79, 70, 0.26);
+        border-radius: 10px;
+        background:
+          linear-gradient(180deg, rgba(90, 79, 70, 0.08) 0 28px, transparent 28px),
+          linear-gradient(90deg, rgba(90, 79, 70, 0.06) 0 140px, transparent 140px),
+          #F2EBDF;
+        position: relative;
+        overflow: hidden;
+      }
+      [data-composition-id="seg10-outro"] .b-old-ide-mock::before {
+        content: "// IDE 1.0";
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 13px;
+        font-weight: 600;
+        color: #806c5b;
+      }
+      [data-composition-id="seg10-outro"] .b-old-ide-mock::after {
+        content: "";
+        position: absolute;
+        top: 64px;
+        left: 168px;
+        right: 24px;
+        bottom: 24px;
+        background:
+          repeating-linear-gradient(180deg,
+            rgba(90, 79, 70, 0.16) 0 2px,
+            transparent 2px 16px);
+      }
+      [data-composition-id="seg10-outro"] .b-old-status {
+        margin-top: 18px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      /* 中央 砍 + sweep */
+      [data-composition-id="seg10-outro"] .b-cut-zone {
+        position: absolute;
+        top: 540px;
+        left: 50%;
+        margin-left: -100px;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .b-cut-char {
+        font-size: 140px;
+        font-weight: 900;
+      }
+      /* 右侧 Antigravity 2.0 新卡 */
+      [data-composition-id="seg10-outro"] .b-new-card {
+        position: absolute;
+        top: 230px;
+        left: 1140px;
+        width: 720px;
+        height: 720px;
+        background: #F7F2EA;
+        border: 2px solid rgba(217, 119, 87, 0.85);
+        border-radius: 20px;
+        padding: 28px 28px 24px;
+        box-sizing: border-box;
+        opacity: 0;
+        box-shadow:
+          0 30px 60px rgba(43, 38, 34, 0.12),
+          0 0 60px rgba(217, 119, 87, 0.16);
+      }
+      [data-composition-id="seg10-outro"] .b-new-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      [data-composition-id="seg10-outro"] .b-new-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        font-weight: 800;
+        color: #9A4634;
+        letter-spacing: 0.12em;
+      }
+      [data-composition-id="seg10-outro"] .b-new-title {
+        margin-top: 10px;
+        font-size: 44px;
+        font-weight: 900;
+        line-height: 1.1;
+      }
+      [data-composition-id="seg10-outro"] .b-new-shot {
+        margin-top: 20px;
+        width: 100%;
+        height: 460px;
+        border-radius: 12px;
+        background: url('assets/screenshots/antigravity-2-desktop.png') center / cover no-repeat;
+        border: 1px solid rgba(90, 79, 70, 0.18);
+      }
+      [data-composition-id="seg10-outro"] .b-new-foot {
+        margin-top: 16px;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      /* ═════════════════ SEC C · 超级应用 + Codex 走对了 (27.9-54.0s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-c {
+        opacity: 0;
+      }
+      /* 双卡并排 */
+      [data-composition-id="seg10-outro"] .c-twin-row {
+        position: absolute;
+        top: 280px;
+        left: 50%;
+        margin-left: -880px;
+        width: 1760px;
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .c-app-card {
+        width: 860px;
+        height: 540px;
+        background: #F7F2EA;
+        border-radius: 18px;
+        padding: 22px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      [data-composition-id="seg10-outro"] .c-app-card.left {
+        border: 2px solid rgba(217, 119, 87, 0.85);
+        box-shadow: 0 20px 40px rgba(43, 38, 34, 0.10), 0 0 50px rgba(217, 119, 87, 0.16);
+      }
+      [data-composition-id="seg10-outro"] .c-app-card.right {
+        border: 2px solid rgba(217, 119, 87, 0.85);
+        box-shadow: 0 20px 40px rgba(43, 38, 34, 0.10), 0 0 50px rgba(217, 119, 87, 0.16);
+      }
+      [data-composition-id="seg10-outro"] .c-app-chip {
+        position: absolute;
+        top: -22px;
+        left: 24px;
+        height: 38px;
+        padding: 0 20px;
+        background: #9A4634;
+        color: #FFF7EE;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 18px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+      [data-composition-id="seg10-outro"] .c-app-shot {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 1px solid rgba(90, 79, 70, 0.18);
+      }
+      [data-composition-id="seg10-outro"] .c-app-shot.codex {
+        background-image: url('assets/screenshots/codex-desktop.png');
+      }
+      [data-composition-id="seg10-outro"] .c-app-shot.antigravity {
+        background-image: url('assets/screenshots/antigravity-2-desktop.png');
+      }
+      /* 双向箭头 ↔ */
+      [data-composition-id="seg10-outro"] .c-arrow-sym {
+        position: absolute;
+        top: 870px;
+        left: 50%;
+        margin-left: -40px;
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+        font-weight: 900;
+        opacity: 0;
+      }
+      /* 中央上方 chrome 中字「超级应用」 */
+      [data-composition-id="seg10-outro"] .c-mid-headline {
+        position: absolute;
+        top: 130px;
+        left: 50%;
+        margin-left: -400px;
+        width: 800px;
+        text-align: center;
+        font-size: 84px;
+        font-weight: 900;
+        line-height: 1.1;
+        opacity: 0;
+      }
+      /* Phase 2 「不只 A 社在走」+ 厂商 dot */
+      [data-composition-id="seg10-outro"] .c-vendor-row {
+        position: absolute;
+        top: 950px;
+        left: 50%;
+        margin-left: -560px;
+        width: 1120px;
+        display: flex;
+        gap: 56px;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .c-vendor-headline {
+        position: absolute;
+        top: 890px;
+        left: 50%;
+        margin-left: -400px;
+        width: 800px;
+        text-align: center;
+        font-size: 56px;
+        font-weight: 800;
+        line-height: 1.1;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .c-vendor-dot {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 24px;
+        font-weight: 650;
+        color: #5A4F46;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .c-vendor-dot::before {
+        content: "";
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #d97757;
+        box-shadow: 0 0 12px rgba(217, 119, 87, 0.55);
+      }
+      /* Phase 3 走对了 */
+      [data-composition-id="seg10-outro"] .c-walk-headline {
+        position: absolute;
+        top: 130px;
+        left: 50%;
+        margin-left: -360px;
+        width: 720px;
+        text-align: center;
+        font-size: 110px;
+        font-weight: 900;
+        line-height: 1.05;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .c-walk-chip {
+        position: absolute;
+        top: 290px;
+        left: 50%;
+        margin-left: -120px;
+        width: 240px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+      /* Phase 3 上升箭头 */
+      [data-composition-id="seg10-outro"] .c-arrow-up {
+        position: absolute;
+        top: 360px;
+        left: 50%;
+        margin-left: -50px;
+        width: 100px;
+        height: 220px;
+        opacity: 0;
+      }
+
+      /* ═════════════════ SEC D · 个人态度 (54.0-77.1s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-d {
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-strike {
+        position: absolute;
+        top: 200px;
+        left: 50%;
+        margin-left: -200px;
+        width: 400px;
+        text-align: center;
+        font-size: 28px;
+        font-weight: 600;
+        color: #806c5b;
+        text-decoration: line-through;
+        text-decoration-color: rgba(155, 70, 52, 0.6);
+        text-decoration-thickness: 2px;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-headline {
+        position: absolute;
+        top: 260px;
+        left: 50%;
+        margin-left: -500px;
+        width: 1000px;
+        text-align: center;
+        font-size: 100px;
+        font-weight: 900;
+        line-height: 1.1;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-chip-row {
+        position: absolute;
+        top: 430px;
+        left: 50%;
+        margin-left: -550px;
+        width: 1100px;
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-chip-item {
+        height: 56px;
+        padding: 0 28px;
+        background: rgba(217, 119, 87, 0.10);
+        border: 1.5px solid rgba(217, 119, 87, 0.48);
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 22px;
+        font-weight: 700;
+        color: #9A4634;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-chip-num {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 18px;
+        color: #8b3d28;
+        opacity: 0.8;
+      }
+      [data-composition-id="seg10-outro"] .d-comments {
+        position: absolute;
+        top: 560px;
+        left: 50%;
+        margin-left: -640px;
+        width: 1280px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px 28px;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-comment {
+        background: #F7F2EA;
+        border: 1px solid rgba(90, 79, 70, 0.22);
+        border-radius: 14px;
+        padding: 18px 22px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .d-comment-avatar {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(217, 119, 87, 0.18);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 800;
+        color: #9A4634;
+      }
+      [data-composition-id="seg10-outro"] .d-comment-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      [data-composition-id="seg10-outro"] .d-comment-meta {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        color: #806c5b;
+        letter-spacing: 0.04em;
+      }
+      [data-composition-id="seg10-outro"] .d-comment-text {
+        font-size: 20px;
+        line-height: 1.4;
+        color: #5A4F46;
+      }
+      [data-composition-id="seg10-outro"] .d-foot-headline {
+        position: absolute;
+        top: 920px;
+        left: 50%;
+        margin-left: -440px;
+        width: 880px;
+        text-align: center;
+        font-size: 58px;
+        font-weight: 800;
+        line-height: 1.1;
+        opacity: 0;
+      }
+
+      /* ═════════════════ SEC E · 北京线下火花（chrome 大字唯一位）(77.1-93.5s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-e {
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-skyline {
+        position: absolute;
+        top: 120px;
+        left: 50%;
+        margin-left: -600px;
+        width: 1200px;
+        height: 200px;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-loc-chip {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        margin-left: -90px;
+        width: 180px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-avatar-zone {
+        position: absolute;
+        top: 380px;
+        left: 0;
+        width: 1920px;
+        height: 380px;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-avatar {
+        position: absolute;
+        top: 100px;
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: #F7F2EA;
+        border: 2.5px solid rgba(155, 70, 52, 0.85);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 52px;
+        font-weight: 900;
+        color: #9A4634;
+        box-shadow: 0 14px 28px rgba(43, 38, 34, 0.10);
+      }
+      [data-composition-id="seg10-outro"] .e-avatar.left { left: 360px; }
+      [data-composition-id="seg10-outro"] .e-avatar.right { left: 1420px; }
+      [data-composition-id="seg10-outro"] .e-bubble {
+        position: absolute;
+        width: 280px;
+        padding: 14px 20px;
+        background: #F7F2EA;
+        border: 1.5px solid rgba(217, 119, 87, 0.45);
+        border-radius: 16px;
+        font-size: 22px;
+        font-weight: 600;
+        color: #5A4F46;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-bubble.left {
+        top: 10px;
+        left: 290px;
+      }
+      [data-composition-id="seg10-outro"] .e-bubble.right {
+        top: 10px;
+        left: 1350px;
+      }
+      /* spark particles 容器（avatar 之间中央区域） */
+      [data-composition-id="seg10-outro"] .e-sparks {
+        position: absolute;
+        top: 460px;
+        left: 50%;
+        margin-left: -180px;
+        width: 360px;
+        height: 280px;
+        pointer-events: none;
+      }
+      [data-composition-id="seg10-outro"] .e-spark {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #d97757;
+        box-shadow: 0 0 16px rgba(217, 119, 87, 0.85);
+        opacity: 0;
+      }
+      /* chrome 大字唯一位「思想的火花」160px */
+      [data-composition-id="seg10-outro"] .e-headline {
+        position: absolute;
+        top: 380px;
+        left: 50%;
+        margin-left: -700px;
+        width: 1400px;
+        text-align: center;
+        font-size: 160px;
+        font-weight: 900;
+        line-height: 1.05;
+        opacity: 0;
+        white-space: nowrap;
+      }
+      [data-composition-id="seg10-outro"] .e-foot-chip {
+        position: absolute;
+        top: 920px;
+        left: 50%;
+        margin-left: -160px;
+        width: 320px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .e-foot-chip .chip {
+        height: 56px;
+        font-size: 26px;
+        padding: 0 32px;
+      }
+
+      /* ═════════════════ SEC F · CTA 收尾（fade-out · §18 例外）(93.5-100.6s) ═════════════════ */
+      [data-composition-id="seg10-outro"] .sec-f {
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .f-headline {
+        position: absolute;
+        top: 320px;
+        left: 50%;
+        margin-left: -360px;
+        width: 720px;
+        text-align: center;
+        font-size: 88px;
+        font-weight: 900;
+        line-height: 1.1;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .f-sign {
+        position: absolute;
+        top: 470px;
+        left: 50%;
+        margin-left: -260px;
+        width: 520px;
+        text-align: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .f-sign-zh {
+        font-size: 52px;
+        font-weight: 900;
+        line-height: 1.05;
+      }
+      [data-composition-id="seg10-outro"] .f-sign-en {
+        margin-top: 10px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 22px;
+        font-weight: 700;
+        color: #806c5b;
+        letter-spacing: 0.32em;
+      }
+      [data-composition-id="seg10-outro"] .f-icons {
+        position: absolute;
+        top: 660px;
+        left: 50%;
+        margin-left: -360px;
+        width: 720px;
+        display: flex;
+        gap: 88px;
+        justify-content: center;
+        opacity: 0;
+      }
+      [data-composition-id="seg10-outro"] .f-icon {
+        width: 96px;
+        height: 96px;
+        border-radius: 24px;
+        background: #F7F2EA;
+        border: 1.5px solid rgba(217, 119, 87, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        box-shadow: 0 8px 20px rgba(43, 38, 34, 0.06);
+      }
+      [data-composition-id="seg10-outro"] .f-bye {
+        position: absolute;
+        top: 800px;
+        left: 50%;
+        margin-left: -360px;
+        width: 720px;
+        text-align: center;
+        font-size: 32px;
+        font-weight: 700;
+        color: #5A4F46;
+        opacity: 0;
+      }
+    </style>
+
+    <div class="scene-content">
+
+      <!-- ═════════════════ SEC A · 结论钉位 (0-6.93s) ═════════════════ -->
+      <div class="sec sec-a" data-sec="a">
+        <div class="a-pre-chip" data-a-pre-chip>
+          <span class="chip">我最想看到的</span>
+        </div>
+        <div class="a-headline" data-a-headline>
+          <span class="chrome">套壳，</span><span class="hot">才是产品</span>
+        </div>
+        <div class="a-mini-row" data-a-mini-row>
+          <div class="a-mini-card" data-a-mini="1">
+            <div class="a-mini-halo" data-a-mini-halo="1"></div>
+            <div class="a-mini-num">01 · PREDICTION</div>
+            <div class="a-mini-title">上下文集市</div>
+          </div>
+          <div class="a-mini-card" data-a-mini="2">
+            <div class="a-mini-halo" data-a-mini-halo="2"></div>
+            <div class="a-mini-num">02 · PREDICTION</div>
+            <div class="a-mini-title">Goal 风格命令</div>
+          </div>
+          <div class="a-mini-card" data-a-mini="3">
+            <div class="a-mini-halo" data-a-mini-halo="3"></div>
+            <div class="a-mini-num">03 · PREDICTION</div>
+            <div class="a-mini-title">非开发者打包工具</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════ SEC B · Antigravity 2.0 (6.93-27.9s) ═════════════════ -->
+      <div class="sec sec-b" data-sec="b">
+        <div class="b-title" data-b-title>
+          <span class="chrome">今年越来越</span><span class="hot">明显</span>
+        </div>
+        <div class="b-subchip" data-b-subchip>
+          <span class="chip">Google Developer Conference · 2026</span>
+        </div>
+
+        <div class="b-old-card" data-b-old-card>
+          <div class="b-old-tag">Antigravity 1.0</div>
+          <div class="b-old-headline">IDE 形态</div>
+          <div class="b-old-ide-mock"></div>
+          <div class="b-old-status">
+            <span class="chip gray">过去时</span>
+          </div>
+        </div>
+
+        <div class="b-cut-zone" data-b-cut-zone>
+          <span class="hot b-cut-char">砍</span>
+        </div>
+
+        <div class="b-new-card" data-b-new-card>
+          <div class="b-new-header">
+            <div>
+              <div class="b-new-tag">ANTIGRAVITY 2.0</div>
+              <div class="b-new-title"><span class="chrome">独立</span><span class="hot">桌面 App</span></div>
+            </div>
+            <span class="chip hot-solid lg">砍 IDE</span>
+          </div>
+          <div class="b-new-shot" data-b-new-shot></div>
+          <div class="b-new-foot">
+            <span class="chip">mac App</span>
+            <span class="chip">对话驱动</span>
+            <span class="chip">超级应用形态</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════ SEC C · 超级应用 + Codex 走对了 (27.9-54.0s) ═════════════════ -->
+      <div class="sec sec-c" data-sec="c">
+        <!-- Phase 1+2 双卡 + 收敛 -->
+        <div class="c-mid-headline" data-c-mid-headline>
+          <span class="chrome">同一种形态：</span><span class="hot">超级应用</span>
+        </div>
+        <div class="c-twin-row" data-c-twin-row>
+          <div class="c-app-card left" data-c-app-card="codex">
+            <div class="c-app-chip">OpenAI · Codex</div>
+            <div class="c-app-shot codex"></div>
+          </div>
+          <div class="c-app-card right" data-c-app-card="antigravity">
+            <div class="c-app-chip">Google · Antigravity 2.0</div>
+            <div class="c-app-shot antigravity"></div>
+          </div>
+        </div>
+        <div class="c-arrow-sym" data-c-arrow-sym>
+          <span class="hot">⇄</span>
+        </div>
+
+        <!-- Phase 2 厂商行 -->
+        <div class="c-vendor-headline" data-c-vendor-headline>
+          <span class="chrome">不只 A 社 · </span><span class="hot">都在走</span>
+        </div>
+        <div class="c-vendor-row" data-c-vendor-row>
+          <div class="c-vendor-dot" data-c-vendor-dot="1">OpenAI · Codex</div>
+          <div class="c-vendor-dot" data-c-vendor-dot="2">Google · Antigravity 2.0</div>
+          <div class="c-vendor-dot" data-c-vendor-dot="3">Anthropic · Claude Code</div>
+        </div>
+
+        <!-- Phase 3 走对了（46-54s） -->
+        <div class="c-walk-headline" data-c-walk-headline>
+          <span class="chrome">Codex · </span><span class="hot">走对了</span>
+        </div>
+        <div class="c-walk-chip" data-c-walk-chip>
+          <span class="chip hot-solid lg">✓ 谁推出 = 谁拿话语权</span>
+        </div>
+        <svg class="c-arrow-up" data-c-arrow-up viewBox="0 0 100 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 50 210 L 50 30" stroke="#d97757" stroke-width="6" stroke-linecap="round" />
+          <path d="M 20 60 L 50 30 L 80 60" stroke="#d97757" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+
+      <!-- ═════════════════ SEC D · 个人态度 (54.0-77.1s) ═════════════════ -->
+      <div class="sec sec-d" data-sec="d">
+        <div class="d-strike" data-d-strike>纯水？也不是</div>
+        <div class="d-headline" data-d-headline>
+          <span class="chrome">有感而</span><span class="hot">发</span>
+        </div>
+        <div class="d-chip-row" data-d-chip-row>
+          <div class="d-chip-item" data-d-chip-item="1">
+            <span class="d-chip-num">①</span><span>完全主观</span>
+          </div>
+          <div class="d-chip-item" data-d-chip-item="2">
+            <span class="d-chip-num">②</span><span>未来方向</span>
+          </div>
+          <div class="d-chip-item" data-d-chip-item="3">
+            <span class="d-chip-num">③</span><span>听一听也行</span>
+          </div>
+        </div>
+        <div class="d-comments" data-d-comments>
+          <div class="d-comment" data-d-comment="1">
+            <div class="d-comment-avatar">陈</div>
+            <div class="d-comment-body">
+              <div class="d-comment-meta">USER A · 2 分钟前</div>
+              <div class="d-comment-text">我对这个超级应用方向有不同看法...</div>
+            </div>
+          </div>
+          <div class="d-comment" data-d-comment="2">
+            <div class="d-comment-avatar">金</div>
+            <div class="d-comment-body">
+              <div class="d-comment-meta">USER B · 5 分钟前</div>
+              <div class="d-comment-text">Goal 风格命令我已经在用了，体验真的不一样</div>
+            </div>
+          </div>
+          <div class="d-comment" data-d-comment="3">
+            <div class="d-comment-avatar">友</div>
+            <div class="d-comment-body">
+              <div class="d-comment-meta">USER C · 10 分钟前</div>
+              <div class="d-comment-text">非开发者怎么打包，能展开讲讲吗</div>
+            </div>
+          </div>
+          <div class="d-comment" data-d-comment="4">
+            <div class="d-comment-avatar">客</div>
+            <div class="d-comment-body">
+              <div class="d-comment-meta">USER D · 12 分钟前</div>
+              <div class="d-comment-text">Antigravity 2.0 我装了，确实是 mac App 形态</div>
+            </div>
+          </div>
+        </div>
+        <div class="d-foot-headline" data-d-foot-headline>
+          <span class="chrome">欢迎评论 · </span><span class="hot">一起讨论</span>
+        </div>
+      </div>
+
+      <!-- ═════════════════ SEC E · 北京线下火花（chrome 大字唯一位）(77.1-93.5s) ═════════════════ -->
+      <div class="sec sec-e" data-sec="e">
+        <!-- 简化北京天际线 SVG -->
+        <svg class="e-skyline" data-e-skyline viewBox="0 0 1200 200" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+          <!-- 远山 / 胡同低层（左） -->
+          <path d="M 0 200 L 0 150 L 60 150 L 60 130 L 100 130 L 100 150 L 160 150 L 160 140 L 220 140 L 220 160 L 280 160 L 280 200 Z"
+                fill="rgba(43, 38, 34, 0.18)" />
+          <!-- 故宫角楼（中左） -->
+          <path d="M 280 200 L 280 110 L 320 110 L 320 80 L 360 80 L 360 110 L 400 110 L 400 200 Z"
+                fill="rgba(43, 38, 34, 0.22)" />
+          <!-- 屋脊 -->
+          <path d="M 315 80 L 340 60 L 365 80 Z" fill="rgba(43, 38, 34, 0.22)" />
+          <!-- 城楼 -->
+          <path d="M 400 200 L 400 130 L 440 130 L 440 100 L 480 100 L 480 70 L 520 70 L 520 100 L 560 100 L 560 130 L 600 130 L 600 200 Z"
+                fill="rgba(43, 38, 34, 0.20)" />
+          <!-- 中心 CBD（央视大楼造型 简化） -->
+          <path d="M 620 200 L 620 80 L 660 80 L 660 40 L 720 40 L 720 80 L 760 80 L 760 200 Z"
+                fill="rgba(43, 38, 34, 0.26)" />
+          <!-- 国贸 / 中信 -->
+          <path d="M 760 200 L 760 60 L 800 60 L 800 20 L 840 20 L 840 60 L 880 60 L 880 200 Z"
+                fill="rgba(43, 38, 34, 0.30)" />
+          <!-- 银泰 -->
+          <path d="M 880 200 L 880 100 L 920 100 L 920 70 L 960 70 L 960 100 L 1000 100 L 1000 200 Z"
+                fill="rgba(43, 38, 34, 0.24)" />
+          <!-- 远右 -->
+          <path d="M 1000 200 L 1000 140 L 1050 140 L 1050 120 L 1100 120 L 1100 150 L 1160 150 L 1160 200 Z"
+                fill="rgba(43, 38, 34, 0.18)" />
+          <!-- 地平线 -->
+          <path d="M 0 200 L 1200 200" stroke="rgba(43, 38, 34, 0.32)" stroke-width="1.5" />
+        </svg>
+
+        <div class="e-loc-chip" data-e-loc-chip>
+          <span class="chip lg">线下 · 北京</span>
+        </div>
+
+        <div class="e-avatar-zone" data-e-avatar-zone>
+          <div class="e-avatar left" data-e-avatar="left">陈</div>
+          <div class="e-bubble left" data-e-bubble="left">"你那个 SOP 我抄过"</div>
+          <div class="e-avatar right" data-e-avatar="right">友</div>
+          <div class="e-bubble right" data-e-bubble="right">"我用 /goal 跑了一周"</div>
+        </div>
+
+        <!-- spark particles 中央迸发 -->
+        <div class="e-sparks" data-e-sparks>
+          <div class="e-spark" data-e-spark="1" style="left: 50%; top: 60%;"></div>
+          <div class="e-spark" data-e-spark="2" style="left: 30%; top: 70%;"></div>
+          <div class="e-spark" data-e-spark="3" style="left: 70%; top: 65%;"></div>
+          <div class="e-spark" data-e-spark="4" style="left: 45%; top: 55%;"></div>
+          <div class="e-spark" data-e-spark="5" style="left: 55%; top: 75%;"></div>
+          <div class="e-spark" data-e-spark="6" style="left: 25%; top: 50%;"></div>
+          <div class="e-spark" data-e-spark="7" style="left: 75%; top: 55%;"></div>
+          <div class="e-spark" data-e-spark="8" style="left: 35%; top: 80%;"></div>
+          <div class="e-spark" data-e-spark="9" style="left: 65%; top: 80%;"></div>
+          <div class="e-spark" data-e-spark="10" style="left: 50%; top: 40%;"></div>
+          <div class="e-spark" data-e-spark="11" style="left: 40%; top: 45%;"></div>
+          <div class="e-spark" data-e-spark="12" style="left: 60%; top: 45%;"></div>
+          <div class="e-spark" data-e-spark="13" style="left: 20%; top: 65%;"></div>
+          <div class="e-spark" data-e-spark="14" style="left: 80%; top: 70%;"></div>
+          <div class="e-spark" data-e-spark="15" style="left: 50%; top: 85%;"></div>
+          <div class="e-spark" data-e-spark="16" style="left: 38%; top: 32%;"></div>
+          <div class="e-spark" data-e-spark="17" style="left: 62%; top: 32%;"></div>
+          <div class="e-spark" data-e-spark="18" style="left: 50%; top: 20%;"></div>
+        </div>
+
+        <!-- chrome 大字唯一位 -->
+        <div class="e-headline" data-e-headline>
+          <span class="chrome">思想的</span><span class="hot">火花</span>
+        </div>
+        <div class="e-foot-chip" data-e-foot-chip>
+          <span class="chip hot-solid">AI · 给不了的</span>
+        </div>
+      </div>
+
+      <!-- ═════════════════ SEC F · CTA 收尾（fade-out · §18 例外）(93.5-100.6s) ═════════════════ -->
+      <div class="sec sec-f" data-sec="f">
+        <div class="f-headline" data-f-headline>
+          <span class="chrome">本期 · </span><span class="hot">到此</span>
+        </div>
+        <div class="f-sign" data-f-sign>
+          <div class="f-sign-zh"><span class="chrome">陈与</span><span class="hot">小金</span></div>
+          <div class="f-sign-en">X C Y J</div>
+        </div>
+        <div class="f-icons" data-f-icons>
+          <div class="f-icon" data-f-icon="1">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 12 22 L 12 40 L 8 40 L 8 22 Z" stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" />
+              <path d="M 14 22 L 22 6 L 24 6 L 26 14 L 36 14 L 38 16 L 38 20 L 36 38 L 16 40 L 14 40 Z"
+                    stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="f-icon" data-f-icon="2">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 6 12 L 42 12 L 42 32 L 28 32 L 18 42 L 18 32 L 6 32 Z"
+                    stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+              <circle cx="16" cy="22" r="2" fill="#d97757" />
+              <circle cx="24" cy="22" r="2" fill="#d97757" />
+              <circle cx="32" cy="22" r="2" fill="#d97757" />
+            </svg>
+          </div>
+          <div class="f-icon" data-f-icon="3">
+            <svg viewBox="0 0 48 48" width="48" height="48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 8 14 L 8 22 L 16 22"
+                    stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="none" />
+              <path d="M 8 22 C 12 12, 24 8, 34 14 C 40 18, 42 24, 40 30"
+                    stroke="#d97757" stroke-width="2.5" stroke-linecap="round" fill="none" />
+              <path d="M 40 34 L 40 26 L 32 26"
+                    stroke="#d97757" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="none" />
+              <path d="M 40 26 C 36 36, 24 40, 14 34 C 8 30, 6 24, 8 18"
+                    stroke="#d97757" stroke-width="2.5" stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
+        </div>
+        <div class="f-bye" data-f-bye>那么就评论转发 · 我们下期再见</div>
+      </div>
+
+    </div>
+
+    <script>
+      (() => {
+        const root = '[data-composition-id="seg10-outro"]';
+        const SEGMENT_DURATION = 100.6;
+        const tl = gsap.timeline({ paused: true });
+
+        // ═════════════════ SEC A · 结论钉位 (0-6.93s) ═════════════════
+        const tA = 0;
+
+        // 0.3-1.1s: 上方副标 chip
+        tl.fromTo(root + ' [data-a-pre-chip]',
+          { autoAlpha: 0, y: -10 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tA + 0.3);
+
+        // 0.5-2.5s: 底部三卡 fly-up
+        tl.fromTo(root + ' [data-a-mini-row]',
+          { autoAlpha: 0, y: 60 },
+          { autoAlpha: 1, y: 0, duration: 1.5, ease: 'power3.out' },
+          tA + 0.5);
+        // 三 halo 依次 pulse
+        tl.fromTo(root + ' [data-a-mini-halo="1"]',
+          { autoAlpha: 0 }, { autoAlpha: 0.55, duration: 0.45, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 1.4);
+        tl.fromTo(root + ' [data-a-mini-halo="2"]',
+          { autoAlpha: 0 }, { autoAlpha: 0.55, duration: 0.45, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 1.6);
+        tl.fromTo(root + ' [data-a-mini-halo="3"]',
+          { autoAlpha: 0 }, { autoAlpha: 0.55, duration: 0.45, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 1.8);
+
+        // 2.0-5.5s: chrome 中字「套壳，才是产品」入场
+        tl.fromTo(root + ' [data-a-headline]',
+          { autoAlpha: 0, y: 20, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 1.4, ease: 'power3.out' },
+          tA + 2.0);
+        // 3.5s 视觉重心：chrome 中字 + 三卡 halo pulse 同帧
+        tl.to(root + ' [data-a-mini-card="1"]',
+          { boxShadow: '0 12px 30px rgba(43, 38, 34, 0.10), 0 0 30px rgba(217, 119, 87, 0.32)', duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 3.5);
+        tl.to(root + ' [data-a-mini-card="2"]',
+          { boxShadow: '0 12px 30px rgba(43, 38, 34, 0.10), 0 0 30px rgba(217, 119, 87, 0.32)', duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 3.55);
+        tl.to(root + ' [data-a-mini-card="3"]',
+          { boxShadow: '0 12px 30px rgba(43, 38, 34, 0.10), 0 0 30px rgba(217, 119, 87, 0.32)', duration: 0.5, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 3.6);
+        // 5.5-6.4s: hold + 微 breathing
+        tl.to(root + ' [data-a-headline]',
+          { scale: 1.012, duration: 0.6, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tA + 5.5);
+
+        // 6.4-6.93s: SEC A fade out
+        tl.to(root + ' .sec-a', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, tA + 6.4);
+
+        // ═════════════════ SEC B · Antigravity 2.0 (6.93-27.9s) ═════════════════
+        const tB = 6.93;
+        tl.to(root + ' .sec-b', { opacity: 1, duration: 0.4, ease: 'power2.out' }, tB);
+
+        // 6.93-9s: b-title + b-subchip
+        tl.fromTo(root + ' [data-b-title]',
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+          tB + 0.2);
+        tl.fromTo(root + ' [data-b-subchip]',
+          { autoAlpha: 0, y: -8 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          tB + 0.8);
+
+        // 9-14s: 左侧 IDE 1.0 旧卡上场
+        tl.fromTo(root + ' [data-b-old-card]',
+          { autoAlpha: 0, x: -40 },
+          { autoAlpha: 1, x: 0, duration: 1.2, ease: 'power3.out' },
+          tB + 2.0);
+
+        // 14-15s: 中央「砍」字
+        tl.fromTo(root + ' [data-b-cut-zone]',
+          { autoAlpha: 0, scale: 0.5, rotation: -8 },
+          { autoAlpha: 1, scale: 1.0, rotation: 0, duration: 0.7, ease: 'back.out(2.2)' },
+          tB + 7.0);
+        tl.to(root + ' [data-b-cut-zone] .b-cut-char',
+          { scale: 1.08, duration: 0.4, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tB + 7.7);
+
+        // 15-18s: 右侧 Antigravity 2.0 卡 fly-in
+        tl.fromTo(root + ' [data-b-new-card]',
+          { autoAlpha: 0, x: 80, scale: 0.96 },
+          { autoAlpha: 1, x: 0, scale: 1.0, duration: 1.2, ease: 'power3.out' },
+          tB + 8.0);
+
+        // 18-23s: marker sweep 划过截图区
+        // 23-27.9s: hold + 右卡 halo pulse + fade out
+        tl.to(root + ' [data-b-old-card]',
+          { opacity: 0.4, duration: 1.0, ease: 'power2.inOut' },
+          tB + 12.0);
+        tl.to(root + ' [data-b-new-card]',
+          { boxShadow: '0 36px 70px rgba(43, 38, 34, 0.16), 0 0 80px rgba(217, 119, 87, 0.30)', duration: 0.9, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tB + 14.0);
+
+        // SEC B fade out at 27.4
+        tl.to(root + ' .sec-b', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, tB + 20.47);
+
+        // ═════════════════ SEC C · 超级应用 + Codex 走对了 (27.9-54.0s · 26.1s) ═════════════════
+        const tC = 27.9;
+        tl.to(root + ' .sec-c', { opacity: 1, duration: 0.4, ease: 'power2.out' }, tC);
+
+        // Phase 1: 双卡并排 (0-10.1s 段内)
+        // 27.9-29.5s: Codex 左卡 fly-in + Antigravity 右卡 fly-in 同时
+        tl.fromTo(root + ' [data-c-app-card="codex"]',
+          { autoAlpha: 0, x: -60 },
+          { autoAlpha: 1, x: 0, duration: 1.4, ease: 'power3.out' },
+          tC + 0.1);
+        tl.fromTo(root + ' [data-c-app-card="antigravity"]',
+          { autoAlpha: 0, x: 60 },
+          { autoAlpha: 1, x: 0, duration: 1.4, ease: 'power3.out' },
+          tC + 0.1);
+        tl.to(root + ' [data-c-twin-row]',
+          { opacity: 1, duration: 0.4, ease: 'power2.out' },
+          tC + 0.1);
+
+        // 32-35s: 中央 chrome 中字「超级应用」+ 双向箭头
+        tl.fromTo(root + ' [data-c-mid-headline]',
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          tC + 4.0);
+        tl.fromTo(root + ' [data-c-arrow-sym]',
+          { autoAlpha: 0, scale: 0.6 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.8, ease: 'back.out(2.0)' },
+          tC + 4.4);
+        // 双向箭头 pulse
+        tl.to(root + ' [data-c-arrow-sym]',
+          { scale: 1.15, duration: 0.55, yoyo: true, repeat: 2, ease: 'sine.inOut' },
+          tC + 5.2);
+
+        // Phase 2 (38-46s): 厂商行
+        // 38-41s: 「不只 A 社在走」+ 三厂商 dot stagger
+        tl.fromTo(root + ' [data-c-vendor-headline]',
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tC + 10.0);
+        tl.fromTo(root + ' [data-c-vendor-row]',
+          { autoAlpha: 0 },
+          { autoAlpha: 1, duration: 0.4, ease: 'power2.out' },
+          tC + 10.4);
+        tl.fromTo(root + ' [data-c-vendor-dot="1"]',
+          { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' },
+          tC + 10.6);
+        tl.fromTo(root + ' [data-c-vendor-dot="2"]',
+          { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' },
+          tC + 11.0);
+        tl.fromTo(root + ' [data-c-vendor-dot="3"]',
+          { autoAlpha: 0, x: -16 }, { autoAlpha: 1, x: 0, duration: 0.5, ease: 'power3.out' },
+          tC + 11.4);
+
+        // Phase 3 (46-54s): Codex 走对了
+        // 46-48s: 右卡（Antigravity）淡退 + 中央元素清屏 + chrome 中字「走对了」+ 上升箭头
+        tl.to(root + ' [data-c-app-card="antigravity"]',
+          { autoAlpha: 0.18, duration: 0.7, ease: 'power2.inOut' },
+          tC + 18.1);
+        tl.to(root + ' [data-c-app-card="codex"]',
+          { scale: 1.04, duration: 0.8, ease: 'power3.out' },
+          tC + 18.1);
+        tl.to(root + ' [data-c-mid-headline]',
+          { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' },
+          tC + 18.1);
+        tl.to(root + ' [data-c-arrow-sym]',
+          { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' },
+          tC + 18.1);
+        tl.to(root + ' [data-c-vendor-headline]',
+          { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' },
+          tC + 18.1);
+        tl.to(root + ' [data-c-vendor-row]',
+          { autoAlpha: 0, duration: 0.5, ease: 'power2.inOut' },
+          tC + 18.1);
+
+        // 48-51s: chrome 中字「走对了」+ chip + 上升箭头 draw
+        tl.fromTo(root + ' [data-c-walk-headline]',
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          tC + 19.0);
+        tl.fromTo(root + ' [data-c-walk-chip]',
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tC + 19.6);
+        // 上升箭头 draw 入场
+        tl.fromTo(root + ' [data-c-arrow-up]',
+          { autoAlpha: 0, y: 60, scale: 0.6 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 1.0, ease: 'back.out(1.6)' },
+          tC + 20.0);
+        tl.to(root + ' [data-c-arrow-up]',
+          { y: -16, duration: 0.5, yoyo: true, repeat: 2, ease: 'sine.inOut' },
+          tC + 21.0);
+
+        // 51-54s: hold breathing on walk-headline
+        tl.to(root + ' [data-c-walk-headline]',
+          { scale: 1.014, duration: 0.6, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tC + 23.0);
+
+        // SEC C fade out at 53.4
+        tl.to(root + ' .sec-c', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, tC + 25.6);
+
+        // ═════════════════ SEC D · 个人态度 (54.0-77.1s · 23.1s) ═════════════════
+        const tD = 54.0;
+        tl.to(root + ' .sec-d', { opacity: 1, duration: 0.4, ease: 'power2.out' }, tD);
+
+        // 54-57s: d-strike + d-headline
+        tl.fromTo(root + ' [data-d-strike]',
+          { autoAlpha: 0, y: -8 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tD + 0.4);
+        tl.fromTo(root + ' [data-d-headline]',
+          { autoAlpha: 0, y: 18, scale: 0.96 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 1.2, ease: 'power3.out' },
+          tD + 1.0);
+
+        // 57-63s: 三 chip stagger
+        tl.fromTo(root + ' [data-d-chip-row]',
+          { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+          tD + 3.0);
+        tl.fromTo(root + ' [data-d-chip-item="1"]',
+          { autoAlpha: 0, y: 14, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 0.6, ease: 'back.out(1.6)' },
+          tD + 3.0);
+        tl.fromTo(root + ' [data-d-chip-item="2"]',
+          { autoAlpha: 0, y: 14, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 0.6, ease: 'back.out(1.6)' },
+          tD + 3.4);
+        tl.fromTo(root + ' [data-d-chip-item="3"]',
+          { autoAlpha: 0, y: 14, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 0.6, ease: 'back.out(1.6)' },
+          tD + 3.8);
+
+        // 63-71s: 四张评论卡 stagger fly-in
+        tl.fromTo(root + ' [data-d-comments]',
+          { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+          tD + 9.0);
+        tl.fromTo(root + ' [data-d-comment="1"]',
+          { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+          tD + 9.0);
+        tl.fromTo(root + ' [data-d-comment="2"]',
+          { autoAlpha: 0, x: 24 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+          tD + 9.4);
+        tl.fromTo(root + ' [data-d-comment="3"]',
+          { autoAlpha: 0, x: -24 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+          tD + 10.0);
+        tl.fromTo(root + ' [data-d-comment="4"]',
+          { autoAlpha: 0, x: 24 }, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' },
+          tD + 10.4);
+
+        // 71-77s: foot headline「欢迎评论 · 一起讨论」
+        tl.fromTo(root + ' [data-d-foot-headline]',
+          { autoAlpha: 0, y: 14 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          tD + 17.0);
+        tl.to(root + ' [data-d-foot-headline]',
+          { scale: 1.012, duration: 0.6, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tD + 18.2);
+
+        // SEC D fade out at 76.6
+        tl.to(root + ' .sec-d', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, tD + 22.6);
+
+        // ═════════════════ SEC E · 北京线下火花（chrome 大字唯一位）(77.1-93.5s · 16.4s) ═════════════════
+        const tE = 77.1;
+        tl.to(root + ' .sec-e', { opacity: 1, duration: 0.4, ease: 'power2.out' }, tE);
+
+        // 77.1-80s: 天际线 + loc chip
+        tl.fromTo(root + ' [data-e-skyline]',
+          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 1, y: 0, duration: 1.2, ease: 'power3.out' },
+          tE + 0.2);
+        tl.fromTo(root + ' [data-e-loc-chip]',
+          { autoAlpha: 0, y: -8 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tE + 0.5);
+
+        // 80-86s: 两 avatar 淡入 + 气泡
+        tl.fromTo(root + ' [data-e-avatar-zone]',
+          { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+          tE + 2.9);
+        tl.fromTo(root + ' [data-e-avatar="left"]',
+          { autoAlpha: 0, scale: 0.6 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.7, ease: 'back.out(1.8)' },
+          tE + 2.9);
+        tl.fromTo(root + ' [data-e-avatar="right"]',
+          { autoAlpha: 0, scale: 0.6 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.7, ease: 'back.out(1.8)' },
+          tE + 3.2);
+        tl.fromTo(root + ' [data-e-bubble="left"]',
+          { autoAlpha: 0, y: -10 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          tE + 3.8);
+        tl.fromTo(root + ' [data-e-bubble="right"]',
+          { autoAlpha: 0, y: -10 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          tE + 4.6);
+
+        // 86-91s: spark particles 迸发（视觉高潮）
+        const sparks = document.querySelectorAll(root + ' .e-spark');
+        sparks.forEach((spark, i) => {
+          const seed = ((i + 1) * 2654435761) >>> 0;
+          const r = (n) => ((((seed * (n + 17)) >>> 0) % 1000) / 1000);
+          const dx = (r(1) - 0.5) * 300;
+          const dy = -((r(2) * 280) + 40);
+          const dur = 0.5 + r(3) * 0.4;
+          const sc = 0.5 + r(4) * 1.0;
+          const a = 0.4 + r(5) * 0.5;
+          const rep = 1 + Math.floor(r(6) * 3);
+          tl.fromTo(root + ' [data-e-spark="' + (i + 1) + '"]',
+            { autoAlpha: 0, scale: 0.3, x: 0, y: 0 },
+            { autoAlpha: a, scale: sc, x: dx, y: dy, duration: dur, repeat: rep, yoyo: true, ease: 'sine.inOut' },
+            tE + 8.9 + i * 0.04);
+        });
+
+        // chrome 大字唯一位「思想的火花」160px @ tE + 9.5s
+        tl.fromTo(root + ' [data-e-headline]',
+          { autoAlpha: 0, y: 24, scale: 0.94 },
+          { autoAlpha: 1, y: 0, scale: 1.0, duration: 0.8, ease: 'power3.out' },
+          tE + 9.5);
+
+        // 88s 撞击同帧合成
+        tl.fromTo(root + ' [data-e-foot-chip]',
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'back.out(1.6)' },
+          tE + 10.3);
+
+        // chrome 大字 hold breathing
+        tl.to(root + ' [data-e-headline]',
+          { scale: 1.01, duration: 0.7, yoyo: true, repeat: 1, ease: 'sine.inOut' },
+          tE + 11.5);
+
+        // SEC E fade out at tE + 15.9
+        tl.to(root + ' .sec-e', { opacity: 0, duration: 0.5, ease: 'power2.inOut' }, tE + 15.9);
+
+        // ═════════════════ SEC F · CTA 收尾（fade-out · §18 例外）(93.5-100.6s · 7.1s) ═════════════════
+        const tF = 93.5;
+        tl.to(root + ' .sec-f', { opacity: 1, duration: 0.4, ease: 'power2.out' }, tF);
+
+        // 93.5-95s: f-headline 入场
+        tl.fromTo(root + ' [data-f-headline]',
+          { autoAlpha: 0, y: 16 },
+          { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out' },
+          tF + 0.2);
+
+        // 94.5-96s: XCYJ 频道签名
+        tl.fromTo(root + ' [data-f-sign]',
+          { autoAlpha: 0, y: 12 },
+          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out' },
+          tF + 1.0);
+
+        // 95.5-98s: 三 icon stagger
+        tl.fromTo(root + ' [data-f-icons]',
+          { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power2.out' },
+          tF + 2.0);
+        tl.fromTo(root + ' [data-f-icon="1"]',
+          { autoAlpha: 0, scale: 0.7 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.55, ease: 'back.out(1.8)' },
+          tF + 2.0);
+        tl.fromTo(root + ' [data-f-icon="2"]',
+          { autoAlpha: 0, scale: 0.7 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.55, ease: 'back.out(1.8)' },
+          tF + 2.4);
+        tl.fromTo(root + ' [data-f-icon="3"]',
+          { autoAlpha: 0, scale: 0.7 },
+          { autoAlpha: 1, scale: 1.0, duration: 0.55, ease: 'back.out(1.8)' },
+          tF + 2.8);
+
+        // 97-98s: "下期再见"
+        tl.fromTo(root + ' [data-f-bye]',
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+          tF + 3.5);
+
+        // 98-100.6s: §18 例外执行 · 整段 fade-out 2.6s
+        tl.to(root + ' .sec-f',
+          { autoAlpha: 0, scale: 1.02, duration: 2.6, ease: 'power2.inOut', transformOrigin: '50% 50%' },
+          tF + 4.5);
+
+        // 段末尾撑满（§10 工艺底线）
+        tl.set({}, {}, SEGMENT_DURATION);
+
+        window.__timelines = window.__timelines || {};
+        window.__timelines['seg10-outro'] = tl;
+      })();
+    </script>
+  </div>
+</template>
