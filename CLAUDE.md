@@ -25,7 +25,10 @@ assets/logos/                33 个 AI 厂商 / 工具 SVG（产品引用用真 
 - 「加个零件 / 加个转场 / 加 macos 通知 / Logo 落版」→ `/cyxj-add-block`
 - 插 AI 厂商 / 工具 logo：先查 `assets/logos/`，命名规则全小写无分隔符（`claudecode.svg`），文档见 [`assets/logos/LOGOS.md`](assets/logos/LOGOS.md)。`claude-code-logo.png` 像素拟人头像不在本库，由各视频工程自存
 
-## 硬约束铁律（完整版见 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md)）
+## 硬约束精选 10 条（完整 30 条见 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md)）
+
+> 完整 30 条分两层：**§1–§19 本仓库实战坑** + **§20–§30 官方非可商量底线**（2026-05-22 同步 hyperframes@0.6.33）。
+> 下面 10 条是命中频率最高的速查，**改 compositions/*.html 前必读完整版全文**。
 
 1. **不准** 在 GSAP selector 里用 template literal —— 永远硬编码 `'[data-composition-id="X"] .child'`
 2. **不准** 复制 beat html 后忘记全局换 beat id（CSS class + GSAP selector 两处）
