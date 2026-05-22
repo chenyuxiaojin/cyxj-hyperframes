@@ -15,6 +15,7 @@
         background: transparent;
         color: #2B2622;
         font-family: "Noto Sans SC", "Inter", sans-serif;
+        font-variant-numeric: tabular-nums;
       }
       [data-composition-id="seg04-wrapper"] .sec {
         position: absolute;
@@ -606,7 +607,7 @@
       }
       [data-composition-id="seg04-wrapper"] .sec-d-planet-tag {
         font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
+        font-size: 16px;
         color: #8b3d28;
         letter-spacing: 0.18em;
         margin-bottom: 4px;
@@ -620,7 +621,7 @@
       }
       [data-composition-id="seg04-wrapper"] .sec-d-planet-sub {
         font-family: "JetBrains Mono", monospace;
-        font-size: 12px;
+        font-size: 16px;
         color: #5A4F46;
         margin-top: 4px;
         letter-spacing: 0.04em;
@@ -648,7 +649,7 @@
       }
       [data-composition-id="seg04-wrapper"] .sec-d-sun-tag {
         font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
+        font-size: 16px;
         color: #8b3d28;
         letter-spacing: 0.22em;
         font-weight: 700;
@@ -1035,21 +1036,21 @@
         </div>
         <div class="sec-b-products">
           <div class="sec-b-product p1">
-            <img src="参考图/seg04-official-visuals/01-cursor-real.png" alt="Cursor IDE" />
+            <img crossorigin="anonymous" src="参考图/seg04-official-visuals/01-cursor-real.png" alt="Cursor IDE" />
             <div class="sec-b-product-cap">
               <div class="sec-b-product-name">Cursor</div>
               <div class="sec-b-product-tag">workflow</div>
             </div>
           </div>
           <div class="sec-b-product p2">
-            <img src="参考图/seg04-official-visuals/02-perplexity-page-real.png" alt="Perplexity Page" />
+            <img crossorigin="anonymous" src="参考图/seg04-official-visuals/02-perplexity-page-real.png" alt="Perplexity Page" />
             <div class="sec-b-product-cap">
               <div class="sec-b-product-name">Perplexity</div>
               <div class="sec-b-product-tag">answer engine</div>
             </div>
           </div>
           <div class="sec-b-product p3">
-            <img src="参考图/seg04-official-visuals/03-claude-code-terminal-real.png" alt="Claude Code terminal" />
+            <img crossorigin="anonymous" src="参考图/seg04-official-visuals/03-claude-code-terminal-real.png" alt="Claude Code terminal" />
             <div class="sec-b-product-cap">
               <div class="sec-b-product-name">Claude Code</div>
               <div class="sec-b-product-tag">agentic terminal</div>
@@ -1204,10 +1205,10 @@
           <div class="sec-d-sun">
             <div class="sec-d-sun-tag">MODEL</div>
             <div class="sec-d-sun-logos">
-              <img class="sec-d-sun-logo" src="assets/logos/claude.svg" alt="Claude" />
-              <img class="sec-d-sun-logo" src="assets/logos/openai.svg" alt="OpenAI" />
-              <img class="sec-d-sun-logo" src="assets/logos/gemini.svg" alt="Gemini" />
-              <img class="sec-d-sun-logo" src="assets/logos/deepseek.svg" alt="DeepSeek" />
+              <img crossorigin="anonymous" class="sec-d-sun-logo" src="assets/logos/claude.svg" alt="Claude" />
+              <img crossorigin="anonymous" class="sec-d-sun-logo" src="assets/logos/openai.svg" alt="OpenAI" />
+              <img crossorigin="anonymous" class="sec-d-sun-logo" src="assets/logos/gemini.svg" alt="Gemini" />
+              <img crossorigin="anonymous" class="sec-d-sun-logo" src="assets/logos/deepseek.svg" alt="DeepSeek" />
             </div>
           </div>
           <div class="sec-d-sweep"></div>
@@ -1295,8 +1296,8 @@
         const ROOT = '[data-composition-id="seg04-wrapper"]';
         const tl = gsap.timeline({ paused: true });
 
-        // 所有 SEC 起始 autoAlpha:0
-        gsap.set(ROOT + ' .sec', { autoAlpha: 0 });
+        // 所有 SEC 起始 autoAlpha:0（用 tl.set 写进 timeline 跨段统一 → motion-principles.md L143-148 hard-kill）
+        tl.set(ROOT + ' .sec', { autoAlpha: 0 }, 0);
 
         // ========== SEC A · COOL · 1.2-20.6s ==========
         tl.set(ROOT + ' .sec-a', { autoAlpha: 1 }, 1.2);
