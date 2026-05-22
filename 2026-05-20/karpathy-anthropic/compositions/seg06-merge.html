@@ -1422,6 +1422,11 @@
         14.3
       );
 
+      // SEC A 整体 hide — 之前只 hide 了 sec-a 的子元素（dual-track / a-brand），但 .sec-a 容器本身
+      // 一直 autoAlpha:1 → 内部隐藏元素的 layout box 仍参与 .scene-content bbox 计算，导致 inspect 报
+      // t=720-818s text_box_overflow ERROR（rect 3420×1080，含 .a-orange-sweep 的 fromTo 残留 transform）。
+      // 整段 hide 后 opacity chain → 0，所有内部 element 都被 inspect 的 isVisibleElement() 过滤掉。
+      tl.set(root + ' .sec-a', { autoAlpha: 0 }, 14.3);
       tl.set(root + ' .sec-b', { autoAlpha: 1 }, 14.3);
 
       // 16-19s: 两卡框架 stagger 入场
@@ -1859,6 +1864,8 @@
       );
       tl.set(root + ' .sec-d', { autoAlpha: 0 }, 177.5);
       tl.set(root + ' .sec-e', { autoAlpha: 1 }, 177.5);
+      // SEC E 要 callback .sec-a 的 brand chips（180s）—— 把 sec-a 容器重新 unhide（之前 14.3s 整段 hide 了）
+      tl.set(root + ' .sec-a', { autoAlpha: 1 }, 177.5);
 
       // 177.5-180s: 双轨 pipeline 整体 callback（重新可见 + 两轨同步亮起）
       tl.set(root + ' .dual-track', { autoAlpha: 1 }, 177.5);
