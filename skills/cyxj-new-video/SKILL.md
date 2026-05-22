@@ -1,476 +1,213 @@
 ---
 name: cyxj-new-video
-description: 中文 YouTube 教程视频的全生命周期助手（基于 HyperFrames / HF）——建工程、推参考、协助渲染、归档、判断是否抽模板。当用户说「新视频」「做视频」「做个视频」「做新视频」「做 HF 视频」「做 HyperFrames 视频」「做 HF 教程」「片头」「new video」「做完了」「归档」「这条做好了」「抽成模板」时触发。覆盖从「有想法」到「成品归档进 videos/」+「可选抽模板」的全流程。本仓库做 HyperFrames 中文教程优先用此 skill，不要用上游 make-a-video（缺归档/抽模板/参考推荐工作流）。
+description: 陈与小金（XCYJ）频道 HyperFrames（HF）中文视频全生命周期助手——建工程、推参考、风格借鉴、QA、渲染、归档、抽模板。当用户说「新视频」「做视频」「做个视频」「做新视频」「做 HF 视频」「做 HyperFrames 视频」「做 HF 教程」「片头」「new video」，或输入含 URL 且意图做视频，或说「做完了」「归档」「这条做好了」「渲染完成了归档吧」，或说「抽成模板」「这个结构挺好抽个模板吧」时触发。覆盖从「想法 / URL / 参考素材」到「成片归档进 videos/」+「可选抽模板」的全流程。本仓库做 HyperFrames 中文视频一律用此 skill，不要直接用上游 make-a-video（缺归档 / 抽模板 / 参考推荐 / DNA gate）。这是仓库级 wrapper：叠加在官方 HF skills 和本仓库 DNA / 硬约束之上，不替代官方 skill。
 ---
 
-# /新视频 — 视频全生命周期 SOP
+# cyxj-new-video — XCYJ × HyperFrames 视频全生命周期 SOP
 
-这是陈与小金（XCYJ）频道的视频生产 wrapper。它把"复制模板 + 改 meta + 推参考 + 渲染 + 归档 + 抽模板"这一连串琐事自动化成一句话触发。
+这是陈与小金（XCYJ）频道的视频生产 wrapper。它把「建工程 + 推参考 + 借风格 + QA + 渲染 + 归档 + 抽模板」这一串琐事收成一句话触发。
 
-## 工作目录默认为仓库根
+**这个文件只放触发、路由、gate、delegate。技术真源在官方 skill，纪律真源在仓库 docs。** 动手前按任务读对应的源文件，不要把规则复制进来——复制就是制造第二真源，会漂移。
 
-`~/项目/视频制作台/hyperframes/`。新工程建在 `2026-MM-DD/<slug>/` 下。归档到 `videos/<日期>-<slug>/`。模板源在 `templates/`。
+> 环境基线（2026-05 实测）：本机 `hyperframes 0.6.33`。命令面以此版为准；新 session 先 `npx hyperframes upgrade --check` 看有没有大版本漂移，有就重新核对本文命令。
 
-## 触发分流
+---
 
-根据用户的话识别在哪个阶段：
+## 0. 三条铁律（每次进 skill 先记住）
 
-| 用户说 | 进入 |
+1. **`npx hyperframes` 必须在工程目录里跑**（仓库根没 package.json）。见 HARD_CONSTRAINTS §5。
+2. **mp4 / mov / 大音频不进 git**（§7）；debug 截图只放 `<工程>/debug-shots/` 或 `/tmp/`，不准丢仓库根（§19）。
+3. **单源原则**：规则改动一律改源头文件再 commit，本 skill 和 CLAUDE.md 都不写死「N 条约束」这种数字——只链回 `docs/HARD_CONSTRAINTS.md` 全文。
+
+仓库默认根：`~/项目/视频制作台/hyperframes/`。新工程 `2026-MM-DD/<slug>/`，归档 `videos/<日期>-<slug>/`，模板 `templates/<name>/`，参考索引 `docs/REFERENCE_INDEX.md`。
+
+---
+
+## 1. 分流决策图（进 skill 第一步走这里）
+
+```
+用户输入
+ │
+ ├─ 含 URL 且要做视频 ─────────→ A0：delegate /website-to-hyperframes，拿到 capture/+DESIGN+SCRIPT+STORYBOARD 再回 A1
+ ├─「做完了 / 归档 / 这条做好了」→ 阶段 B（归档）
+ ├─「抽成模板」───────────────→ 阶段 C（抽模板）
+ └─ 其他（文字主题 / 参考图 / 口播）→ 阶段 A
+         │
+         ├─ 9:16 竖屏 ──────────→ delegate /short-form-video，本 skill 退出
+         └─ 横屏 ── 模板决策：
+                ├─ 无录屏 + 结构化教程（≥30s、≥6 beat、hook+痛点+方案+流程）→ cp templates/tutorial-8beat/
+                └─ 其他（有录屏 / 单段演示 / 概念片 / 品牌片中段）→ npx hyperframes init --example blank 起步，
+                   参考 videos/ 拓扑但不直接 cp 已发布工程（id / 文案绑死旧内容）
+```
+
+不确定时只问一句：**「你是要建新工程、继续现有工程、归档，还是抽模板？」**
+
+拓扑参考（按形态从 `videos/` 回查，仅看结构不 cp）：直出 host-overlay → `claude-demo-v2`；ProRes alpha 精修 → `claude-overlays-only`；无录屏 demo 串联 → `codex-claude-intro`；长教程 → `claude-19-tips`。完整 10 条见 `docs/REFERENCE_INDEX.md`。
+
+---
+
+## 2. 动手前必读（写 composition 前 [BLOCKING]）
+
+写任何 `index.html` / `compositions/*.html` 之前，必须先加载官方能力 + 读仓库纪律。**跳过这步＝重蹈 2026-05-20 cold-open 的覆辙**（漏了官方硬规则，写了禁用的 exit 动画、用了 absolute 定位、用绝对秒数）。
+
+| 任务 | 加载 / 参考 |
 |---|---|
-| 「新视频」「做视频」「做个视频」「片头」 | 阶段 A |
-| 「做完了」「归档」「这条做好了」「渲染完成了归档吧」 | 阶段 B |
-| 「抽成模板」「这个结构挺好抽个模板吧」 | 阶段 C |
+| composition / sub-composition / caption / timeline | `/hyperframes`（含 Scene Transitions 硬规则、Layout Before Animation、Visual Identity Gate、WCAG） |
+| CLI dev loop（init/lint/validate/inspect/preview/render/doctor） | `/hyperframes-cli` |
+| GSAP 时间线 / position parameter（`"<"` `">"` `"<0.2"`）/ paused timeline / autoAlpha | `/gsap` |
+| 用 catalog block/component | `/hyperframes-registry`（**但记住：add 是 fork demo 起点，不是参数化零件，见 §3 catalog**） |
+| URL → 视频 | `/website-to-hyperframes` |
+| TTS / 转写 / 抠像 | `/hyperframes-media` |
 
-不确定时主动问用户："你是要建新工程，还是把现有工程归档？"
+仓库纪律真源（写前读，不要凭记忆）：
+- `docs/HARD_CONSTRAINTS.md`（**全文必读**，不看条数看内容）——核心是 GSAP querySelector 硬编码（§1）、复制 beat 全局换 id（§2）、sub-comp 用 `[data-composition-id="X"]` 不用 `#X`（§9）、GSAP transform 覆盖 CSS translate（§14）、catalog 是 demo（§16）、转场即退场仅 final scene 例外（§18）。
+- `MY_VISUAL_DNA.md`（个人美学宪法）+ `MY_MOTION_NOTES.md`（19 招实战沉淀）。
+
+> **PROJECT-STATE / RHYTHM-MAP 是工程级文档，不是 wrapper 级。** 只有当前工程目录里**确实存在** `PROJECT-STATE.md` 时，才按「真源优先」校对（读 SRT 发现跟描述对不上 → 改源头文件再 commit）。wrapper 层不依赖它存在——仓库根没有这个文件。
 
 ---
 
 ## 阶段 A：建工程
 
-### A0. URL 输入早分流（必做）
+### A1. 一次性问清四件事
 
-**进入阶段 A 之前先看用户输入是不是 URL**（如「基于 anthropic.com 做个视频」「把这个网站做成片头 https://...」）：
+1. **视频形态**（决定走哪条模板路径，见 §1 决策图）：9:16 竖屏 / 横屏有录屏直出 / 横屏有录屏 ProRes 精修 / 横屏无录屏结构化教程 / 横屏无录屏单段演示。
+2. **主题** → 转 kebab-case 当 slug（去中文，保留拼音 / 英文 / 数字 / `-`）。
+3. **大致时长** → 5-30s / 30-60s / 60-120s / 自定义。
+4. **有没有参考素材** → 有 → **走阶段 D**（先让用户把图存 `参考图/<slug>/`）；没有 → 按 DNA 默认风格，跳过 D。
 
-- ✅ 是 URL → 立即移交 `/website-to-hyperframes` 跑前 5 步（capture / DESIGN / SCRIPT / STORYBOARD / VO），收到 capture 结果（截图 + 设计 token + 文案大纲）后再回到本 skill 的 A1
-- ❌ 不是 URL（用户给的是文字主题、参考截图、口播文案）→ 直接跳到 A1
+### A2. 推荐参考工程
 
-**不要自己手动 Read 网页**——/website-to-hyperframes 有专门的浏览器抓取 + 设计提取流程，跳过会丢失关键的字体、配色、品牌信息。
-
-### A0.5 模板选择决策树（先看这个，再用 A1 问用户确认）
-
-真模板只有一个（`templates/tutorial-8beat/`）。其他形态请**从 0 写**——`videos/` 下 9 条已发布工程可作拓扑参考，**不要 cp 起步**（id / 文案绑死旧内容）。
-
-```
-1. 是不是 9:16 竖屏？
-   ├─ 是 → 移交 /short-form-video，本 skill 退出
-   └─ 否 → 继续
-
-2. 有没有录屏（主播口播 + 屏幕操作）？
-   ├─ 有 → 从 0 写工程（参考 docs/hyperframes-official/getting-started/quickstart.md 最小骨架）
-   │       拓扑回查：videos/2026-05-02-claude-demo-v2/（直出 mp4）或 /host-overlay-alpha/（达芬奇精修 alpha）
-   └─ 没有 → 继续
-
-3. 是不是结构化教程（≥30s，含「hook + 痛点 + 解决方案 + 流程」完整段落，≥6 beat）？
-   ├─ 是 → templates/tutorial-8beat/   （8 beat 教程骨架，含 face FULL→PiP→FULL 时序、kicker、终端、卡片栈、执行计划列表、章节切换卡）
-   └─ 否（单段演示 / 概念片 / 品牌片中段 / 纯视觉叙事 ≤30s）→ 从 0 写工程
-       拓扑回查：videos/2026-05-02-codex-claude-intro/（7 beat 串联无录屏）
-```
-
-**对应 DNA 形态**（docs/REFERENCE_INDEX.md 第 5 节模板表已标注）：
-- 录屏教程类 / tutorial-8beat → 教程类，底色用暖米色 `#F7F2EA`（19-tips 实战验证）
-- 单段演示 / 概念片 → 自由，按片子主题选底色（DNA 第 1 条"其他形态"分支）
-
-**多段混用**：一条视频可以用多个段落，达芬奇里串联（如开头 demo 钩子 → 中段录屏讲解 → 收尾品牌 hold）。每段单独建 `2026-MM-DD/<slug>-<segment>/` 工作区分别 render。
-
-> ⚠️ **模板状态**：当前唯一从 0 设计的真模板是 `templates/tutorial-8beat/`。其他形态从 0 写——等同形态做到 3-5 次重复后，从最近几条工程里抽真模板。可参考 `videos/2026-05-02-claude-demo-v2/` (host-overlay 形态)、`videos/2026-05-02-claude-overlays-only/` (alpha 输出)、`videos/2026-05-02-codex-claude-intro/` (无录屏 demo-fullscreen) 的拓扑。
-
-### A1. 问清四件事（一次性，用 AskUserQuestion 多选）
-
-1. **视频形态**（影响选哪个模板，按 A0.5 决策树排序）：
-   - A. 9:16 竖屏 → 调用 `/short-form-video` skill 接管，本 skill 退出
-   - B. 横屏 + 有录屏 + 直接出成品 → **从 0 写**（拓扑回查：`videos/2026-05-02-claude-demo-v2/`）
-   - C. 横屏 + 有录屏 + 达芬奇精修 → **从 0 写**（拓扑回查：`videos/2026-05-02-claude-overlays-only/`，alpha 输出）
-   - D. 横屏 + 无录屏 + 结构化教程（≥30s ≥6 beat 含口播） → `templates/tutorial-8beat/`
-   - E. 横屏 + 无录屏 + 单段演示 / 概念片 → **从 0 写**（拓扑回查：`videos/2026-05-02-codex-claude-intro/`）
-2. **主题** —— 自由文本，转 kebab-case 当 slug（去除中文，保留拼音/英文/数字/`-`）
-3. **大致时长** —— 5-30s / 30-60s / 60-120s / 自定义
-4. **是否有参考素材**（决定要不要走阶段 D 风格借鉴）：
-   - A. 我有参考图/参考视频 → **必走阶段 D**，让用户先把截图存到 `参考图/<topic-slug>/`
-   - B. 没有参考，按 DNA 默认风格做 → 跳过阶段 D 直接 A5
-5. **特别想参考的工程**（可选）—— 用户可指名，否则下一步自动推荐
-
-### A2. 读 INDEX 推荐参考工程
-
-`Read docs/REFERENCE_INDEX.md`，根据形态匹配 2-3 个工程，列给用户：
-
-```
-我从 videos/ 挑了 2 个比较贴的工程：
-- nate-demos/claude-edit-intro/ — 23s 教程片头标杆
-- 我的作品/2026-05-02-codex-claude-intro/ — 你之前做过的中文片头
-
-要不要先 npx hyperframes preview 看一眼？还是直接开干？
-```
-
-让用户决定是先看还是直接建。
+`Read docs/REFERENCE_INDEX.md`，按形态挑 2-3 个工程列给用户，问「先 `npx hyperframes preview` 看一眼，还是直接开干？」
 
 ### A3. 建工作区
 
 ```bash
-DATE=$(date +%Y-%m-%d)
-mkdir -p $DATE
+DATE=$(date +%Y-%m-%d); mkdir -p "$DATE"
 ```
 
-- **形态 D（tutorial-8beat）**：`cp -R templates/tutorial-8beat $DATE/<slug>/`（DNA token mirror `assets/xcyj-tokens.css` 自动带过去）
-- **形态 B/C/E（从 0 写）**：`mkdir -p $DATE/<slug>/assets && cd $DATE/<slug>/`，照 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架（meta.json + hyperframes.json + index.html + compositions/*.html + assets/）一步步建。可参考 `videos/2026-05-02-claude-demo-v2/`（host-overlay）/ `videos/2026-05-02-claude-overlays-only/`（host-overlay-alpha）/ `videos/2026-05-02-codex-claude-intro/`（demo-fullscreen）看旧形态怎么拼，但**不要直接 cp**——id 和文案是绑死那一条视频的。
-  - DNA token 接入：`cp templates/components/xcyj-tokens/xcyj-tokens.css $DATE/<slug>/assets/xcyj-tokens.css`，然后 `index.html` 顶部加 `<link rel="stylesheet" href="assets/xcyj-tokens.css" />`，所有 beat 直接 `var(--c-bg)` / `var(--c-hot)` 等。详见 `templates/components/xcyj-tokens/README.md`。
+- **结构化教程（形态 D）**：`cp -R templates/tutorial-8beat "$DATE/<slug>/"`（自带 `assets/xcyj-tokens.css` 镜像 + `source.mp4`）。
+- **其他形态**：`cd "$DATE" && npx hyperframes init <slug> --example blank --skip-skills`，照 `/hyperframes` 最小骨架补 `compositions/*.html`。参考 `videos/` 旧工程拓扑但不 cp。
+- **DNA token 接入**：真源是 `templates/components/xcyj-tokens/xcyj-tokens.css`，tutorial-8beat 里那份是镜像副本。从 0 写时 `cp templates/components/xcyj-tokens/xcyj-tokens.css <工程>/assets/`，`index.html` 顶部 `<link rel="stylesheet" href="assets/xcyj-tokens.css" />`，beat 里直接 `var(--c-bg)` / `var(--c-hot)`。**改 token 改真源，不要改镜像。**
 
-### A4. 改 meta.json 和 index.html
+可复用零件在 `templates/components/`（7 个）：`cc-window`（终端 UI）、`orbit-dots`、`pulse-bars`、`shake-error`、`spec-fill`、`text-effects`、`xcyj-tokens`。用前 `Read templates/catalog.json` 看清楚每个干什么，优先复用不重写。
+
+### A4. 改 meta / index
 
 ```bash
-cd $DATE/<slug>/
+cd "$DATE/<slug>/"
 ```
 
-- 改 `meta.json` 的 `id` 和 `name`：把模板里的占位符替换成 `xcyj-<slug>`、可读中文 name（从 0 写时直接填正确值）
-- 改 `index.html`：
-  - `<title>` 标签
-  - `<div id="root" data-composition-id="...">` 改 id
-  - 文件末尾 `window.__timelines["..."]` 同步改 id（见 docs/HARD_CONSTRAINTS.md 第 4 条）
-  - 总 `data-duration` 按用户给的时长调整（同时按比例调各 beat 的 `data-start`/`data-duration`）
-  - 字幕 `<div class="caption clip">` 占位文案
+- `meta.json`：`id = xcyj-<slug>`，`name = 可读中文名`（从 0 写时直接填正确值，cp 模板时替换占位符 `xcyj-tutorial-8beat-PLACEHOLDER`）。
+- `index.html`：`<title>`、root `data-composition-id`、文件末尾 `window.__timelines["..."]` key 三处 id 同步（§2 / §9）。
+- 总时长用 timeline 结尾 `tl.set({}, {}, TOTAL_SECONDS)` 表达，不要靠 root `data-duration`。
 
-### A5. 告知用户开始干活
+### A5. 接收文案后改 beat
 
+先过 `MY_VISUAL_DNA.md` 末尾的自检清单（全部 yes 才继续，任何一条 no 先修 brief 或 theme）。再扫 `MY_MOTION_NOTES.md` 看本视频会触发哪几条（撞击/爆炸 → 同帧合成；改主色/加效果 → sample→broadcast；2025-Q4 后新功能 → 联网双源审核；SVG filter → 命名空间）。然后改各 `compositions/*.html` 的 headline / caption / list / terminal / card 文案，全程守 `docs/HARD_CONSTRAINTS.md`。
+
+---
+
+## 阶段 D：风格借鉴（A1 第 4 题答「有参考素材」时）
+
+时机：A4 改完 meta 之后、A5 改 beat 之前。目的：让参考影响视觉，但**强制保留 XCYJ 视觉 DNA**，不被参考带跑。
+
+1. **必读 4 个文件**：`MY_VISUAL_DNA.md`、`MY_MOTION_NOTES.md`、`docs/STYLE_BORROW_PLAYBOOK.md`、`参考图/<slug>/` 下所有图（≤10 张全 Read，≥10 张挑 8-12 张代表性的）。
+2. **写本工程 `STYLE_BRIEF.md`**：强制做 DNA 对照表（参考有但 DNA 拒绝 / DNA 必须但参考没有 / 参考有且 DNA 允许）→ 套 PLAYBOOK brief 骨架（≤200 行）→ 每 beat 写「核心比喻 + 用什么组件 + 引第几张参考图 + hot 词」→ 过 DNA 自检全 yes 才进下一步。
+3. **改 beat**：8 beat 默认分组 hook+pain / verdict+promise / concept+flow / punchline+outro。可用 subagent 并行（同一条消息里启动）；每个 agent 必读本工程 STYLE_BRIEF.md + index.html + 现状 composition + MY_VISUAL_DNA.md + 1-2 张相关参考图。
+4. 完成后回到 A5 收尾，进 QA。
+
+---
+
+## QA → commit → render 流水线
+
+所有命令在工程目录跑。出错就停下问用户，不要硬跑下一步。
+
+```bash
+npx hyperframes doctor      # 环境：Node≥22 / FFmpeg / Chrome / Docker（新机器/新 session 先跑）
+npx hyperframes lint        # 结构 lint，必须 0 errors（§1/§2 高频触发）
+npx hyperframes validate    # WCAG contrast 审核（默认开；命令不在主 help 列表但可用）。§17：米色底用深橙 #B5563D
+npx hyperframes inspect --samples 15   # 文本/容器溢出审计（lint 抓不到，肉眼也常漏）
+npx hyperframes preview     # localhost:3002，浏览器拖 scrubber 全段人眼审 motion
 ```
-✅ 工程建好了：~/项目/视频制作台/hyperframes/2026-MM-DD/<slug>/
 
-下一步等你提供：
-1. 文案（每个 beat 的字幕、标题）
-2. 录屏文件（如果是有录屏的形态）
-3. 配音文件（可选）
+每一步解决的问题不同：`lint` = 结构合法性，`validate` = 对比度，`inspect` = 布局溢出（19 招里 polaroid 溢出、cc-window 居中失效本该这步抓），`preview` = 真实 motion 人眼判断。
 
-提供后我会改各个 beat 的 html，跑 lint，preview。
+**motion 验证只认 preview 人眼 scrub**，禁 playwright 单帧截图、禁 render mp4 验证（preview 即所见即所得）。需要把单帧给 AI 看时用 `npx hyperframes snapshot --at 3.0,10.5`（不开常驻浏览器 tab，契合 §10/§11 内存教训）。
+
+```bash
+# ── preview 人眼通过 → 立即 commit（不等整片完成）──
+git add <工程>/
+git commit -m "feat(videos): <slug> v1 - 完整可 render"
+# ── commit 后才 render ──
+npx hyperframes render --quality draft --output renders/draft.mp4    # 草稿速验
 ```
 
-### A6. DNA 自检 + 扫笔记 + 接收文案后改各 beat
+**commit 节奏（§19）**：一段 preview 通过即 commit；改完一轮 → `iterate(videos): <slug> v2 - <主要变化>`；通用 bug fix / 新硬约束各自独立 commit。理由：cold-open 做一天没 commit 差点丢工作。
 
-> ⚠️ **如果 A1 第 4 题答 "我有参考素材"，先走阶段 D 再回到 A6**（D2 已含 DNA 自检，可跳过本步第 1 项）。
+### render 形态速查（0.6.33 实测）
 
-**🔴 前置 0：动手写 composition HTML 之前**[BLOCKING]**必须调三个官方 skill**（2026-05-21 教训沉淀）：
-
-| skill | 干什么 |
+| 场景 | 命令 |
 |---|---|
-| `Skill: hyperframes` | composition 结构 + Scene Transitions Non-Negotiable 硬规则 + Layout Before Animation + Visual Identity Gate + WCAG validate + animation-map QA |
-| `Skill: hyperframes-registry` | catalog blocks 是 demo 模板（fork 改造用），不是参数化即插即用零件 |
-| `Skill: gsap` | 时间线 + position parameter（`"<"`, `">"`, `"<0.2"`）+ autoAlpha + 相对值 + labels |
+| 横屏直出成片 | `render --quality standard --output renders/final.mp4`（standard 在 1080p 视觉无损） |
+| 终交付最高档 | `render --quality high --output renders/final.mp4` |
+| **ProRes 4444 alpha（达芬奇/PR/FCP 精修）** | `render --format mov --output renders/overlay.mov` ← **NLE 叠加层走这个，不是 webm（§3）** |
+| WebM alpha（**仅浏览器**播放） | `render --format webm --output renders/overlay.webm`（VP9 alpha 进 NLE 是黑底，别用） |
+| PNG 序列（AE/Nuke/Fusion） | `render --format png-sequence --output renders/frames/` |
+| 竖屏成片 | `render --resolution portrait --output renders/final.mp4`（4K 加 `-4k`） |
+| 4K | `render --resolution 4k --output renders/final-4k.mp4`（DPR 超采，HDR 暂不支持 4K） |
+| 渲单 sub-comp | `render -c <composition-id> --output renders/<id>.mp4` |
+| 变量驱动模板 | `render --variables-file vars.json --output renders/out.mp4`（见阶段 C） |
 
-**为什么硬规定**：2026-05-20 karpathy-anthropic cold-open 第一稿因为只调了 cyxj-new-video，没调上述三个，结果：
-1. 写了 hyperframes skill 明文禁止的 SEC 末尾 exit 动画（"NEVER use exit animations except final scene. The transition IS the exit."）
-2. 大量 absolute positioning 违反 "Layout Before Animation"（应 padding flex）
-3. 用绝对秒数没用相对时序，改时长要逐个手算偏移
-4. 误以为 catalog block 是参数化零件，盲推荐"装 4 个 block 替换手撸"，装完才发现都是 demo（fork 用，不直接调）
-
-写 sub-composition 一律走前置 0 → 前置 1 → 前置 2 → 前置 3 顺序，不准跳过。
-
----
-
-## 前置 0.3：真实素材 + preview 验证（两条硬约束）
-
-工作过程中**禁止两种偷懒**（2026-05-21 seg02 v1 教训）：
-
-1. **真实人物 / 真实内容（推文 / Gist / 视频列表 / 文章页）→ 抓真截图，禁 HTML mock 替代**
-   - 工具链：`grok-search`（X.com 找推文最强）或 `tavily web_search` 找 URL → `firecrawl-scrape` screenshot 模式抓图
-   - 落地：放 `assets/screenshots/` 或 `assets/tweets/`，命名清晰可识别（如 `vibe-coding-tweet.png` / `llm-wiki-gist.png` / `bili-1.png`）
-   - 为什么：HTML mock 看着像但**可信度归零**——观众一眼能看出是手绘的"X 推文样式"还是真的从 X.com 抓的。可信度直接决定视频说服力
-   - 出处：seg02 v1 教训。最初 SEC A vibe coding 推文 / SEC B LLM Wiki Gist / SEC E B 站 3 视频都是 HTML mock，用户审一眼看出，要求全部改真截图
-
-2. **motion 验证 → HF Studio preview 人眼审，禁 playwright 截图 / 禁 render mp4 验证**
-   - 工具：`npx hyperframes preview`（工程目录跑，localhost:3002），浏览器拖 scrubber 全段过
-   - 官方原话：preview 即所见即所得（What you see in the preview is exactly what will be captured during rendering）
-   - 禁止：playwright `browser_take_screenshot` 看单帧（看不出 motion）/ `hyperframes render` mp4（慢且浪费，段验证不需要）
-   - 出处：seg02 v1 教训。preview 是官方设计的人眼验证工具，单帧截图和 render mp4 都不是段验证的合理路径
-
----
-
-## 前置 0.5：发现 mismatch 必须回改文物（轻量纪律）
-
-工作过程中，**任何时候发现以下情况之一，停下来先回改源头文件，不准默默调整后只写进当前 PLAN**：
-
-1. **SRT 真源 vs PROJECT-STATE / INTEGRAL-RHYTHM-MAP 衍生描述不一致**
-   （例：读 SRT 发现 ch2 实际口播跟 RHYTHM-MAP 卡片描述对不上）
-   → 真源胜。改 PROJECT-STATE.md §3 表 + RHYTHM-MAP 对应卡片，commit，再继续
-
-2. **PROJECT-STATE 里某条工艺底线在当前段实操不合理**
-   （例：§9 默认 hard cut，但本段进高潮真的需要 1.2s 重转场）
-   → 在 PLAN-seg{NN} 顶部写「§X 例外（仅本段）」一行说明；如果连续 2 段都触发例外，回改 §X 本身
-
-3. **PROJECT-STATE 里某段拓扑/形态归类发现不对**
-   （例：seg06 写到一半发现该是 overlay 不是 cutaway）
-   → 改 PROJECT-STATE.md §3 表形态列 + RHYTHM-MAP 第 1 部分节奏曲线 + 第 2 部分卡片，commit，再继续
-
-**判断要不要回改的标准：影响范围 > 当前段就回改，只影响当前段就 PLAN 里写**。
-
-例：seg02 实际口播没有 context engineering → 以后任何人读 PROJECT-STATE / RHYTHM-MAP 都会被误导 → 必须回改
-例：seg02 决定某条字幕用红色 highlight → 只影响 seg02 视觉 → PLAN-seg02 里写就行
-
-回改时 commit message 模板：
-`fix(plan): {改了什么} - 出处 seg{NN}`
-commit body 写一行"为什么改 / 同步改了哪些下游文件"。
-
----
-
-**前置 1：DNA 自检 5 题（跳过阶段 D 时强制跑）**：
-1. 读 `MY_VISUAL_DNA.md` 末尾 "## 自检清单" 5 题
-2. 对照本工程 `index.html` / theme.css / 各 beat HTML 逐题答 yes/no
-3. **5/5 yes 才能继续**；任何一条 no 必须先修复 brief 或 theme
-
-**前置 2：扫 MY_MOTION_NOTES.md 看本视频会触发哪些条目**：
-- 撞击 / 爆炸 / 闪现戏 → § 3（同帧合成模板）
-- 视觉风格全局变更（改主色、加新效果） → § 7（sample → broadcast → cleanup）
-- 涉及 2025-Q4 之后的最新产品功能 → § 8（联网双源审核）
-- 用 SVG filter（feTurbulence 等） → § 5（命名空间）
-- 用 cc-window 终端 UI → 直接 link `templates/components/cc-window/cc-window.css`
-
-**前置 3：复用零件**——优先 `templates/components/` 已有零件（当前：cc-window）+ catalog 已装零件，不要重写。
-
-用户提供文案后，改 `compositions/*.html`：每个 beat 的 headline、card name、列表项等。
-**严格遵守 [`docs/HARD_CONSTRAINTS.md`](../../../docs/HARD_CONSTRAINTS.md)（仓库单源，8 条）**：核心是 GSAP querySelector 硬编码 / 复制 beat 全局换 id / 中文 Whisper 用 `whisper-cli` / `npx hyperframes` 必须在工程目录 / 不 commit 上游目录 / 大视频不进 git。**改 compositions/*.html 前必读全文。**
-
-### A7. lint → preview → commit → render
-
-```bash
-npx hyperframes lint                                                    # 必须 0 errors
-npx hyperframes validate                                                # WCAG contrast 必须 0 warnings (docs/HARD_CONSTRAINTS.md §17)
-npx hyperframes preview                                                 # 在浏览器看
-# ── 用户审 preview 通过 → 立即 commit ──
-git add <工程>/                                                          # commit 本段所有工程文件 + brief 改动
-git commit -m "feat(videos): <slug> <段> v1 - 完整可 render"
-# ── commit 后才允许 render ──
-npx hyperframes render --quality draft --output renders/draft.mp4       # 草稿
-npx hyperframes render --quality standard --output renders/final.mp4    # 成片
-```
-
-每一步出错都暂停问用户，不要硬跑。
-
-**🔴 commit 节奏硬规则**（docs/HARD_CONSTRAINTS.md §19）：
-- 一段 preview 通过 → **立即 commit**（不等"整片完成"才提）
-- 收到反馈改完一轮 → commit `iterate(videos): <slug> <段> v2 - <主要变化>`
-- 遇到通用 bug fix → 独立 commit
-- 沉淀新硬约束到 HARD_CONSTRAINTS.md → 独立 commit
-- **为什么硬规则**：2026-05-21 cold-open 工作做了一整天没 commit，效果不达预期切换新对话时差点丢工作 / 新对话踩同样坑。每段 commit 让回滚 + 切换 session 零成本。
-
-**🔴 debug 截图禁止仓库根**：
-- playwright/preview 截图必须存 `<工程>/debug-shots/`（已 gitignore）或 `/tmp/`
-- 截图前 `cd` 进工程目录 或 显式给 `filename: '<工程>/debug-shots/v1-secA.png'`
-- 仓库根 `.gitignore` 拦截 `/*.png`，但仍要养成习惯避免路径写错
-
----
-
-## 阶段 D：风格借鉴（A1 第 4 题答 "我有参考素材" 时触发）
-
-**触发时机**：A4 改完 meta 之后，A6 改 beat 之前。即"工程已建好，但还没动 beat 文案"。
-
-**目的**：让参考素材（截图/视频）影响视觉风格，但**强制保留小陈自己的视觉 DNA**——避免被参考完全带跑。
-
-### D1. 必读 4 个文件
-1. `MY_VISUAL_DNA.md`（仓库根）—— 个人美学宪法
-2. `MY_MOTION_NOTES.md`（仓库根）—— 19 招实战沉淀的动效与工程笔记（10 节实操陷阱 + 工程方法论 + 可复用范式索引）
-3. `docs/STYLE_BORROW_PLAYBOOK.md`（仓库 docs/）—— 借鉴方法论 + brief 骨架
-4. 用户参考图：`参考图/<topic-slug>/` 下所有 PNG/JPG（≤10 张全 Read，≥10 张挑代表性的 8-12 张）
-
-### D2. 写本工程的 STYLE_BRIEF.md
-按 PLAYBOOK 步骤 2-3 走：
-1. **强制做 DNA 对照表**——三栏：参考有但 DNA 拒绝 / DNA 必须但参考没有 / 参考有且 DNA 允许（借鉴重点）
-2. 套 PLAYBOOK 步骤 3 的 brief 骨架填空（≤200 行）
-3. 每 beat 写"核心比喻 + 用什么组件 + 引用第几张参考图 + hot 词"
-4. 写完后过 DNA 自检清单 5 个 yes/no——5/5 才进 D3
-
-### D3. 派 4 个 sonnet agent 并行改 beat
-按 PLAYBOOK 步骤 4：
-- 8 beat → 4 个 agent 配对：hook+pain / verdict+promise / concept+flow / punchline+outro
-- 每个 agent 必读：本工程 STYLE_BRIEF.md + index.html + 现状 composition + MY_VISUAL_DNA.md + 1-2 张相关参考图
-- 4 个 Agent 调用放在**同一条消息里**并行启动（`run_in_background: true`）
-
-### D4. main 跑 lint 后转 preview gate
-按 PLAYBOOK 步骤 5：
-1. `npx hyperframes lint` 必须 0 errors
-2. preview 已在跑（默认 localhost:3002）→ 把 URL（含 `?comp=<beat-id>` 单 beat 调试）告诉用户
-3. **不要主动 render**——等用户在浏览器看完反馈
-4. 用户认可某个 beat → 留着；要改 → 派对应 agent 修
-5. 用户**明确说**"渲一版" → 才跑 `--quality draft` → 满意 → `--quality standard`
-
-### D5. 完成后回到 A6
-当用户对 preview 满意 → 视为 D 阶段完成 → 进入 A6 接收文案后改其他细节，或直接到 A7 跑 render。
+> 别默认 4K/60fps：1920×1080 / 30fps 渲得快也够好，需要才上。
 
 ---
 
 ## 阶段 B：归档
 
-用户说「做完了」「归档」时触发。
-
-### B1. 检查工程状态
-
-```bash
-ls $WORKDIR/renders/ | grep final
-```
-
-如果没有 `renders/final.mp4`：先问用户"要不要现在渲染 standard 版？还是已经在别的地方有成片了？"
-
-### B2. 拿日期前缀
-
-按以下优先级：
-
-1. `git log --reverse --format=%cs -- 2026-MM-DD/<slug>/ | head -1`
-2. 不行就用工作区文件夹日期（`2026-MM-DD`）
-3. 不行就用今天 `date +%Y-%m-%d`
-
-### B3. 移动到我的作品
-
-```bash
-mv 2026-MM-DD/<slug>  videos/<日期>-<slug>
-```
-
-完整工程含 `renders/final.mp4` 一并移动（mp4 本地保留，gitignored）。
-
-### B4. 在 INDEX 加一行
-
-`Edit docs/REFERENCE_INDEX.md`，找到「你的旧作品」相关板块（横屏教程片头 / 整片演示等），加一行：
-
-```markdown
-| `我的作品/<日期>-<slug>/` | 16:9 | XXs | 主题/亮点一句话 |
-```
-
-### B5. 在 catalog 用例补一行（如果用了 block）
-
-如果工程里 `compositions/components/` 下有装过的 block，在 INDEX 的「真实工程里用过哪些零件」板块加一行：
-
-```markdown
-- `我的作品/<日期>-<slug>/` 用了：`block-name-1`、`block-name-2`
-```
-
-### B6. 必做：主动问"要抽成模板吗？"
-
-**这一步永远要问，不要跳过**。即使用户没说要抽，也主动问：
-
-```
-归档完成了。最后一个问题：
-
-这条工程的结构（XX beat、XX 拓扑、XX 时长公式）你以后可能反复用吗？
-- 「会，抽成模板」→ 我进入阶段 C，把这条抽成 templates/ 里的新模板
-- 「不会，留着这一份当参考就够」→ 完成
-
-要抽吗？
-```
-
-用户答案：
-- 要 → 进入阶段 C
-- 不要 → 输出"✅ 归档完成。`docs/REFERENCE_INDEX.md` 已更新"，结束
+1. 查 `renders/final.mp4`；没有就问「现在渲 standard/high，还是别处已有成片？」
+2. 取日期前缀：① `git log --reverse --format=%cs -- 2026-MM-DD/<slug>/ | head -1` ② 工作区文件夹日期 ③ 今天。
+3. `mv 2026-MM-DD/<slug> videos/<日期>-<slug>`（含 `renders/` 一并移，mp4 本地留、gitignored）。
+4. `docs/REFERENCE_INDEX.md` 加一行：`| videos/<日期>-<slug>/ | 16:9 | XXs | 主题/亮点 |`。
+5. 用了 catalog block 的话，在「真实工程用过哪些零件」板块补一行。
+6. **必问**（永不跳过）：「这条的结构（XX beat / XX 拓扑 / XX 时长）以后会反复用吗？要 → 进阶段 C 抽模板；不要 → 留作参考即可。」
 
 ---
 
 ## 阶段 C：抽模板
 
-用户说要抽时触发。
-
-### C1. 起模板名
-
-询问用户："这个新模板叫什么？建议 kebab-case，比如 `tutorial-7beat-product` 或 `concept-card-stack`"
-
-### C2. 复制 + 抽空具体内容
-
-```bash
-cp -R videos/<日期>-<slug>  templates/<新模板名>
-cd templates/<新模板名>
-```
-
-抽空动作（用 Edit/MultiEdit）：
-- 改 `meta.json` 的 `id` → `xcyj-NEW-TOPIC`，`name` → 模板说明
-- 改 `index.html` 的 `<title>` → 占位
-- 各 beat html 把具体文案/数据替换为占位符 `{{...}}`：
-  - headline → `{{HEADLINE}}`
-  - 字幕 → `{{CAPTION}}`
-  - 终端 prompt → `{{TERMINAL_PROMPT}}`
-  - list items → `{{ITEM_1}}` 等
-- 删 `assets/` 里的具体素材（保留通用结构资源如品牌字体、CSS token）
-- 删 `renders/`
-- 顶部加注释 `<!-- Template: <名称> · 拓扑：XXX · 用法见 TEMPLATE_USAGE.md -->`
-
-### C3. 在 TEMPLATE_USAGE.md 加一节
-
-```markdown
-## <新模板名>
-
-**拓扑**：XX
-**输出**：MP4 / ProRes 4444 alpha
-**适用场景**：XX
-**改什么**：
-- meta.json: id, name
-- index.html: title, data-composition-id (×2), data-duration, 字幕
-- compositions/<beat>.html: headline、列表项等
-**时长公式**：总时长 = beat 1 (Xs) + beat 2 (Xs) + ... = XXs
-```
-
-### C4. 通知用户
-
-```
-✅ 新模板已抽好：templates/<新模板名>/
-
-以后用：
-  cp -R templates/<新模板名> 2026-MM-DD/<新主题>/
-
-你的归档版仍在 videos/<日期>-<slug>/，作为完整成品保留。
-```
-
-### C5. 必做：问"DNA 有要更新的条目吗？"
-
-抽完模板后**永远问一次**这个问题：
-
-```
-最后一个问题：
-这次视频里，有没有视觉决策你想沉淀进 MY_VISUAL_DNA.md？
-比如某个新色、新组件、新节奏，**连续 2-3 条视频都用了**就值得加进 DNA。
-- 「有，加 XXX 进 DNA」→ 我 Edit MY_VISUAL_DNA.md 加进去
-- 「没有，DNA 现在的就够了」→ 完成
-```
-
-DNA 频繁改 = 没 DNA。只有**反复确认有用**的偏好才升级进 DNA。
+1. 问模板名（kebab-case，如 `tutorial-7beat-product` / `host-overlay-alpha`）。
+2. `cp -R videos/<日期>-<slug> templates/<新模板名> && cd templates/<新模板名>`。
+3. 抽空：`meta.json` 的 id→`xcyj-NEW-TOPIC`、`<title>`、各 beat 的 headline/caption/terminal/list、`assets/` 具体素材、`renders/`。
+4. **参数化优先用官方 variables，不要只靠 `{{PLACEHOLDER}}`**：root 加 `data-composition-variables`，beat 里 `window.__hyperframes.getVariables()` 读值，渲染时 `--variables-file vars.json`（可加 `--strict-variables`）。这才是官方「参数化」姿势，跟 catalog block 的 fork 困境正相反。
+5. 写 `TEMPLATE_USAGE.md`：拓扑 / 输出格式 / 适用场景 / 改什么 / 时长公式。
+6. **必问**：「这次有没有视觉决策要沉淀进 `MY_VISUAL_DNA.md`？只有连续 2-3 条都验证有效的偏好才升级——DNA 频繁改 = 没 DNA。」
 
 ---
 
-## 协作惯例（19 招实战沉淀）
+## §3 catalog 是 fork 起点，不是参数化零件（重要认知，实测坐实）
 
-> 来自 retrospective `03-skills.md §3` 的 12 个 Claude Code 协作开窍点凝练。
-> 这是本 skill 默认的协作风格，跳过会被用户感觉不专业。
+`npx hyperframes add <name>`（如 `yt-lower-third`）实测行为：✅ 写 `compositions/<name>.html`（200+ 行完整 demo，含 GSAP timeline）+ 落地 demo 资产 + 给一行 include snippet 复制到剪贴板；❌ 不改 `index.html`、❌ 无参数化接口（姓名/标题/配色全硬编码在那 200 行里）。
 
-### 1. 视觉跟语义走，每段口播必须对应一个视觉变化
+关键认知：**装进来的是完整源码 demo（文案/配色硬编码），fork 改就能用**——改颜色就是进文件改那几处 `color: #xxx`，改文案就是改写死的字符串，完全能用。「fork demo」指的是「**没有参数化接口、每次复用都得手动进文件改**」，不是「不能改」。
 
-不要先想"32 秒可以塞多少效果"再反推视觉。先把 SRT 切成"段·语义·秒数"三列表，每段口播对应一个视觉 cue。空窗段用过程视觉（grid pulse / particles drift）填，不准 spoiler 下一句。
-
-详见 `MY_MOTION_NOTES.md § 4`。出处：commit `a4c5843` Tip 1 V3→V4 教训。
-
-### 2. commit body 写"原因 + 修法"双段，不只 what 还要 why
-
-不只描述改了什么，还要描述为什么之前错了。示例：
-
-> "top:50% + translate(-50%) 居中失效，因为 cc-window grid layout 实际渲染高度比预期高 ~50px → 改用 flexbox inset:0"
-
-同 chapter 的多版本迭代（如 hook V8a/V9/V10）写在**单个 commit body 内**，不要每个版本一个 commit。
-
-### 3. Callback 历史 chapter 视觉作为叙事手法
-
-如果某个 chapter 用过的视觉（如 mode-toggle-bar、cc-window）在后续 chapter 又出现，**刻意保持视觉同步**（用同一个 CSS 类，不重写一份）。这不是偷懒，是叙事手法——让用户感受到"这个东西又出现了"的呼应感。
-
-19 招里 mode-toggle-bar 在 Tip 4/6/7 三处共用，cc-window 在 12 章共用。
-
-### 4. 一个 commit 一个主题，不是一个 chapter
-
-"Tip 1 视觉重做对齐口播 + Tip 2 polaroid 溢出修复" 是合理 commit（主题 = 视觉口播对齐），跨多个 chapter 一起改没问题。
-
-但 "改 Tip 1 字号 + 改 Tip 2 颜色 + 改 Tip 3 时长" 是 3 个不同主题，应拆 3 个 commit。
-
-出处：commit `f2f0de1`。
-
-### 5. 推全前必单点 sample，不是 commit 全局改完再说
-
-视觉风格全局变更（改主色、改字体、加 wavy filter 等）**必须先选一个代表 chapter 做 sample → preview 截图给用户看 → 用户确认 → 才能 broadcast 到其他 chapter**。
-
-反模式：直接改 `index.html` + `theme.css` 全局 token 推全所有 chapter（19-tips 9 分钟内 3 commit + 1 Revert 教训）。
-
-详见 `MY_MOTION_NOTES.md § 7`。
-
-### 6. 教程涉及最新产品功能必跑联网双源审核
-
-agent 凭训练数据出稿可能错配（训练数据滞后）。涉及 **2025-Q4 之后**的产品功能（Agent Teams / Skills / Plan Mode / Thinking Budget 等）必跑 grok-search `web_search` (extra_sources=2) + Tavily 2 源交叉验证。
-
-commit body 标注："联网核实（Tavily 2 源交叉验证 X.com / Y.com）"。
-
-详见 `MY_MOTION_NOTES.md § 8`。出处：commit `6f81556` Tip 18 教训。
+所以引导用户用 catalog 时说清两点：① add 之后能直接 fork 改（改色/改字即用），② 但**每次复用都要手动改源码**，没有一键换皮。预期工作量 = 进那 200+ 行改，不是「插一个零件填参数」。建议先 `Read docs/hyperframes-official/catalog/blocks/<name>.md` 看 dimensions/duration/风格再决定 add。**想零成本反复换皮**（同一结构换不同主题反复用），走阶段 C 的 variables 路径自己抽模板，不走 catalog。
 
 ---
 
-## 注意事项
+## 贯穿纪律（链回真源，不复制规则）
 
-- **不要在仓库根直接建工程**：必须在 `2026-MM-DD/` 子目录下
-- **不要把 mp4 提交进 git**：`.gitignore` 已配置，但要 verify
-- **每次 npx 命令必须在工程目录里跑**（cd 进去）
-- **遇到 lint 报错**：参照 [`docs/HARD_CONSTRAINTS.md`](../../../docs/HARD_CONSTRAINTS.md)（约束 1 / 2 是 lint 高频触发）自查
-- **中文转写绕开 hyperframes**：用 `whisper-cli`（见 docs/HARD_CONSTRAINTS.md 第 4 条）
+- **视觉跟语义走**：先把 SRT 切「段·语义·秒数」，每段口播对应一个视觉 cue，空窗用过程视觉填、不 spoiler 下句（MOTION_NOTES §4）。
+- **真实素材禁 HTML mock**：真人/推文/Gist/文章页/视频列表一律抓真截图（grok-search 或 tavily 找 URL → firecrawl screenshot），放 `assets/screenshots/`。HTML mock 可信度归零（seg02 v1 教训）。
+- **全局风格改动先 sample**：改主色/字体/加 filter，先选一个代表 beat 做 sample → preview 给用户看 → 确认 → 才 broadcast（MOTION_NOTES §7，19-tips 9 分钟 3 commit + 1 revert 教训）。
+- **最新功能联网双源审核**：涉及 2025-Q4 后产品功能，跑 grok-search + Tavily 2 源交叉，commit body 标注（MOTION_NOTES §8）。
+- **中文转写**：HARD_CONSTRAINTS §4 仍规定绕开 hyperframes 走 `whisper-cli`（历史 DTW preset 写死 `large-v3` vs whisper.cpp 期望 `large.v3` 的 bug，0.6.33 是否修未实测，保守仍绕开）。
+
+---
+
+## 输出口径
+
+- 建好工程：给路径 + 下一步要的材料（文案/录屏/配音）+ 即将跑的 QA 顺序。
+- preview gate：给 lint/validate/inspect 状态 + Studio URL（可带 `?comp=<beat-id>` 单 beat 调试）。
+- render 后：给 `renders/final.mp4` 路径。
+- 归档后：给 `videos/<日期>-<slug>/` 路径，并问是否抽模板。
