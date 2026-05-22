@@ -1,5 +1,9 @@
 <template id="seg06-merge-template">
-  <div data-composition-id="seg06-merge" data-width="1920" data-height="1080">
+  <!-- data-layout-allow-overflow：SEC D 末段 .d-not-filling + Anthropic 卡的 d-axis 在 scale 0.7 + y:280
+       平移后底部超画布 205px（视觉被 canvas 1920×1080 viewport 自然 clip，无实际渲染问题）。
+       inspect 在 sub-comp wrapper 层级 report 这个 overflow（closest() 不到 sub-comp 内的 attribute），
+       需要标在 wrapper 本身。整段 seg06 此类 fade-out 越界都属设计意图 → SKILL.md:402 标 wrap-level -->
+  <div data-composition-id="seg06-merge" data-width="1920" data-height="1080" data-layout-allow-overflow="true">
     <style>
       [data-composition-id="seg06-merge"] {
         position: absolute;
@@ -1018,7 +1022,7 @@
         <div class="pair-cards-row">
           <!-- 左卡 vibe coding -->
           <div class="pair-card c-left">
-            <span class="c-arrow left" data-c-arrow-l>→</span>
+            <span class="c-arrow left" data-c-arrow-l data-layout-allow-overflow="true">→</span>
             <div class="card-brand-row">
               <div class="card-portrait"><img src="../assets/portraits/karpathy.png" alt="Karpathy" /></div>
               <div class="card-mono-chip">x.com</div>
@@ -1042,7 +1046,7 @@
 
           <!-- 右卡 Claude Code（像素拟人图标 + 完整 cc-window 多行演示）-->
           <div class="pair-card c-right">
-            <span class="c-arrow right" data-c-arrow-r>←</span>
+            <span class="c-arrow right" data-c-arrow-r data-layout-allow-overflow="true">←</span>
             <div class="card-brand-row">
               <div class="card-icon-pixel"><img src="../assets/icons/claude-code-icon.png" alt="Claude Code" /></div>
             </div>
@@ -1112,9 +1116,13 @@
     </div>
 
     <!-- ═════════ SEC D · 第三组对位 Eureka ↔ Anthropic Academy (101.7-176.7s) ═════════ -->
-    <div class="sec sec-d" style="opacity:0;">
+    <!-- data-layout-allow-overflow：SEC D 末段双卡 + d-not-filling 同步 scale 0.7 + y:280 fade-out，
+         设计意图是把两卡推到底部当作"背景参照"，让 D-3 stage 上前 —— 这段的 layout 越界是故意的 -->
+    <div class="sec sec-d" style="opacity:0;" data-layout-allow-overflow="true">
       <div class="scene-content">
-        <div class="pair-cards-row">
+        <!-- pair-cards-row 在 t=151s 被 scale 0.7 + y:280 平移做 D-3 阶段 fade-out，axis 内容可能贴底 →
+             标 data-layout-allow-overflow 让 inspect 跳过这块（SKILL.md:402）-->
+        <div class="pair-cards-row" data-layout-allow-overflow="true">
           <!-- 左卡 Eureka 实验室 -->
           <div class="pair-card d-left hot-border">
             <div class="card-brand-row">
@@ -1192,8 +1200,9 @@
           </div>
         </div>
 
-        <!-- D 段双卡间 "不是填补" chip -->
-        <div class="d-not-filling" data-d-not-filling>不是填补 / A 社自己在做</div>
+        <!-- D 段双卡间 "不是填补" chip（t=151s 跟 pair-cards-row 同步 scale 0.7 + y:280 → 末段贴底，
+             标 data-layout-allow-overflow 让 inspect 跳过这块（SKILL.md:402）-->
+        <div class="d-not-filling" data-d-not-filling data-layout-allow-overflow="true">不是填补 / A 社自己在做</div>
 
         <!-- D-3 触达 / 风格 / 布道者 stage -->
         <div class="d3-stage" data-d3-stage>
