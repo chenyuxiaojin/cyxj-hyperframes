@@ -1,6 +1,25 @@
 <template id="seg04-wrapper-template">
   <div data-composition-id="seg04-wrapper" data-width="1920" data-height="1080">
     <style>
+      /* ── 本地 @font-face（与 index.html 同步，避免 sub-comp 隔离渲染 fallback） ── */
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: block; src: url("../assets/fonts/inter-400.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: block; src: url("../assets/fonts/inter-500.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: block; src: url("../assets/fonts/inter-600.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: block; src: url("../assets/fonts/inter-700.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 800; font-display: block; src: url("../assets/fonts/inter-800.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 900; font-display: block; src: url("../assets/fonts/inter-900.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 400; font-display: block; src: url("../assets/fonts/noto-sans-sc-400.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 500; font-display: block; src: url("../assets/fonts/noto-sans-sc-500.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 600; font-display: block; src: url("../assets/fonts/noto-sans-sc-600.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 700; font-display: block; src: url("../assets/fonts/noto-sans-sc-700.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 800; font-display: block; src: url("../assets/fonts/noto-sans-sc-800.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 900; font-display: block; src: url("../assets/fonts/noto-sans-sc-900.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: block; src: url("../assets/fonts/jetbrains-mono-400.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: block; src: url("../assets/fonts/jetbrains-mono-500.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 600; font-display: block; src: url("../assets/fonts/jetbrains-mono-600.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: block; src: url("../assets/fonts/jetbrains-mono-700.woff2") format("woff2"); }
+      /* font-smoothing 由全局 * 选择器统一处理 */
+      * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
       /* =====================================================
        * seg04-wrapper · Wrapper 从贬义到产品 + 洋葱剖面 + 主持稿例子
        * 段长 201s, 5 SEC: A 命名 / B 反转 / C 跑分迷雾 / D 洋葱 / E 主持稿

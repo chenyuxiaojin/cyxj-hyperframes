@@ -11,13 +11,33 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/MotionPathPlugin.min.js"></script>
     <!-- seg08 SVG path drawing 用（GSAP 官方 plugin，与 MorphSVG / MotionPath 同批免费）-->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/DrawSVGPlugin.min.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=block"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="assets/xcyj-tokens.css" />
     <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
+      /* ── 本地 @font-face：Noto Sans SC + Inter，避免 render 容器 Google Fonts 网络 fallback ── */
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 400; font-display: block; src: url("assets/fonts/inter-400.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 500; font-display: block; src: url("assets/fonts/inter-500.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 600; font-display: block; src: url("assets/fonts/inter-600.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 700; font-display: block; src: url("assets/fonts/inter-700.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 800; font-display: block; src: url("assets/fonts/inter-800.woff2") format("woff2"); }
+      @font-face { font-family: "Inter"; font-style: normal; font-weight: 900; font-display: block; src: url("assets/fonts/inter-900.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 400; font-display: block; src: url("assets/fonts/noto-sans-sc-400.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 500; font-display: block; src: url("assets/fonts/noto-sans-sc-500.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 600; font-display: block; src: url("assets/fonts/noto-sans-sc-600.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 700; font-display: block; src: url("assets/fonts/noto-sans-sc-700.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 800; font-display: block; src: url("assets/fonts/noto-sans-sc-800.woff2") format("woff2"); }
+      @font-face { font-family: "Noto Sans SC"; font-style: normal; font-weight: 900; font-display: block; src: url("assets/fonts/noto-sans-sc-900.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 400; font-display: block; src: url("assets/fonts/jetbrains-mono-400.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 500; font-display: block; src: url("assets/fonts/jetbrains-mono-500.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 600; font-display: block; src: url("assets/fonts/jetbrains-mono-600.woff2") format("woff2"); }
+      @font-face { font-family: "JetBrains Mono"; font-style: normal; font-weight: 700; font-display: block; src: url("assets/fonts/jetbrains-mono-700.woff2") format("woff2"); }
+
+      * {
+        margin: 0; padding: 0; box-sizing: border-box;
+        /* ── 全局 font-smoothing：消除发青彩边（subpixel rendering 在 render 抽帧时凝固成彩色边） ── */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+      }
       html, body {
         width: 1920px;
         height: 1080px;
