@@ -332,219 +332,141 @@
       }
 
       /* ============================================================
-       * === SEC D · 数据反超折线图（16.1-27.3s · NYT 数据驱动重写）  ===
+       * === SEC D · 双进度条对比（16.1-27.3s · 替代折线图）         ===
+       * 满量程 50% · OpenAI 灰 #5A4F46 vs Anthropic 橙 #d97757
+       * 真实数据：34.44% vs 32.3%，三年前 0.003% (×11000 倍)
        * ============================================================ */
       [data-composition-id="ch0-cold-open"] .sec-d .scene-content {
         width: 100%;
         height: 100%;
-        padding: 80px 140px 80px;
+        padding: 110px 200px 90px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 18px;
         box-sizing: border-box;
         position: relative;
       }
 
-      /* 标题区（左对齐，NYT 编辑部样式） */
+      /* 标题区 · 左对齐 NYT 编辑部样式 */
       [data-composition-id="ch0-cold-open"] .sec-d .chart-title {
         font-family: "Noto Sans SC", "Inter", sans-serif;
         font-weight: 700;
-        font-size: 52px;
+        font-size: 56px;
         letter-spacing: 0.005em;
         line-height: 1.15;
         color: #2B2622;
         clip-path: inset(0 100% 0 0);
       }
-      [data-composition-id="ch0-cold-open"] .sec-d .chart-title .hot {
-        color: #B5563D;
-      }
+      [data-composition-id="ch0-cold-open"] .sec-d .chart-title .hot { color: #B5563D; }
       [data-composition-id="ch0-cold-open"] .sec-d .chart-subtitle {
         font-family: "JetBrains Mono", "Inter", monospace;
         font-weight: 500;
         font-size: 22px;
         letter-spacing: 0.06em;
         color: #8B7563;
+        margin-top: -6px;
         clip-path: inset(0 100% 0 0);
       }
 
-      /* chart 容器 */
-      [data-composition-id="ch0-cold-open"] .sec-d .chart-wrap {
-        position: relative;
+      /* 标题与 bar 之间的分隔线（横贯）· scaleX 揭示 */
+      [data-composition-id="ch0-cold-open"] .sec-d .divider {
         width: 100%;
-        flex: 1;
-        margin-top: 16px;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .chart {
-        width: 100%;
-        height: 100%;
-        overflow: visible;
+        height: 1px;
+        background: rgba(43, 38, 34, 0.18);
+        margin: 24px 0 8px;
+        transform-origin: left center;
+        transform: scaleX(0);
       }
 
-      /* 网格 + 轴 · NYT 极细灰 */
-      [data-composition-id="ch0-cold-open"] .sec-d .grid-line {
-        stroke: rgba(43, 38, 34, 0.10);
-        stroke-width: 1;
-        fill: none;
+      /* 进度条行 */
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row {
         opacity: 0;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .axis-baseline {
-        stroke: rgba(43, 38, 34, 0.42);
-        stroke-width: 1.5;
-        fill: none;
-        opacity: 0;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .axis-label {
-        font-family: "JetBrains Mono", "Inter", monospace;
-        font-size: 18px;
-        font-weight: 500;
-        fill: #8B7563;
-        opacity: 0;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .axis-label.year { text-anchor: middle; }
-      [data-composition-id="ch0-cold-open"] .sec-d .axis-label.value { text-anchor: end; }
-
-      /* 折线 · 无 glow，纯净 stroke */
-      [data-composition-id="ch0-cold-open"] .sec-d .line-openai {
-        stroke: #5A4F46;
-        stroke-width: 2.5;
-        stroke-linejoin: round;
-        stroke-linecap: round;
-        fill: none;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .line-anthropic {
-        stroke: #d97757;
-        stroke-width: 3;
-        stroke-linejoin: round;
-        stroke-linecap: round;
-        fill: none;
-      }
-
-      /* 数据点 · 实心圆，不带 outer ring */
-      [data-composition-id="ch0-cold-open"] .sec-d .data-dot {
-        r: 0;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .data-dot.openai { fill: #5A4F46; }
-      [data-composition-id="ch0-cold-open"] .sec-d .data-dot.anthropic { fill: #d97757; }
-
-      /* 系列 key（顶部右侧） */
-      [data-composition-id="ch0-cold-open"] .sec-d .chart-key {
         display: flex;
-        gap: 36px;
-        margin-top: 4px;
-        opacity: 0;
+        flex-direction: column;
+        gap: 14px;
       }
-      [data-composition-id="ch0-cold-open"] .sec-d .key-item {
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row .bar-header {
         display: flex;
-        align-items: center;
-        gap: 12px;
-        font-family: "Inter", "Noto Sans SC", sans-serif;
-        font-weight: 600;
-        font-size: 22px;
-        color: #2B2622;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 28px;
       }
-      [data-composition-id="ch0-cold-open"] .sec-d .key-dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .key-dot.openai { background: #5A4F46; }
-      [data-composition-id="ch0-cold-open"] .sec-d .key-dot.anthropic { background: #d97757; }
-
-      /* 末端 value label · 跟随线条颜色，紧贴 dot 右侧 */
-      [data-composition-id="ch0-cold-open"] .sec-d .end-value {
-        position: absolute;
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row .bar-label {
         font-family: "Inter", "Noto Sans SC", sans-serif;
         font-weight: 700;
-        opacity: 0;
-        white-space: nowrap;
-        line-height: 1;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .end-value.anthropic {
-        color: #d97757;
-        font-size: 38px;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .end-value.openai {
-        color: #5A4F46;
-        font-size: 30px;
-      }
-
-      /* 反超 annotation pin · NYT 编辑标注风格（替代手搓 badge + ripple） */
-      [data-composition-id="ch0-cold-open"] .sec-d .callout {
-        position: absolute;
-        padding: 14px 22px;
-        border-left: 3px solid #B5563D;
-        background: rgba(217, 119, 87, 0.06);
-        opacity: 0;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .callout .label {
-        font-family: "JetBrains Mono", "Inter", monospace;
-        font-weight: 600;
-        font-size: 14px;
-        letter-spacing: 0.14em;
-        color: #B5563D;
-        text-transform: uppercase;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .callout .word {
-        font-family: "Noto Sans SC", "Inter", sans-serif;
-        font-weight: 700;
-        font-size: 32px;
         letter-spacing: 0.005em;
         color: #2B2622;
-        margin-top: 4px;
-        line-height: 1.15;
+        display: flex;
+        align-items: center;
+        gap: 16px;
       }
-      [data-composition-id="ch0-cold-open"] .sec-d .callout .word .accent {
-        color: #B5563D;
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.openai .bar-label { font-size: 32px; color: #5A4F46; }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.anthropic .bar-label { font-size: 36px; color: #2B2622; }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row .bar-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.openai .bar-dot { background: #5A4F46; }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.anthropic .bar-dot { background: #d97757; }
+
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row .bar-value {
+        font-family: "Inter", "Noto Sans SC", sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.openai .bar-value {
+        font-size: 48px;
+        color: #5A4F46;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.anthropic .bar-value {
+        font-size: 88px;
+        color: #d97757;
       }
 
-      /* 三年前对比 · NYT inline data block（移到底部，让主图居中） */
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years {
+      /* 进度条轨道 + 填充 */
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-track {
+        width: 100%;
+        height: 32px;
+        background: rgba(43, 38, 34, 0.06);
+        border-radius: 6px;
+        overflow: hidden;
+        position: relative;
+      }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-fill {
         position: absolute;
-        bottom: 86px;
-        left: 140px;
-        display: flex;
-        align-items: baseline;
-        gap: 28px;
-        font-family: "JetBrains Mono", "Inter", monospace;
-        opacity: 0;
+        top: 0; left: 0; bottom: 0;
+        width: 0;
+        border-radius: 6px;
       }
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years .label {
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: 0.14em;
-        color: #8B7563;
-        text-transform: uppercase;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years .step {
-        display: flex;
-        align-items: baseline;
-        gap: 10px;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years .yr {
-        font-size: 14px;
-        color: #8B7563;
-        letter-spacing: 0.06em;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years .val {
-        font-size: 24px;
-        font-weight: 700;
-        color: #B5563D;
-      }
-      [data-composition-id="ch0-cold-open"] .sec-d .three-years .arrow {
-        color: #C9BFB3;
-        font-size: 18px;
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.openai .bar-fill { background: #5A4F46; }
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-row.anthropic .bar-fill {
+        background: linear-gradient(90deg, #d97757 0%, #B5563D 100%);
       }
 
-      /* Source · NYT 极小字 */
-      [data-composition-id="ch0-cold-open"] .sec-d .source {
-        position: absolute;
-        bottom: 50px;
-        left: 140px;
+      /* 进度条上的 50% 满量程标记（小竖线 + 数字） */
+      [data-composition-id="ch0-cold-open"] .sec-d .bar-scale {
+        display: flex;
+        justify-content: space-between;
         font-family: "JetBrains Mono", "Inter", monospace;
         font-size: 13px;
         font-weight: 500;
-        letter-spacing: 0.06em;
         color: #8B7563;
+        letter-spacing: 0.08em;
+        margin-top: 8px;
+        opacity: 0;
+      }
+
+      /* Source · 在进度条下方 inline 流，字号放大 */
+      [data-composition-id="ch0-cold-open"] .sec-d .source {
+        font-family: "JetBrains Mono", "Inter", monospace;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: #8B7563;
+        margin-top: 20px;
         opacity: 0;
       }
 
@@ -714,9 +636,9 @@
     </div>
 
     <!-- ============================================================
-     * === SEC D · 数据反超折线图（NYT 数据驱动重写）             ===
+     * === SEC D · 双进度条对比（替代折线图）                       ===
      * 真实数据：34.44% (Anthropic) vs 32.3% (OpenAI)，
-     *            三年前 Anthropic 仅 0.003%
+     *            三年前 0.003% (×11000 倍)
      * Source: Ramp 企业 AI 采纳指数
      * ============================================================ -->
     <div class="sec sec-d">
@@ -724,43 +646,30 @@
         <div class="chart-title">
           Anthropic 在美国企业市场<span class="hot">首次反超</span> OpenAI
         </div>
-        <div class="chart-subtitle">U.S. Enterprise AI Adoption · Monthly Share</div>
-        <div class="chart-key">
-          <div class="key-item"><div class="key-dot openai"></div>OpenAI</div>
-          <div class="key-item"><div class="key-dot anthropic"></div>Anthropic</div>
-        </div>
+        <div class="chart-subtitle">U.S. Enterprise AI Adoption · 2026.05 Snapshot</div>
 
-        <div class="chart-wrap">
-          <svg class="chart" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-            <g class="gridlines"></g>
-            <g class="x-axis-labels"></g>
-            <g class="y-axis-labels"></g>
-            <line class="axis-baseline" />
-            <path class="line-openai" />
-            <path class="line-anthropic" />
-            <g class="dots-openai"></g>
-            <g class="dots-anthropic"></g>
-          </svg>
+        <div class="divider"></div>
 
-          <!-- 末端 value（数据点旁的百分比，JS 定位） -->
-          <div class="end-value anthropic">34.44%</div>
-          <div class="end-value openai">32.3%</div>
-
-          <!-- 反超 callout（NYT 编辑标注，JS 定位） -->
-          <div class="callout">
-            <div class="label">2026.05</div>
-            <div class="word">首次<span class="accent">反超</span></div>
+        <!-- OpenAI 进度条 -->
+        <div class="bar-row openai">
+          <div class="bar-header">
+            <div class="bar-label"><div class="bar-dot"></div>OpenAI</div>
+            <div class="bar-value">0.0%</div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill"></div>
           </div>
         </div>
 
-        <!-- 三年前对比 · NYT inline data block -->
-        <div class="three-years">
-          <span class="label">Anthropic · 三年阶跃</span>
-          <div class="step"><span class="yr">2023.06</span><span class="val">0.003%</span></div>
-          <span class="arrow">→</span>
-          <div class="step"><span class="yr">2025.04</span><span class="val">7.94%</span></div>
-          <span class="arrow">→</span>
-          <div class="step"><span class="yr">2026.05</span><span class="val">34.44%</span></div>
+        <!-- Anthropic 进度条 + growth-tag -->
+        <div class="bar-row anthropic">
+          <div class="bar-header">
+            <div class="bar-label"><div class="bar-dot"></div>Anthropic</div>
+            <div class="bar-value">0.00%</div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill"></div>
+          </div>
         </div>
 
         <div class="source">Source: Ramp 企业 AI 采纳指数 · 5 万 + 美国企业真实消费</div>
@@ -972,148 +881,83 @@
       tl.set(root + ' .sec-d', { autoAlpha: 1 }, 16.1);
 
       // ============================================================
-      // === SEC D timeline（base offset = 16.1）· NYT 数据驱动重写 ===
+      // === SEC D timeline（base offset = 16.1）· 双进度条对比      ===
       // ============================================================
       (function () {
         const D_BASE = 16.1;
         const secD = document.querySelector(root + ' .sec-d');
-        const svg = secD.querySelector('.chart');
 
-        /* ── 数据（沿用原 ch0 视觉曲线，确凿点：Anthropic 0.003%/7.94%/34.44%、OpenAI 32.3%）── */
-        const years = ['2023.06', '2024.06', '2025.04', '2025.10', '2026.05'];
-        const openaiData    = [30,  32,    33,    33.5, 32.30];
-        const anthropicData = [ 0,   3,     7.94, 20,   34.44];
+        /* 满量程 50% · 让 30+% 数据视觉占进度条 60-70% 宽，对比明显 */
+        const SCALE_MAX = 50;
+        const oaTarget = 32.3;
+        const anthTarget = 34.44;
+        const oaWidth   = (oaTarget   / SCALE_MAX * 100) + '%';   // ≈ 64.6%
+        const anthWidth = (anthTarget / SCALE_MAX * 100) + '%';   // ≈ 68.88%
 
-        /* ── 坐标系（SVG viewBox 1600 × 600，留 margin）── */
-        const CHART = { x: 140, y: 70, w: 1340, h: 450, yMax: 40 };
-        const N = years.length;
-        const stepX = CHART.w / (N - 1);
-        const getX = (i) => CHART.x + i * stepX;
-        const getY = (v) => CHART.y + CHART.h - (v / CHART.yMax) * CHART.h;
-
-        /* ── 渲染 gridlines（5 条 y 轴线：0/10/20/30/40%）+ y 标 ── */
-        const gridGroup = svg.querySelector('.gridlines');
-        const yAxisGroup = svg.querySelector('.y-axis-labels');
-        for (let i = 0; i <= 4; i++) {
-          const v = i * 10;
-          const y = getY(v);
-          const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-          line.setAttribute('x1', CHART.x);
-          line.setAttribute('y1', y);
-          line.setAttribute('x2', CHART.x + CHART.w);
-          line.setAttribute('y2', y);
-          line.setAttribute('class', 'grid-line');
-          gridGroup.appendChild(line);
-          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          label.setAttribute('x', CHART.x - 18);
-          label.setAttribute('y', y + 7);
-          label.setAttribute('class', 'axis-label value');
-          label.textContent = v + '%';
-          yAxisGroup.appendChild(label);
-        }
-
-        /* ── x 轴时间标 ── */
-        const xAxisGroup = svg.querySelector('.x-axis-labels');
-        years.forEach((year, i) => {
-          const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          label.setAttribute('x', getX(i));
-          label.setAttribute('y', CHART.y + CHART.h + 32);
-          label.setAttribute('class', 'axis-label year');
-          label.textContent = year;
-          xAxisGroup.appendChild(label);
-        });
-
-        /* ── baseline（最底部 0% 轴线，加强视觉锚定）── */
-        const baseline = svg.querySelector('.axis-baseline');
-        baseline.setAttribute('x1', CHART.x);
-        baseline.setAttribute('y1', getY(0));
-        baseline.setAttribute('x2', CHART.x + CHART.w);
-        baseline.setAttribute('y2', getY(0));
-
-        /* ── 双折线 + dots（数据驱动）── */
-        function renderSeries(data, lineCls, dotsGroupCls, kind) {
-          const path = svg.querySelector('.' + lineCls);
-          const pts = data.map((v, i) => `${getX(i)},${getY(v)}`);
-          path.setAttribute('d', `M ${pts.join(' L ')}`);
-          const len = path.getTotalLength();
-          path.style.strokeDasharray = len;
-          path.style.strokeDashoffset = len;
-          const dotsGroup = svg.querySelector('.' + dotsGroupCls);
-          data.forEach((v, i) => {
-            const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            dot.setAttribute('cx', getX(i));
-            dot.setAttribute('cy', getY(v));
-            dot.setAttribute('class', 'data-dot ' + kind);
-            dotsGroup.appendChild(dot);
-          });
-        }
-        renderSeries(openaiData, 'line-openai', 'dots-openai', 'openai');
-        renderSeries(anthropicData, 'line-anthropic', 'dots-anthropic', 'anthropic');
-
-        /* ── end-value / callout 定位（用 svg 实际尺寸映射到 chart-wrap）── */
-        const wrap = secD.querySelector('.chart-wrap');
-        function positionAt(el, svgX, svgY, dx, dy) {
-          // chart-wrap 内部坐标 = svg viewBox 坐标（preserveAspectRatio xMidYMid meet，但宽度匹配）
-          const rectW = wrap.clientWidth || 1640;
-          const rectH = wrap.clientHeight || 560;
-          const sx = rectW / 1600;
-          const sy = rectH / 600;
-          const s = Math.min(sx, sy);
-          const offsetX = (rectW - 1600 * s) / 2;
-          const offsetY = (rectH - 600 * s) / 2;
-          el.style.left = (offsetX + svgX * s + (dx || 0)) + 'px';
-          el.style.top  = (offsetY + svgY * s + (dy || 0)) + 'px';
-        }
-        const lastIdx = N - 1;
-        const endValAnth = secD.querySelector('.end-value.anthropic');
-        const endValOA  = secD.querySelector('.end-value.openai');
-        const callout    = secD.querySelector('.callout');
-        // defer positioning until layout settled
-        requestAnimationFrame(() => {
-          positionAt(endValAnth, getX(lastIdx), getY(anthropicData[lastIdx]), 18, -32);
-          positionAt(endValOA,   getX(lastIdx), getY(openaiData[lastIdx]),    18, 14);
-          positionAt(callout,    getX(lastIdx) - 360, getY(anthropicData[lastIdx]) - 90, 0, 0);
-        });
+        const oaValEl   = secD.querySelector('.bar-row.openai .bar-value');
+        const anthValEl = secD.querySelector('.bar-row.anthropic .bar-value');
+        const oaDummy   = { val: 0 };
+        const anthDummy = { val: 0 };
 
         /* ── GSAP TIMELINE · 11.2s 编排 ──────────────────────── */
 
-        // t=0.0-1.2 标题 clipPath 揭示（NYT 风格 wipe-in）
+        // t=0.0-1.0s 标题 + 副标 clip-path 揭示（NYT 风格 wipe-in）
         tl.to(root + ' .sec-d .chart-title',    { clipPath: 'inset(0 0% 0 0)', duration: 1.0, ease: 'power1.inOut' }, D_BASE + 0.0);
         tl.to(root + ' .sec-d .chart-subtitle', { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' }, D_BASE + 0.4);
-        tl.to(root + ' .sec-d .chart-key',      { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, D_BASE + 1.1);
 
-        // t=1.3 baseline + gridlines stagger fade-in
-        tl.to(root + ' .sec-d .axis-baseline',  { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, D_BASE + 1.3);
-        tl.to(root + ' .sec-d .grid-line',      { opacity: 1, duration: 0.4, stagger: 0.10, ease: 'power2.out' }, D_BASE + 1.4);
-        tl.to(root + ' .sec-d .y-axis-labels .axis-label', { opacity: 1, duration: 0.35, stagger: 0.08, ease: 'power2.out' }, D_BASE + 1.5);
+        // t=1.1s 分隔线 scaleX 揭示
+        tl.to(root + ' .sec-d .divider', { scaleX: 1, duration: 0.8, ease: 'power2.out' }, D_BASE + 1.1);
 
-        // t=2.1 x 轴时间标 stagger
-        tl.to(root + ' .sec-d .x-axis-labels .axis-label', { opacity: 1, duration: 0.35, stagger: 0.12, ease: 'power2.out' }, D_BASE + 2.1);
-
-        // t=2.8-4.0 OpenAI 线 draw（先画，"市场原有领先"叙事）
-        tl.to(root + ' .sec-d .line-openai',           { strokeDashoffset: 0, duration: 1.2, ease: 'power2.inOut' }, D_BASE + 2.8);
-        tl.to(root + ' .sec-d .dots-openai .data-dot', { attr: { r: 5 }, duration: 0.3, stagger: 1.2 / (N - 1), ease: 'back.out(2)' }, D_BASE + 2.85);
-
-        // t=4.2-6.0 Anthropic 线 draw（更慢更稳，"阶跃式反超"叙事）
-        tl.to(root + ' .sec-d .line-anthropic',           { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut' }, D_BASE + 4.2);
-        tl.to(root + ' .sec-d .dots-anthropic .data-dot', { attr: { r: 6 }, duration: 0.3, stagger: 1.8 / (N - 1), ease: 'back.out(2)' }, D_BASE + 4.25);
-
-        // t=6.2 end-value 浮现（两个百分比落定）
-        tl.to(root + ' .sec-d .end-value.anthropic', { autoAlpha: 1, duration: 0.5, ease: 'power3.out' }, D_BASE + 6.2);
-        tl.to(root + ' .sec-d .end-value.openai',    { autoAlpha: 1, duration: 0.5, ease: 'power3.out' }, D_BASE + 6.4);
-
-        // t=6.8 callout pin pop-up（NYT 编辑标注，替代旧 badge+ripple）
-        tl.fromTo(root + ' .sec-d .callout',
-          { autoAlpha: 0, x: -16 },
-          { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' },
-          D_BASE + 6.8
+        // t=1.5s OpenAI 行入场
+        tl.fromTo(root + ' .sec-d .bar-row.openai',
+          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+          D_BASE + 1.5
         );
 
-        // t=7.6 三年阶跃数据块（NYT inline data row）
-        tl.to(root + ' .sec-d .three-years', { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, D_BASE + 7.6);
+        // t=1.8-2.8s OpenAI 进度条灌满 + 数字 count-up（1.0s power2.out）
+        tl.to(root + ' .sec-d .bar-row.openai .bar-fill',
+          { width: oaWidth, duration: 1.0, ease: 'power2.out' },
+          D_BASE + 1.8
+        );
+        tl.to(oaDummy,
+          { val: oaTarget, duration: 1.0, ease: 'power2.out',
+            onUpdate: () => { oaValEl.textContent = oaDummy.val.toFixed(1) + '%'; }
+          },
+          D_BASE + 1.8
+        );
 
-        // t=8.5 source
-        tl.to(root + ' .sec-d .source', { autoAlpha: 1, duration: 0.5, ease: 'power2.out' }, D_BASE + 8.5);
+        // t=3.0s Anthropic 行入场
+        tl.fromTo(root + ' .sec-d .bar-row.anthropic',
+          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 1, y: 0, duration: 0.5, ease: 'power2.out' },
+          D_BASE + 3.0
+        );
+
+        // t=3.3-4.9s Anthropic 进度条灌满（更慢更戏剧 1.6s power3.out）+ 数字 count-up
+        tl.to(root + ' .sec-d .bar-row.anthropic .bar-fill',
+          { width: anthWidth, duration: 1.6, ease: 'power3.out' },
+          D_BASE + 3.3
+        );
+        tl.to(anthDummy,
+          { val: anthTarget, duration: 1.6, ease: 'power3.out',
+            onUpdate: () => { anthValEl.textContent = anthDummy.val.toFixed(2) + '%'; }
+          },
+          D_BASE + 3.3
+        );
+
+        // t=4.4s 反超瞬间 box-shadow 闪烁（Anthropic 灌满约 1.1s 时跨过 OpenAI 32.3 → 此时 D_BASE + 4.4）
+        tl.to(root + ' .sec-d .bar-row.anthropic .bar-fill',
+          { boxShadow: '0 0 32px rgba(217, 119, 87, 0.85)', duration: 0.25, yoyo: true, repeat: 1, ease: 'power2.inOut' },
+          D_BASE + 4.4
+        );
+
+        // t=5.5s source 在进度条下方淡入（24px，跟数据同视觉重量级，不再是底部小字）
+        tl.fromTo(root + ' .sec-d .source',
+          { autoAlpha: 0, y: 10 },
+          { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+          D_BASE + 5.5
+        );
       })();
 
       // ─── SEC D → SEC E 切换（master t = 27.3）───
