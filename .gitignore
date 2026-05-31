@@ -61,7 +61,8 @@ MOTION_PHILOSOPHY.md
 # Claude Code 工作状态
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
-.claude/agents/
+.claude/agents/*
+!.claude/agents/composition-reviewer.md
 .claude/worktrees/
 
 # 子工程内部 .claude state
