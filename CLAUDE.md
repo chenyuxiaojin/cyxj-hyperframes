@@ -65,6 +65,16 @@ GSAP 3.13+ 全部插件免费（SplitText / DrawSVG / MorphSVG / ScrollSmoother 
 9. **不准** 在 `onUpdate` 里每帧 `document.getElementById` 或 new closure —— 8+ sub-composition 工程会内存爆
 10. **不准**（协作）主动 render —— preview 反复打磨完，用户明确说「render 吧」才跑（memory `feedback_workflow_polish_in_browser`）
 
+## Claude Code 自动化（仅 Claude 侧，Codex 不读）
+
+仓库装了两个 hook + 一个 subagent，把上面部分硬约束从「靠自觉」变成「写代码当场拦」。**配置在 `.claude/settings.json`，脚本在 `scripts/hf-{lint,guard-upstream}.sh`。**
+
+- **写完 `compositions/*.html` 收到 `⚠️ HARD_CONSTRAINTS 机械自检命中` 是预期行为，不是报错** —— PostToolUse 钩子 grep 了 §1/§3/§11/§20/§21/§22/§24/§25/§29 九类机械可检测违规，命中即注入提醒。对照原文确认即可，极少数是合法例外。clean 时静默。
+- 改 `hyperframes-student-kit/` 或 `hyperframes-launches/` 会弹确认（PreToolUse，§6 上游只读）。
+- render 前要查 grep 咬不住的判断题（§7/§12 语义、§17 对比度、§18 禁 exit）→ 用 `composition-reviewer` subagent（只读审查，不改文件）。
+
+> 改 `scripts/hf-*.sh` 或 `.claude/settings.json` 即改这套自检；个人权限在 gitignored 的 `settings.local.json`。
+
 ## 常用命令（工程目录里跑）
 
 ```bash
