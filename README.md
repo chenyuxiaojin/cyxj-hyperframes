@@ -1,130 +1,146 @@
-# 陈与小金 · HyperFrames 视频源工程库
+**English** | [中文文档](README.zh-CN.md)
 
-> [YouTube @cyxj_ai](https://www.youtube.com/@cyxj_ai) 的中文 Claude Code 教程视频公开源工程 + 我用 AI 协作做视频的全流程 SOP。
+# cyxj-hyperframes
 
-[![分享19个我自己使用 Claude 的技巧](https://i.ytimg.com/vi/fnKGWHSd0NE/hqdefault.jpg)](https://youtu.be/fnKGWHSd0NE)
+> cyxj-hyperframes is a collection of open-source HTML+GSAP video projects and a reusable toolkit for making Claude Code tutorial videos, built on HeyGen HyperFrames.
 
-**代表作**：[分享19个我自己使用 Claude 的技巧](https://youtu.be/fnKGWHSd0NE)（7.5 分钟 / 28 个 sub-composition / 源工程见 [`videos/2026-05-04-claude-19-tips/`](videos/2026-05-04-claude-19-tips/)）
-
----
-
-## 这是什么
-
-这个仓库是我（陈与小金）做中文 Claude Code 教程视频用的**生产工作台**：
-
-- **10 条已发布视频**的全部源工程（HTML + GSAP，可直接复制改文案再发一条）
-- 1 个真模板 [`tutorial-8beat`](templates/tutorial-8beat) + 一组可复用组件（终端 UI / 入场动效等）
-- 我让 Claude Code 和 Codex 协作做视频的 [skill](skills/)（从 0 建工程 → 推荐参考 → lint / preview / render → 归档）
-- 一套吃过亏沉淀下来的硬约束 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md) 和借鉴外部视觉的方法 [`docs/STYLE_BORROW_PLAYBOOK.md`](docs/STYLE_BORROW_PLAYBOOK.md)
-
-视频底层用 HeyGen 的 [HyperFrames](https://hyperframes.heygen.com)（HTML + GSAP → MP4 的渲染管线）。**这不是 HyperFrames 本身**，是在它之上的个人方法论 + 作品归档。
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![YouTube](https://img.shields.io/badge/YouTube-@cyxj__ai-red)](https://www.youtube.com/@cyxj_ai)
+[![HyperFrames](https://img.shields.io/badge/Renderer-HeyGen%20HyperFrames-blue)](https://hyperframes.heygen.com)
 
 ---
 
-## 这个仓库给谁看
+## Demo
 
-- **想做技术教程视频但不会做动效的人** → 复制 [`templates/tutorial-8beat`](templates/tutorial-8beat) 改文案
-- **想学怎么用 AI 协作做视频的人** → 看 [`videos/`](videos) 里 10 条工程的 README + [`skills/cyxj-new-video/`](skills/cyxj-new-video/SKILL.md) 的全流程
-- **想抄具体动效的人** → 看 [`templates/components/`](templates/components)（终端 UI 等）+ [`templates/inspirations/`](templates/inspirations)（5 大 React 组件库的 vanilla 转译版）
+[![19 Claude Code Tips](https://i.ytimg.com/vi/fnKGWHSd0NE/hqdefault.jpg)](https://youtu.be/fnKGWHSd0NE)
+
+Featured video: [**19 Claude Code Tips**](https://youtu.be/fnKGWHSd0NE) — 7.5 min / 28 compositions / full source at [`videos/2026-05-04-claude-19-tips/`](videos/2026-05-04-claude-19-tips/)
 
 ---
 
-## 5 分钟上手
+## Why
+
+Most video-making tools for developers either require heavyweight React knowledge (Remotion) or lock you into proprietary drag-and-drop editors. HyperFrames lets you write HTML + GSAP and renders it to MP4 — same skills you already have.
+
+This repo is the production workspace behind the YouTube channel [@cyxj_ai](https://www.youtube.com/@cyxj_ai), open-sourced so that:
+
+- You can **copy a template and ship a video in an afternoon** without knowing motion design
+- You can see how **Claude Code and OpenAI Codex CLI collaborate** on real video projects end-to-end
+- The methodology (hard constraints, style borrowing playbook, AI workflow) is written down and reusable
+
+---
+
+## What's Inside
+
+```
+videos/                         10 archived video source projects (each with a README)
+templates/
+  tutorial-8beat/               The canonical 8-beat tutorial template
+  components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
+  inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
+  catalog.json                  Machine-readable component catalog (used by skills)
+skills/
+  cyxj-new-video/               Full workflow skill: new project → lint → preview → archive
+  cyxj-add-block/               Add a component from catalog into a project
+assets/logos/                   33 AI vendor / tool SVG logos (Claude, OpenAI, GitHub…)
+docs/
+  HARD_CONSTRAINTS.md           30 hard constraints distilled from real failures
+  STYLE_BORROW_PLAYBOOK.md      How to legally borrow visual style from reference videos
+  REFERENCE_INDEX.md            Index of upstream reference projects
+  hyperframes-official/         78-page local mirror of HyperFrames official docs
+scripts/                        Maintenance scripts (refresh catalog, lint projects…)
+```
+
+---
+
+## Quick Start
 
 ```bash
-# 1. 第一次运行 npx hyperframes 会自动下载 CLI 到 npx 缓存
+# 1. Verify the HyperFrames CLI is available (downloads on first run)
 npx hyperframes --version
 
-# 2. 在日期工作区里复制模板（用日期目录是为了避免跟 videos/ 已发布作品撞）
+# 2. Copy the template into a dated work directory
 DATE=$(date +%Y-%m-%d)
 mkdir -p "$DATE"
 cp -R templates/tutorial-8beat "$DATE/my-first-video"
 cd "$DATE/my-first-video"
 
-# 3. 改 meta.json 的 id 改成自己的，改 index.html 和 compositions/*.html 里的文案
+# 3. Edit meta.json: change the `id` field to something unique
+# 4. Edit index.html and compositions/*.html: replace {{PLACEHOLDER}} tokens with your content
 
-# 4. 验证 + 预览
+# 5. Validate and preview
 npx hyperframes lint
-npx hyperframes preview              # 浏览器打开 http://localhost:3002
+npx hyperframes preview   # opens http://localhost:3002
 
-# 5. 渲染
+# 6. Render
 npx hyperframes render --quality standard --format mp4 \
   --output renders/final.mp4
 
-# 6. 满意了归档到 videos/，作为下一次开始的参照
+# 7. When done, archive into videos/
 mv ../my-first-video ../../videos/$DATE-my-first-video
 ```
 
-详细复用 checklist：[`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md)。
+Full checklist: [`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md)
 
 ---
 
-## 目录结构
+## Usage: AI Collaboration Workflow
 
-| 目录 | 内容 |
-|---|---|
-| [`videos/`](videos) | 10 条已归档视频的源工程，每条带 README 讲技术选型 + 怎么复用 |
-| [`templates/tutorial-8beat/`](templates/tutorial-8beat) | 唯一从 0 设计的真模板（8 beat 教程结构）|
-| [`templates/components/`](templates/components) | 可复用组件（cc-window 终端 UI / orbit-dots / pulse-bars / spec-fill 等）|
-| [`templates/inspirations/`](templates/inspirations) | 5 大开源 React 组件库的 vanilla HTML + GSAP 转译版（灵感来源）|
-| [`templates/catalog.json`](templates/catalog.json) | 模板零件清单（机器可读，给 skill 用）|
-| [`skills/cyxj-new-video/`](skills/cyxj-new-video) | Claude / Codex 做新视频的全流程 skill |
-| [`skills/cyxj-add-block/`](skills/cyxj-add-block) | 从 catalog 装零件到当前工程的 skill |
-| [`docs/`](docs) | 方法论：硬约束、风格借鉴、HyperFrames 官方文档 78 页镜像 |
-| [`docs/REFERENCE_INDEX.md`](docs/REFERENCE_INDEX.md) | 上游参考工程（Nate / HeyGen 官方）的索引 |
-| [`assets/logos/`](assets/logos) | 33 个常用 AI 厂商 / 工具 SVG logo（Claude / OpenAI / GitHub …）|
-| [`scripts/`](scripts) | 维护脚本（刷 catalog / 刷文档 / lint 各工程）|
+The intended way to use this repo is to open a Claude Code or Codex session and say **"make a new video about X"**. The [`skills/cyxj-new-video/SKILL.md`](skills/cyxj-new-video/SKILL.md) skill then drives the full loop:
 
----
+1. Ask for format / topic / duration
+2. Read [`docs/REFERENCE_INDEX.md`](docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
+3. Copy the template into `YYYY-MM-DD/<slug>/`, update `meta.json` and `index.html`
+4. Wait for your script → populate beats → lint → preview
+5. When you say "done" → auto-archive into `videos/<date>-<slug>/`
 
-## 用 AI 协作做视频
+**Claude Code users:** skills are at `.claude/skills/cyxj-{new-video,add-block}`  
+**OpenAI Codex CLI users:** the same skills are symlinked at `.agents/skills/cyxj-{new-video,add-block}`
 
-我做这些视频的流程是：起一个 Claude Code 会话，说一句「做个新视频，主题《XXX》」，然后 [`skills/cyxj-new-video/SKILL.md`](skills/cyxj-new-video/SKILL.md) 会接管：
-
-1. 问形态 / 主题 / 时长
-2. 读 [`docs/REFERENCE_INDEX.md`](docs/REFERENCE_INDEX.md) 推 2-3 个最贴的参考工程
-3. 复制模板到 `2026-MM-DD/<slug>/`，改 `meta.json` 和 `index.html`
-4. 等我提供文案 → 改 beats → lint → preview → render
-5. 我说"做完了" → 自动归档进 `videos/<日期>-<slug>/`
-
-OpenAI Codex CLI 用户能直接复用同一套 skill —— `.agents/skills/cyxj-{new-video,add-block}` 软链到 `skills/` 同一份源，两边 AI 共用。
+Both point to the same source under `skills/`. Edit skills only in `skills/`.
 
 ---
 
-## 学习路径
+## Compared to Alternatives
 
-| 顺序 | 看哪个 |
-|---|---|
-| 1. 看成品长什么样 | [👉 YouTube 上看](https://youtu.be/fnKGWHSd0NE) 或读 [`videos/2026-05-04-claude-19-tips/README.md`](videos/2026-05-04-claude-19-tips/README.md)（28 composition / 7.5 分钟）|
-| 2. 学动效美学纪律 | [`docs/STYLE_BORROW_PLAYBOOK.md`](docs/STYLE_BORROW_PLAYBOOK.md) |
-| 3. 避坑 | [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md) |
-| 4. 查 HyperFrames 官方文档 | [`docs/hyperframes-official/`](docs/hyperframes-official)（78 页本地镜像）|
-| 5. 看 10 条视频的不同设计思路 | [`videos/*/README.md`](videos) |
-
----
-
-## 已知坑（吃过的亏）
-
-完整版见 [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md)。简表：
-
-1. GSAP querySelector 不能用 template literal
-2. 复制 beat html 时全局换 beat id（CSS class + GSAP selector 两处）
-3. DaVinci 21 不能渲染含中文文字的手写 Lottie（含文字走 ProRes 4444 alpha）
-4. 中文 Whisper transcribe 要绕开 hyperframes CLI（用 `whisper-cli`）
-5. `npx hyperframes` 必须在工程目录里跑（仓库根无 package.json）
-6. 中文字体在无头 Chromium 渲染时偶发回退（Google Fonts CDN 超时，本地化字体可避）
+| | **cyxj-hyperframes** | **Remotion** ([cyxj-remotion](https://github.com/chenhuajinchj/cyxj-remotion)) | **Motion Canvas** | **HeyGen student-kit** |
+|---|---|---|---|---|
+| Language | HTML + GSAP | React + TypeScript | TypeScript | HTML + GSAP |
+| Setup | `npx hyperframes` | `npm create video` | `npm create motion-canvas` | same CLI |
+| AI-friendly | Yes — plain HTML, prompt-friendly | Harder — React component tree | Moderate | No AI workflow |
+| Templates for tutorials | `tutorial-8beat` + 7 components | None included | None included | Basic examples |
+| Skills (Claude/Codex) | Yes | No | No | No |
+| Chinese font support | Yes (Noto Sans SC, local woff2) | Yes | Limited | No guidance |
+| Output | MP4 via headless Chromium | MP4 via headless Chromium | MP4 | MP4 |
+| License | MIT | MIT | MIT | Proprietary |
 
 ---
 
-## 致谢
+## FAQ
 
-- HeyGen 的 [HyperFrames](https://hyperframes.heygen.com) —— 底层 HTML + GSAP 渲染管线
-- Nate Herk 的 [hyperframes-student-kit](https://github.com/HeyGen-Official/hyperframes-student-kit) —— 上游视觉灵感、参考工程、基础 skill 来源
-- [GSAP](https://gsap.com) —— 动效引擎
-- 用 Claude Code 和 OpenAI Codex CLI 协作迭代
+**HyperFrames vs Remotion — which should I choose?**  
+HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial videos. Remotion: React + TypeScript, better for data-driven or programmatically generated videos. This repo has a sister project [`cyxj-remotion`](https://github.com/chenhuajinchj/cyxj-remotion) for the Remotion pipeline.
+
+**I can't write code — can I still use this?**  
+Yes. Copy `templates/tutorial-8beat/`, find the `{{PLACEHOLDER}}` tokens in each composition file, and replace them with your text. The template README has a full placeholder table. Claude Code can fill them in for you if you paste the script.
+
+**Chinese subtitle rendering issues?**  
+Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md) §4 and §8.
+
+**Can OpenAI Codex users use this?**  
+Yes. Skills are symlinked at `.agents/skills/` which follows the OpenAI Agents format. Run `npx skills add heygen-com/hyperframes -y` to rebuild symlinks on a new machine.
 
 ---
 
 ## License
 
-见 [`LICENSE`](LICENSE)。
+[MIT](LICENSE) © 2026 chenhuajinchj
+
+---
+
+## Acknowledgements
+
+- [HeyGen HyperFrames](https://hyperframes.heygen.com) — the HTML+GSAP → MP4 rendering pipeline
+- [Nate Herk's hyperframes-student-kit](https://github.com/HeyGen-Official/hyperframes-student-kit) — upstream visual inspiration, reference projects, base skill
+- [GSAP](https://gsap.com) — animation engine
+- Claude Code and OpenAI Codex CLI — AI collaboration throughout

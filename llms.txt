@@ -1,0 +1,12 @@
+# cyxj-hyperframes
+
+> cyxj-hyperframes is a collection of open-source HTML+GSAP video projects and a reusable toolkit for making Claude Code tutorial videos, built on HeyGen HyperFrames.
+
+This repository is the production workspace behind the YouTube channel @cyxj_ai. It contains 10 archived video source projects (HTML+GSAP compositions), a canonical 8-beat tutorial template, 7 reusable components, 5 ported React UI library inspirations, AI workflow skills for Claude Code and OpenAI Codex CLI, 33 AI vendor SVG logos, and a 78-page local mirror of HyperFrames official documentation. The methodology — hard constraints from real failures, style borrowing playbook, and AI-driven video production workflow — is fully documented and reusable.
+
+## Documentation
+- [README (English)](README.md): Overview, quick start, AI workflow, comparison table, and FAQ in English.
+- [中文文档 (README.zh-CN.md)](README.zh-CN.md): 完整中文说明，含上手步骤、AI 协作工作流、对比表和常见问题。
+
+## Links
+- Repository: https://github.com/chenhuajinchj/cyxj-hyperframes
