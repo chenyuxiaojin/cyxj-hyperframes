@@ -103,7 +103,7 @@ Both point to the same source under `skills/`. Edit skills only in `skills/`.
 
 ## Compared to Alternatives
 
-| | **cyxj-hyperframes** | **Remotion** ([cyxj-remotion](https://github.com/chenhuajinchj/cyxj-remotion)) | **Motion Canvas** | **HeyGen student-kit** |
+| | **cyxj-hyperframes** | **Remotion** ([cyxj-remotion](https://github.com/chenyuxiaojin/cyxj-remotion)) | **Motion Canvas** | **HeyGen student-kit** |
 |---|---|---|---|---|
 | Language | HTML + GSAP | React + TypeScript | TypeScript | HTML + GSAP |
 | Setup | `npx hyperframes` | `npm create video` | `npm create motion-canvas` | same CLI |
@@ -119,7 +119,7 @@ Both point to the same source under `skills/`. Edit skills only in `skills/`.
 ## FAQ
 
 **HyperFrames vs Remotion — which should I choose?**  
-HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial videos. Remotion: React + TypeScript, better for data-driven or programmatically generated videos. This repo has a sister project [`cyxj-remotion`](https://github.com/chenhuajinchj/cyxj-remotion) for the Remotion pipeline.
+HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial videos. Remotion: React + TypeScript, better for data-driven or programmatically generated videos. This repo has a sister project [`cyxj-remotion`](https://github.com/chenyuxiaojin/cyxj-remotion) for the Remotion pipeline.
 
 **I can't write code — can I still use this?**  
 Yes. Copy `templates/tutorial-8beat/`, find the `{{PLACEHOLDER}}` tokens in each composition file, and replace them with your text. The template README has a full placeholder table. Claude Code can fill them in for you if you paste the script.
@@ -134,7 +134,7 @@ Yes. Skills are symlinked at `.agents/skills/` which follows the OpenAI Agents f
 
 ## License
 
-[MIT](LICENSE) © 2026 chenhuajinchj
+[MIT](LICENSE) © 2026 chenyuxiaojin
 
 ---
 

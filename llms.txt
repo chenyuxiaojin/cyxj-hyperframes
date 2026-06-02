@@ -9,4 +9,4 @@ This repository is the production workspace behind the YouTube channel @cyxj_ai.
 - [中文文档 (README.zh-CN.md)](README.zh-CN.md): 完整中文说明，含上手步骤、AI 协作工作流、对比表和常见问题。
 
 ## Links
-- Repository: https://github.com/chenhuajinchj/cyxj-hyperframes
+- Repository: https://github.com/chenyuxiaojin/cyxj-hyperframes
