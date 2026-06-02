@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>动态工作流 · 片头</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=block"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/xcyj-tokens.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--c-bg);          /* 暖米 #F7F2EA — 口播缩框后露出的底 */
+        font-family: "PingFang SC", "Inter", sans-serif;  /* 系统中文字体，preview 不拉 909 face 大字体 */
+        color: #2B2622;                   /* 米色底用深字 (WCAG) */
+      }
+
+      /* -------- 口播图层 (host-overlay) --------
+         #face-wrapper 是纯 div —— GSAP 只动 wrapper，绝不动 <video>
+         (动 <video> 尺寸会冻帧)。<video> height:100% width:auto 居中，
+         wrapper 缩小时 overflow:hidden 自动把横画面裁进小窗 (居中=他的脸)。 */
+      #face-wrapper {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        transform-origin: 0 0;
+        z-index: 1;
+        background: #000;
+      }
+      #face-video {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        height: 100%;
+        width: auto;
+        transform: translateX(-50%);
+        display: block;
+        filter: contrast(1.04) saturate(1.06);
+      }
+      /* docked 态的圆角 + 橙 halo 现在写进 GSAP tween (可 seek)，不再用 class */
+
+      /* overlay 内容层 —— 在 host 之上 (右侧面板不与左侧 host 重叠) */
+      .scene-layer {
+        position: absolute;
+        top: 0; left: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 2;
+      }
+
+      /* 全局米色纹理 (grid + vignette)，z-index:0 垫在 host 之下；
+         host 满屏时遮住它，docked 后在米色区露出。grain+crosshair 留待打磨。 */
+      .bg-tex { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+      #bg-grid {
+        background-image:
+          linear-gradient(rgba(43, 38, 34, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(43, 38, 34, 0.05) 1px, transparent 1px);
+        background-size: 80px 80px;
+      }
+      #bg-vignette {
+        background: radial-gradient(ellipse 80% 80% at 56% 50%, transparent 50%, rgba(43, 38, 34, 0.16) 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="xcyj-dynamic-workflows-intro"
+      data-start="0"
+      data-duration="108.10"
+      data-width="1920"
+      data-height="1080"
+    >
+      <!-- 全局米色纹理 (grid + vignette)，垫在 host 之下 -->
+      <div id="bg-grid" class="bg-tex"></div>
+      <div id="bg-vignette" class="bg-tex"></div>
+
+      <!-- 口播视频 (制作期 720p proxy; 定稿换 4K)。muted + 独立 <audio> 出人声。
+           lint 的 "video_nested_in_timed_element" 是本模式的已知误报 (claude-edit-intro 同款)。 -->
+      <div id="face-wrapper">
+        <video
+          id="face-video"
+          data-start="0"
+          data-duration="108.10"
+          data-track-index="0"
+          src="assets/face.mp4"
+          muted
+          playsinline
+        ></video>
+      </div>
+      <audio
+        id="face-audio"
+        data-start="0"
+        data-duration="108.10"
+        data-track-index="2"
+        data-volume="1"
+        src="assets/face-audio.m4a"
+      ></audio>
+
+      <!-- ===== 8 拍 (track 4, 连续) ===== -->
+      <div id="beat-0" class="scene-layer"
+        data-composition-id="beat-0-hook" data-composition-src="compositions/00-hook.html"
+        data-start="0" data-duration="10.48" data-track-index="4" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-1" class="scene-layer"
+        data-composition-id="beat-1-vs" data-composition-src="compositions/01-vs.html"
+        data-start="10.48" data-duration="3.94" data-track-index="5" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-2" class="scene-layer"
+        data-composition-id="beat-2-feel" data-composition-src="compositions/02-feel.html"
+        data-start="14.42" data-duration="23.58" data-track-index="4" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-3" class="scene-layer"
+        data-composition-id="beat-3-spec" data-composition-src="compositions/03-spec.html"
+        data-start="38.00" data-duration="9.02" data-track-index="5" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-4" class="scene-layer"
+        data-composition-id="beat-4-bench" data-composition-src="compositions/04-bench-overview.html"
+        data-start="47.02" data-duration="11.58" data-track-index="4" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-5" class="scene-layer"
+        data-composition-id="beat-5-terminal" data-composition-src="compositions/05-terminal.html"
+        data-start="58.60" data-duration="11.86" data-track-index="5" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-6" class="scene-layer"
+        data-composition-id="beat-6-verdict" data-composition-src="compositions/06-verdict.html"
+        data-start="70.46" data-duration="18.04" data-track-index="4" data-width="1920" data-height="1080"></div>
+
+      <div id="beat-7" class="scene-layer"
+        data-composition-id="beat-7-outro" data-composition-src="compositions/07-outro.html"
+        data-start="88.50" data-duration="19.60" data-track-index="5" data-width="1920" data-height="1080"></div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const mainTl = gsap.timeline({ paused: true });
+
+      // 口播三态缩放 —— 只动 #face-wrapper (纯 div；video 在里面 overflow:hidden 裁切)。
+      // 圆角 + 橙 halo 写进 tween → 可 seek (不靠 onStart class 回调，scrub 也对)。
+      // 注意：crop 比例要变 (16:9 → 竖框)，所以必须动 width/height，scale 做不到。
+      const FULL = {
+        x: 0, y: 0, width: 1920, height: 1080, borderRadius: 0,
+        boxShadow: "0 40px 100px rgba(43,38,34,0), 0 0 60px rgba(217,119,87,0)"
+      };
+      const LEFT = {
+        x: 80, y: 96, width: 760, height: 888, borderRadius: 32,
+        boxShadow: "0 40px 100px rgba(43,38,34,0.40), 0 0 60px rgba(217,119,87,0.35)"
+      };
+      mainTl.set("#face-wrapper", FULL, 0);
+
+      // 他说到 "Dynamic Workflow" (~2.4s) 时缩到左，右侧让出面板，hold 到底。
+      mainTl.to("#face-wrapper", { ...LEFT, duration: 0.7, ease: "power3.inOut" }, 2.4);
+
+      // ★哨兵：把时间线撑到 = data-duration。HF 按「本地时间 / data-duration」比例 seek，
+      //   时间线必须等长，否则 reframe 被压缩到几乎触发不到 —— 这正是刚才满屏不缩的 bug。
+      mainTl.set({}, {}, 108.10);
+
+      window.__timelines["xcyj-dynamic-workflows-intro"] = mainTl;
+    </script>
+  </body>
+</html>
