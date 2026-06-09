@@ -113,7 +113,9 @@ npx hyperframes render --quality standard \
 - 仓库本身在 `~/项目/视频制作台/hyperframes/`，命令注意 UTF-8
 - 模板默认字体栈：`"Noto Sans SC", "Inter", sans-serif`，代码用 `JetBrains Mono`
 
-## 个人笔记（gitignored，AI 可读，不要在公开输出引用具体内容）
+## 方法论笔记（已入公开仓，供训练营学员 clone 复用）
+
+> 注：这两份原标注为「gitignored 私有」，2026-06-09 起改为有意公开——核心目的是让学员能查看、复用小陈的方法论。AI 可正常引用其内容。
 
 - `cyxj/notes/MY_VISUAL_DNA.md` —— 个人美学宪法（颜色 / 字体 / 节奏）
 - `cyxj/notes/MY_MOTION_NOTES.md` —— 19 招实战沉淀
