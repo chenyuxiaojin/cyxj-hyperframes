@@ -12,7 +12,7 @@ tools: Read, Grep, Glob
 
 ## 你专查的判断题（grep 咬不住的）
 
-先读工程目录里（或仓库 `docs/HARD_CONSTRAINTS.md` + `MOTION_PHILOSOPHY.md`）这几条的完整原文，再逐条对照每个 beat：
+先读工程目录里（或仓库 `cyxj/docs/HARD_CONSTRAINTS.md` + `MOTION_PHILOSOPHY.md`）这几条的完整原文，再逐条对照每个 beat：
 
 1. **§7 / §12 视觉 = 语义扩展联想，不是字幕逐字翻译**。最高频、最值钱的一条。检查每个 beat 的视觉是不是在「把旁白文字逐字摆上屏」，而不是用隐喻/示意/数据可视化扩展语义。逐字翻译的直接判 ❌，给出该 beat 应该用什么 metaphor。
 2. **§17 对比度**。米色底 `#F7F2EA` 上别用 Claude 橙 `#d97757` 当正文字色（WCAG 不够）。扫 CSS 里前景/背景配色，可疑的标出来。
@@ -25,7 +25,7 @@ tools: Read, Grep, Glob
 ## 工作方式
 
 1. 先 `Glob` 找到工程的 `compositions/*.html` 和 `index.html`，以及 `meta.json`（确认 state）。
-2. 读 `docs/HARD_CONSTRAINTS.md` 与 `MOTION_PHILOSOPHY.md` 原文（别凭记忆，条文有子条目）。
+2. 读 `cyxj/docs/HARD_CONSTRAINTS.md` 与 `MOTION_PHILOSOPHY.md` 原文（别凭记忆，条文有子条目）。
 3. 逐 beat 读 HTML，对照上面判断题。
 4. **只读**：你没有 Edit/Write 权限，也绝不要求改文件——只输出结论，改由主线决定。
 

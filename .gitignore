@@ -1,10 +1,4 @@
 # ============================================================
-# 个人笔记（不进开源仓库）
-# ============================================================
-MY_VISUAL_DNA.md
-MY_MOTION_NOTES.md
-
-# ============================================================
 # 媒体（大视频/音频不进 git；小图标 SVG/PNG 允许）
 # ============================================================
 *.mp4
@@ -32,19 +26,23 @@ MY_MOTION_NOTES.md
 # ============================================================
 hyperframes-student-kit/
 hyperframes-launches/
+official/*
+!official/REUSE.md
 
 # ============================================================
-# 软链回上游 / .agents 真物理位置（依赖 gitignored 目标，跨机器需重建）
+# active skill discovery / .agents 真物理位置（official 镜像入口默认不进 git）
 # 规则：
 #   - .claude/skills/* 和 .agents/skills/* 默认 ignore（上游官方 skill 软链 / 真目录）
 #   - cyxj-* 反向 include → 本仓库 wrapper skill 入口必须 commit
-# 跨机器恢复：npx skills add heygen-com/hyperframes -y（重建上游软链）
+# official/ 从 Codex plugin cache 同步；不要用 npx skills update 管理 official/
 # ============================================================
-MOTION_PHILOSOPHY.md
+/MOTION_PHILOSOPHY.md
 .claude/skills/*
 !.claude/skills/cyxj-*
+.claude/skills-disabled-*/
 .agents/skills/*
 !.agents/skills/cyxj-*
+.agents/skills-disabled-*/
 
 # ============================================================
 # 工具状态 / 缓存 / 构建产物
@@ -72,7 +70,7 @@ templates/**/.claude/
 # ============================================================
 # 仓库根禁止 debug 截图（2026-05-21 新增，cold-open 翻车教训）
 # 截图必须放工程目录 `<工程>/debug-shots/` 或 /tmp/
-# 详见 docs/HARD_CONSTRAINTS.md §13
+# 详见 cyxj/docs/HARD_CONSTRAINTS.md §13
 # ============================================================
 /*.png
 /*.jpg

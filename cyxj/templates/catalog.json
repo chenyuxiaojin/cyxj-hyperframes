@@ -1,0 +1,850 @@
+[
+  {
+    "name": "data-chart",
+    "type": "block",
+    "title": "Data Chart",
+    "description": "Animated bar + line chart with staggered reveal, NYT-style typography, and value labels",
+    "tags": [
+      "data",
+      "chart",
+      "statistics"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "flowchart",
+    "type": "block",
+    "title": "Flowchart",
+    "description": "Animated decision tree with SVG connectors, sticky-note nodes, cursor interaction, and typing correction",
+    "tags": [
+      "diagram",
+      "flowchart",
+      "interactive"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "logo-outro",
+    "type": "block",
+    "title": "Logo Outro",
+    "description": "Cinematic logo reveal with piece-by-piece assembly, glow bloom, tagline fade-in, and URL pill",
+    "tags": [
+      "branding",
+      "outro",
+      "logo"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "grain-overlay",
+    "type": "component",
+    "title": "Grain Overlay",
+    "description": "Animated film grain texture overlay using CSS keyframes — adds warmth and analog character to any composition",
+    "tags": [
+      "texture",
+      "grain",
+      "overlay",
+      "film"
+    ]
+  },
+  {
+    "name": "shimmer-sweep",
+    "type": "component",
+    "title": "Shimmer Sweep",
+    "description": "Animated light sweep across text or elements using a CSS gradient mask — ideal for AI accents and premium reveals",
+    "tags": [
+      "text",
+      "shimmer",
+      "highlight",
+      "effect"
+    ]
+  },
+  {
+    "name": "grid-pixelate-wipe",
+    "type": "component",
+    "title": "Grid Pixelate Wipe",
+    "description": "Transition effect where the screen dissolves into a grid of squares that fade out with staggered timing — use between scenes",
+    "tags": [
+      "transition",
+      "wipe",
+      "grid",
+      "pixelate"
+    ]
+  },
+  {
+    "name": "texture-mask-text",
+    "type": "component",
+    "title": "Texture Mask Text",
+    "description": "CSS luminance masks that cut holes through letterforms - 66 pre-built texture masks from ambientCG PBR color maps",
+    "tags": [
+      "text",
+      "texture",
+      "mask",
+      "effect"
+    ]
+  },
+  {
+    "name": "instagram-follow",
+    "type": "block",
+    "title": "Instagram Follow",
+    "description": "Animated Instagram follow overlay with profile card and follow button",
+    "tags": [
+      "social",
+      "overlay",
+      "instagram"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "tiktok-follow",
+    "type": "block",
+    "title": "TikTok Follow",
+    "description": "Animated TikTok follow overlay with profile card and follow button",
+    "tags": [
+      "social",
+      "overlay",
+      "tiktok"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "yt-lower-third",
+    "type": "block",
+    "title": "YouTube Lower Third",
+    "description": "Animated YouTube subscribe lower third with avatar and channel info",
+    "tags": [
+      "social",
+      "overlay",
+      "youtube"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "x-post",
+    "type": "block",
+    "title": "X Post Card",
+    "description": "Animated X/Twitter post card overlay with engagement metrics",
+    "tags": [
+      "social",
+      "overlay",
+      "twitter"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "reddit-post",
+    "type": "block",
+    "title": "Reddit Post Card",
+    "description": "Animated Reddit post card overlay with upvotes and comments",
+    "tags": [
+      "social",
+      "overlay",
+      "reddit"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "spotify-card",
+    "type": "block",
+    "title": "Spotify Now Playing",
+    "description": "Animated Spotify now-playing card with album art and progress bar",
+    "tags": [
+      "social",
+      "overlay",
+      "spotify"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 5
+  },
+  {
+    "name": "macos-notification",
+    "type": "block",
+    "title": "macOS Notification",
+    "description": "Animated macOS-style notification banner with app icon and message",
+    "tags": [
+      "social",
+      "overlay",
+      "notification"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "app-showcase",
+    "type": "block",
+    "title": "App Showcase",
+    "description": "Fitness app product showcase with three floating smartphone screens",
+    "tags": [
+      "showcase",
+      "app",
+      "3d"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5.5
+  },
+  {
+    "name": "north-korea-locked-down",
+    "type": "block",
+    "title": "North Korea Locked Down",
+    "description": "Realistic map zoom into North Korea with a red scribble circle, locked-down pop-up label, and reddish editorial wash.",
+    "tags": [
+      "showcase",
+      "map",
+      "annotation",
+      "youtube",
+      "kinetic"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "apple-money-count",
+    "type": "block",
+    "title": "Apple Money Count",
+    "description": "Apple-style finance counter that counts from $0 to $10,000, flashes green, and bursts money icons with sound.",
+    "tags": [
+      "showcase",
+      "finance",
+      "kinetic",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "vpn-youtube-spot",
+    "type": "block",
+    "title": "VPN YouTube Spot",
+    "description": "Snappy Apple-style YouTube insert showing a phone finding and installing a friendly VPN app with sound effects.",
+    "tags": [
+      "app",
+      "showcase",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "blue-sweater-intro-video",
+    "type": "block",
+    "title": "Blue Sweater Intro Video",
+    "description": "Warm AI creator intro sequence that resolves into an X follow card for @_blue_sweater_.",
+    "tags": [
+      "showcase",
+      "ai",
+      "creator",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "nyc-paris-flight",
+    "type": "block",
+    "title": "NYC Paris Flight",
+    "description": "Apple-style realistic map animation with a plane flying from New York to Paris, marker circle, landing pop, and sound effects.",
+    "tags": [
+      "showcase",
+      "travel",
+      "map",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "ui-3d-reveal",
+    "type": "block",
+    "title": "3D UI Reveal",
+    "description": "Perspective 3D reveal animation for UI elements",
+    "tags": [
+      "showcase",
+      "3d",
+      "reveal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 13
+  },
+  {
+    "name": "domain-warp-dissolve",
+    "type": "block",
+    "title": "Domain Warp Dissolve",
+    "description": "Shader transition with fractal noise domain warping",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "ridged-burn",
+    "type": "block",
+    "title": "Ridged Burn",
+    "description": "Shader transition with ridged turbulence burn effect",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "whip-pan",
+    "type": "block",
+    "title": "Whip Pan",
+    "description": "Shader transition simulating a fast camera whip pan",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "sdf-iris",
+    "type": "block",
+    "title": "SDF Iris",
+    "description": "Shader transition with signed distance field iris reveal",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "ripple-waves",
+    "type": "block",
+    "title": "Ripple Waves",
+    "description": "Shader transition with concentric ripple wave distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "gravitational-lens",
+    "type": "block",
+    "title": "Gravitational Lens",
+    "description": "Shader transition with gravitational lensing distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "cinematic-zoom",
+    "type": "block",
+    "title": "Cinematic Zoom",
+    "description": "Shader transition with dramatic zoom blur",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "chromatic-radial-split",
+    "type": "block",
+    "title": "Chromatic Radial Split",
+    "description": "Shader transition with chromatic aberration radial split",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "glitch",
+    "type": "block",
+    "title": "Glitch",
+    "description": "Shader transition with digital glitch artifacts",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "swirl-vortex",
+    "type": "block",
+    "title": "Swirl Vortex",
+    "description": "Shader transition with swirling vortex distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "thermal-distortion",
+    "type": "block",
+    "title": "Thermal Distortion",
+    "description": "Shader transition with heat haze thermal distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "flash-through-white",
+    "type": "block",
+    "title": "Flash Through White",
+    "description": "Shader transition with white flash crossfade",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "cross-warp-morph",
+    "type": "block",
+    "title": "Cross Warp Morph",
+    "description": "Shader transition with cross-warped morphing",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "light-leak",
+    "type": "block",
+    "title": "Light Leak",
+    "description": "Shader transition with cinematic light leak overlay",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "transitions-3d",
+    "type": "block",
+    "title": "3D Transitions",
+    "description": "Showcase of 3D perspective flip and rotate transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "transitions-blur",
+    "type": "block",
+    "title": "Blur Transitions",
+    "description": "Showcase of blur-based transitions between scenes",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-cover",
+    "type": "block",
+    "title": "Cover Transitions",
+    "description": "Showcase of cover/uncover slide transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-destruction",
+    "type": "block",
+    "title": "Destruction Transitions",
+    "description": "Showcase of destructive break-apart transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 14
+  },
+  {
+    "name": "transitions-dissolve",
+    "type": "block",
+    "title": "Dissolve Transitions",
+    "description": "Showcase of dissolve and fade transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 24
+  },
+  {
+    "name": "transitions-distortion",
+    "type": "block",
+    "title": "Distortion Transitions",
+    "description": "Showcase of warp and distortion transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-grid",
+    "type": "block",
+    "title": "Grid Transitions",
+    "description": "Showcase of grid-based tile transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "transitions-light",
+    "type": "block",
+    "title": "Light Transitions",
+    "description": "Showcase of light-based glow and flash transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-mechanical",
+    "type": "block",
+    "title": "Mechanical Transitions",
+    "description": "Showcase of mechanical shutter and iris transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "transitions-other",
+    "type": "block",
+    "title": "Other Transitions",
+    "description": "Showcase of miscellaneous creative transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-push",
+    "type": "block",
+    "title": "Push Transitions",
+    "description": "Showcase of push and slide transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 24
+  },
+  {
+    "name": "transitions-radial",
+    "type": "block",
+    "title": "Radial Transitions",
+    "description": "Showcase of radial wipe and reveal transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-scale",
+    "type": "block",
+    "title": "Scale Transitions",
+    "description": "Showcase of scale and zoom transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-text-cursor",
+    "type": "block",
+    "title": "VFX Text Cursor",
+    "description": "Dramatic text reveal with cursor glow, chromatic shadow rays, and directional lighting on a black stage. Canvas-based shader post-processing with spectral color edges.",
+    "tags": [
+      "html-in-canvas",
+      "text",
+      "shader",
+      "cursor",
+      "chromatic"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "vfx-liquid-background",
+    "type": "block",
+    "title": "Liquid Background",
+    "description": "Organic liquid simulation with vertex displacement on a subdivided plane. HTML content floats above rippling fluid surface with real-time wave dynamics.",
+    "tags": [
+      "html-in-canvas",
+      "liquid",
+      "webgl",
+      "displacement",
+      "background"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "vfx-iphone-device",
+    "type": "block",
+    "title": "iPhone & MacBook 3D Showcase",
+    "description": "Real GLTF iPhone 15 Pro Max and MacBook Pro models with live HTML-in-Canvas screen content, morphing glass lens, product review camera choreography, and 360° turntable.",
+    "tags": [
+      "html-in-canvas",
+      "3d",
+      "device",
+      "iphone",
+      "macbook",
+      "gltf"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-magnetic",
+    "type": "block",
+    "title": "Magnetic",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-portal",
+    "type": "block",
+    "title": "Portal",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 10
+  },
+  {
+    "name": "vfx-liquid-glass",
+    "type": "block",
+    "title": "Liquid Glass",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "vfx-shatter",
+    "type": "block",
+    "title": "Shatter",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  }
+]

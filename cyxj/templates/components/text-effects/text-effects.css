@@ -1,0 +1,82 @@
+/* ============================================================
+   text-effects.css — 4 个流式文本动效的底层样式
+   驱动：GSAP timeline + stagger（不是 CSS @keyframes / animation）
+   原版 demo：rAF 自管 progress；本组件换成 GSAP 让 hy 无头渲染时序确定
+   ============================================================ */
+
+:root {
+  --te-ink: rgba(11, 11, 8, 0.92);
+  --te-ink-soft: rgba(11, 11, 8, 0.14);
+  --te-skel-bar: #e2e1dc;
+  --te-skel-shimmer: #f5f2ea;
+  --te-token-flash: rgba(11, 11, 8, 0.16);
+}
+
+.te-blur,
+.te-skel,
+.te-scr,
+.te-tok {
+  font-family: inherit;
+  color: var(--te-ink);
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+}
+
+/* ---- A. blur-sharpen ---- */
+.te-blur .te-word {
+  display: inline-block;
+  opacity: 0.18;
+  filter: blur(5px);
+  transform: translateY(10px);
+  will-change: opacity, filter, transform;
+}
+
+/* ---- B. skeleton-fill ---- */
+.te-skel {
+  display: grid;
+  gap: 10px;
+}
+.te-skel-row {
+  position: relative;
+  min-height: 22px;
+}
+.te-skel-bar {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  height: 12px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--te-skel-bar) 0%,
+    var(--te-skel-shimmer) 50%,
+    var(--te-skel-bar) 100%
+  );
+  background-size: 200% 100%;
+  background-position: 0 0;
+}
+.te-skel-text {
+  position: relative;
+  opacity: 0;
+}
+
+/* ---- C. char-scramble ---- */
+.te-scr .te-char {
+  font-family: var(--f-mono, "JetBrains Mono", ui-monospace, monospace);
+  /* 等宽防止 scramble 时整行宽度跳；CJK 会回退到 inherit */
+  display: inline-block;
+  min-width: 0.6em;
+  text-align: center;
+}
+.te-scr .te-char.te-locked {
+  color: var(--te-ink);
+}
+
+/* ---- D. token-chunks ---- */
+.te-tok .te-token {
+  display: inline;
+  padding: 0 1px;
+  border-radius: 2px;
+  opacity: 0;
+  background-color: transparent;
+}

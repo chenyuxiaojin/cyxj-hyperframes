@@ -63,7 +63,7 @@ npx hyperframes lint       # 必须 0 errors
 npx hyperframes preview    # 浏览器验收
 ```
 
-**硬约束**：GSAP querySelector 不能用 template literal，永远硬编码 selector 字符串。完整 8 条详见 [`../../docs/HARD_CONSTRAINTS.md`](../../docs/HARD_CONSTRAINTS.md)。
+**硬约束**：GSAP querySelector 不能用 template literal，永远硬编码 selector 字符串。完整 8 条详见 [`../../cyxj/docs/HARD_CONSTRAINTS.md`](../../cyxj/docs/HARD_CONSTRAINTS.md)。
 
 ---
 

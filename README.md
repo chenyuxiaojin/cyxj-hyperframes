@@ -39,14 +39,15 @@ templates/
   components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
   inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
   catalog.json                  Machine-readable component catalog (used by skills)
-skills/
-  cyxj-new-video/               Full workflow skill: new project → lint → preview → archive
-  cyxj-add-block/               Add a component from catalog into a project
+cyxj/
+  skills/cyxj-hyperframes-overlay/
+                                  Active XCYJ overlay: official rules → user layer → project
 assets/logos/                   33 AI vendor / tool SVG logos (Claude, OpenAI, GitHub…)
-docs/
+cyxj/docs/
   HARD_CONSTRAINTS.md           30 hard constraints distilled from real failures
   STYLE_BORROW_PLAYBOOK.md      How to legally borrow visual style from reference videos
   REFERENCE_INDEX.md            Index of upstream reference projects
+docs/
   hyperframes-official/         78-page local mirror of HyperFrames official docs
 scripts/                        Maintenance scripts (refresh catalog, lint projects…)
 ```
@@ -80,24 +81,24 @@ npx hyperframes render --quality standard --format mp4 \
 mv ../my-first-video ../../videos/$DATE-my-first-video
 ```
 
-Full checklist: [`TEMPLATE_USAGE.md`](TEMPLATE_USAGE.md)
+Full checklist: [`cyxj/notes/TEMPLATE_USAGE.md`](cyxj/notes/TEMPLATE_USAGE.md)
 
 ---
 
 ## Usage: AI Collaboration Workflow
 
-The intended way to use this repo is to open a Claude Code or Codex session and say **"make a new video about X"**. The [`skills/cyxj-new-video/SKILL.md`](skills/cyxj-new-video/SKILL.md) skill then drives the full loop:
+The intended way to use this repo is to open a Claude Code or Codex session in `hyperframes/` and say **"make a new video about X"**. Active discovery now routes through `cyxj-hyperframes-overlay`: read `official/` first for Codex `@hyperframes` rules, then read `cyxj/` for XCYJ assets, templates, visual DNA, and production discipline. The legacy workflow under `skills/` remains only as a reference for the loop:
 
 1. Ask for format / topic / duration
-2. Read [`docs/REFERENCE_INDEX.md`](docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
+2. Read [`cyxj/docs/REFERENCE_INDEX.md`](cyxj/docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
 3. Copy the template into `YYYY-MM-DD/<slug>/`, update `meta.json` and `index.html`
 4. Wait for your script → populate beats → lint → preview
 5. When you say "done" → auto-archive into `videos/<date>-<slug>/`
 
-**Claude Code users:** skills are at `.claude/skills/cyxj-{new-video,add-block}`  
-**OpenAI Codex CLI users:** the same skills are symlinked at `.agents/skills/cyxj-{new-video,add-block}`
+**Claude Code users:** active skills are under `.claude/skills/`, pointing to `official/skills/` plus `cyxj/skills/cyxj-hyperframes-overlay`.  
+**OpenAI Codex users:** active skills are under `.agents/skills/`, pointing to the same official mirror plus XCYJ overlay.
 
-Both point to the same source under `skills/`. Edit skills only in `skills/`.
+Do not edit `official/` by hand; sync it from Codex plugin cache with `cyxj/scripts/sync-official-from-codex-cache.sh`. Edit XCYJ production rules in `cyxj/`.
 
 ---
 
@@ -125,10 +126,10 @@ HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial video
 Yes. Copy `templates/tutorial-8beat/`, find the `{{PLACEHOLDER}}` tokens in each composition file, and replace them with your text. The template README has a full placeholder table. Claude Code can fill them in for you if you paste the script.
 
 **Chinese subtitle rendering issues?**  
-Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`docs/HARD_CONSTRAINTS.md`](docs/HARD_CONSTRAINTS.md) §4 and §8.
+Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`cyxj/docs/HARD_CONSTRAINTS.md`](cyxj/docs/HARD_CONSTRAINTS.md) §4 and §8.
 
 **Can OpenAI Codex users use this?**  
-Yes. Skills are symlinked at `.agents/skills/` which follows the OpenAI Agents format. Run `npx skills add heygen-com/hyperframes -y` to rebuild symlinks on a new machine.
+Yes. Skills are symlinked at `.agents/skills/` which follows the OpenAI Agents format. Active official skills mirror `official/skills/`, and the XCYJ overlay points to `cyxj/skills/cyxj-hyperframes-overlay`. Rebuild `official/` from Codex plugin cache, not `npx skills update`.
 
 ---
 
