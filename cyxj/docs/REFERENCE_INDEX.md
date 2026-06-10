@@ -142,35 +142,20 @@ components 跟 blocks 不同：components 是"叠加层"，全局生效；blocks
 ### 真实工程里用过哪些零件（自动扫描）
 
 <!-- AUTO:zero-usage:start -->
-> 由 `scripts/refresh-zero-usage.sh` 自动扫描 `videos/` 下所有工程的 `compositions/*.html` 和 `compositions/components/*.html` 文件名 vs catalog.json 反查得出。重跑：`bash scripts/refresh-zero-usage.sh --write`。手动编辑会被下次重跑覆盖。
+> 由 `scripts/refresh-zero-usage.sh` 自动扫描 `视频项目/已发布/` 下所有工程的 `compositions/*.html` 和 `compositions/components/*.html` 文件名 vs catalog.json 反查得出。重跑：`bash scripts/refresh-zero-usage.sh --write`。手动编辑会被下次重跑覆盖。
 
-**hyperframes-student-kit/video-projects/**
+**视频项目/已发布/**
 
-- `hyperframes-student-kit/video-projects/aisoc-app-release/` 用了：`instagram-follow`、`x-post`、`grain-overlay`、`shimmer-sweep`
-- `hyperframes-student-kit/video-projects/aisoc-hype/` 用了：`grain-overlay`、`shimmer-sweep`
-- `hyperframes-student-kit/video-projects/aisoc-lesson-5-1/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-student-kit/video-projects/claude-edit-intro/` 用了：`grain-overlay`、`shimmer-sweep`
-- `hyperframes-student-kit/video-projects/clickup-demo/` 用了：_（无 compositions/ 目录，单文件 index.html）_
-- `hyperframes-student-kit/video-projects/first-agent-promo/` 用了：_（无 compositions/ 目录，单文件 index.html）_
-- `hyperframes-student-kit/video-projects/golden-ratio-demo/` 用了：`grain-overlay`
-- `hyperframes-student-kit/video-projects/hyperframes-sizzle/` 用了：`app-showcase`、`chromatic-radial-split`、`cinematic-zoom`、`cross-warp-morph`、`data-chart`、`domain-warp-dissolve`、`flash-through-white`、`glitch`、`gravitational-lens`、`instagram-follow`、`light-leak`、`logo-outro`、`ridged-burn`、`sdf-iris`、`swirl-vortex`、`thermal-distortion`、`tiktok-follow`、`whip-pan`、`x-post`、`yt-lower-third`、`grain-overlay`、`grid-pixelate-wipe`、`shimmer-sweep`
-- `hyperframes-student-kit/video-projects/linear-promo-30s/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-student-kit/video-projects/may-shorts-18/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-student-kit/video-projects/may-shorts-19/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-student-kit/video-projects/may-shorts-6/` 用了：_（未引用 catalog 零件，全部自制）_
-
-**hyperframes-launches/**
-
-- `hyperframes-launches/hyperframes-launch/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-launches/timeline-launch/` 用了：_（未引用 catalog 零件，全部自制）_
-- `hyperframes-launches/website-to-hyperframes/` 用了：_（未引用 catalog 零件，全部自制）_
-
-**videos/**
-
-- `videos/2026-05-02-claude-demo-v2/` 用了：`grain-overlay`、`shimmer-sweep`
-- `videos/2026-05-02-claude-overlays-only/` 用了：`grain-overlay`、`shimmer-sweep`
-- `videos/2026-05-02-codex-claude-intro/` 用了：_（未引用 catalog 零件，全部自制）_
-- `videos/2026-05-04-claude-19-tips-hf/` 用了：`cinematic-zoom`、`flash-through-white`、`flowchart`、`logo-outro`、`macos-notification`、`whip-pan`、`grain-overlay`、`shimmer-sweep`
+- `视频项目/已发布/2026-05-02-claude-demo-v2/` 用了：`grain-overlay`、`shimmer-sweep`
+- `视频项目/已发布/2026-05-02-claude-overlays-only/` 用了：`grain-overlay`、`shimmer-sweep`
+- `视频项目/已发布/2026-05-02-codex-claude-intro/` 用了：_（未引用 catalog 零件，全部自制）_
+- `视频项目/已发布/2026-05-04-claude-19-tips/` 用了：`cinematic-zoom`、`flash-through-white`、`flowchart`、`logo-outro`、`macos-notification`、`whip-pan`、`grain-overlay`、`shimmer-sweep`
+- `视频项目/已发布/2026-05-07-codex-claude-combo/` 用了：_（未引用 catalog 零件，全部自制）_
+- `视频项目/已发布/2026-05-09-claude-edit-intro/` 用了：`grain-overlay`、`shimmer-sweep`
+- `视频项目/已发布/2026-05-09-clickup-intro/` 用了：_（无 compositions/ 目录，单文件 index.html）_
+- `视频项目/已发布/2026-05-09-linear-promo/` 用了：_（未引用 catalog 零件，全部自制）_
+- `视频项目/已发布/2026-05-09-mywebsite-teaser/` 用了：_（未引用 catalog 零件，全部自制）_
+- `视频项目/已发布/2026-05-09-prompt-video-showcase/` 用了：_（未引用 catalog 零件，全部自制）_
 
 <!-- AUTO:zero-usage:end -->
 
