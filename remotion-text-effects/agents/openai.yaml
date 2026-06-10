@@ -1,4 +1,0 @@
-interface:
-  display_name: "Remotion Text Effects"
-  short_description: "Build Remotion-native streaming text animations."
-  default_prompt: "Use remotion-text-effects to add Remotion-native animated text reveals to my composition."
