@@ -18,26 +18,25 @@ XCYJ（陈与小金）的 YouTube 教程视频生产工作台 —— 基于 HeyG
 ## 关键路径速查
 
 ```
-videos/<日期>-<slug>/        已发布视频源工程（10 条）
-2026-MM-DD/<slug>/           当前在做的工作区（可并存多个日期）
-templates/                   tutorial-8beat 真模板 + components + inspirations + catalog.json（只读参考，活工程在 2026-MM-DD/）
-hyperframes-launches/        发布类视频参考模板（含 SCRIPT.md / STORYBOARD.md / 完整 compositions/，可复用）
-hyperframes-student-kit/     Nate Herk 上游 student kit（视觉灵感、参考工程、基础 skill 来源）
+视频项目/已发布/<日期>-<slug>/   已发布视频源工程（10 条，原 videos/）
+视频项目/在制/<工程>/            当前在做的工作区（原根目录 2026-MM-DD/ 日期目录）
+templates/                   tutorial-8beat + components + inspirations + catalog.json（只读参考，活工程在 视频项目/在制/）
+                             ⚠️ tutorial-8beat 2026-06-10 冷启动验证失败（渲染即挂，跨版本复现），修复前勿直接复制使用
+参考/hyperframes-launches/   HeyGen 上游参考仓（含 SCRIPT.md / STORYBOARD.md / 完整 compositions/，只读，不推送）
+参考/我的作品/                历史作品快照参考池（原 参考库/）
+素材/录屏/                   原始录屏素材
 assets/logos/                33 个 AI 厂商 / 工具 SVG（产品引用用真 logo，不准 emoji / 字母）
-归档/                         早期废弃探索（保留参考，不在这里做活）
 
 cyxj/skills/cyxj-{new-video,add-block}/   skill 真源（legacy active links 已停用到 skills-disabled-*，active 入口是 cyxj-hyperframes-overlay）
 cyxj/docs/HARD_CONSTRAINTS.md     硬约束单源（30 主条目 + 子条目，§1–§19 实战坑 / §20–§30 官方底线）
 cyxj/docs/REFERENCE_INDEX.md      上游参考工程 + catalog 零件 + skill 索引
 cyxj/docs/ops.md                  CLI 版本 / 维护脚本 / 软链架构
 
-MOTION_PHILOSOPHY.md         10 大动效法则（软链到 hyperframes-student-kit/，每个新工程必读）
 cyxj/rules/shared/motion-vocabulary.md  动画词汇表（80 术语中英对照 + GSAP/Remotion 映射 + 视频适用性，沟通动效的共同语言）
 cyxj/notes/TEMPLATE_USAGE.md            模板复用 checklist（README 5 分钟上手的详细版）
 ```
 
-`参考库/` 是作品快照参考池：`heygen-launches/`（HeyGen 官方作品）、`nate-demos/`（Nate Herk 作品）、`我的作品/`（自己历史作品快照），跟 `assets/`（工程引用的最终素材）并列分工。
-`remotion-text-effects/` 是 Remotion（非 HyperFrames）管线，不要混做。
+`参考/` 是参考资产层：`我的作品/`（历史作品快照）+ `hyperframes-launches/`（HeyGen 上游仓），跟 `assets/`（工程引用的最终素材）并列分工。Remotion 专属参考已迁至 `../Remotion/参考/`，本仓不再混放。
 
 ## skill 触发词
 
@@ -84,7 +83,7 @@ GSAP 3.13+ 全部插件免费（SplitText / DrawSVG / MorphSVG / ScrollSmoother 
 仓库装了两个 hook + 一个 subagent，把上面部分硬约束从「靠自觉」变成「写代码当场拦」。**配置在 `.claude/settings.json`，脚本在 `scripts/hf-{lint,guard-upstream}.sh`。**
 
 - **写完 `compositions/*.html` 收到 `⚠️ HARD_CONSTRAINTS 机械自检命中` 是预期行为，不是报错** —— PostToolUse 钩子 grep 了 §1/§3/§11/§20/§21/§22/§24/§25/§29 九类机械可检测违规，命中即注入提醒。对照原文确认即可，极少数是合法例外。clean 时静默。
-- 改 `hyperframes-student-kit/` 或 `hyperframes-launches/` 会弹确认（PreToolUse，§6 上游只读）。
+- 改 `参考/hyperframes-launches/` 会弹确认（PreToolUse，§6 上游只读；guard 按目录名匹配，搬动后仍生效）。
 - render 前要查 grep 咬不住的判断题（§7/§12 语义、§17 对比度、§18 禁 exit）→ 用 `composition-reviewer` subagent（只读审查，不改文件）。
 
 > 改 `scripts/hf-*.sh` 或 `.claude/settings.json` 即改这套自检；个人权限在 gitignored 的 `settings.local.json`。
@@ -107,7 +106,7 @@ npx hyperframes render --quality standard \
 | Claude Code | `CLAUDE.md` | `.claude/skills/` |
 | Codex | `AGENTS.md` | `.agents/skills/` |
 
-两边 active official skills 都软链到 `official/skills/`，XCYJ overlay 软链到 `cyxj/skills/cyxj-hyperframes-overlay/`。Legacy workflow sources under `skills/` 暂保留，但 active links 已停用到 `skills-disabled-*`。正在做的视频工程在 `2026-MM-DD/<slug>/`，做基础设施修复时先排除。
+两边 active official skills 都软链到 `official/skills/`，XCYJ overlay 软链到 `cyxj/skills/cyxj-hyperframes-overlay/`。Legacy workflow sources under `skills/` 暂保留，但 active links 已停用到 `skills-disabled-*`。正在做的视频工程在 `视频项目/在制/<工程>/`，做基础设施修复时先排除。
 
 ## 中文环境
 

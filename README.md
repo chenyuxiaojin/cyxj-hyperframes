@@ -14,7 +14,7 @@
 
 [![19 Claude Code Tips](https://i.ytimg.com/vi/fnKGWHSd0NE/hqdefault.jpg)](https://youtu.be/fnKGWHSd0NE)
 
-Featured video: [**19 Claude Code Tips**](https://youtu.be/fnKGWHSd0NE) — 7.5 min / 28 compositions / full source at [`videos/2026-05-04-claude-19-tips/`](videos/2026-05-04-claude-19-tips/)
+Featured video: [**19 Claude Code Tips**](https://youtu.be/fnKGWHSd0NE) — 7.5 min / 28 compositions / full source at [`视频项目/已发布/2026-05-04-claude-19-tips/`](视频项目/已发布/2026-05-04-claude-19-tips/)
 
 ---
 
@@ -33,9 +33,10 @@ This repo is the production workspace behind the YouTube channel [@cyxj_ai](http
 ## What's Inside
 
 ```
-videos/                         10 archived video source projects (each with a README)
+视频项目/已发布/                 10 archived video source projects (each with a README)
+视频项目/在制/                   active work-in-progress projects (gitignored)
 templates/
-  tutorial-8beat/               The canonical 8-beat tutorial template
+  tutorial-8beat/               The canonical 8-beat tutorial template (⚠️ cold-start render currently broken, 2026-06-10)
   components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
   inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
   catalog.json                  Machine-readable component catalog (used by skills)
@@ -77,8 +78,8 @@ npx hyperframes preview   # opens http://localhost:3002
 npx hyperframes render --quality standard --format mp4 \
   --output renders/final.mp4
 
-# 7. When done, archive into videos/
-mv ../my-first-video ../../videos/$DATE-my-first-video
+# 7. When done, archive into 视频项目/已发布/
+mv ../my-first-video ../../已发布/$DATE-my-first-video
 ```
 
 Full checklist: [`cyxj/notes/TEMPLATE_USAGE.md`](cyxj/notes/TEMPLATE_USAGE.md)
@@ -91,9 +92,9 @@ The intended way to use this repo is to open a Claude Code or Codex session in `
 
 1. Ask for format / topic / duration
 2. Read [`cyxj/docs/REFERENCE_INDEX.md`](cyxj/docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
-3. Copy the template into `YYYY-MM-DD/<slug>/`, update `meta.json` and `index.html`
+3. Copy the template into `视频项目/在制/<slug>/`, update `meta.json` and `index.html`
 4. Wait for your script → populate beats → lint → preview
-5. When you say "done" → auto-archive into `videos/<date>-<slug>/`
+5. When you say "done" → auto-archive into `视频项目/已发布/<date>-<slug>/`
 
 **Claude Code users:** active skills are under `.claude/skills/`, pointing to `official/skills/` plus `cyxj/skills/cyxj-hyperframes-overlay`.  
 **OpenAI Codex users:** active skills are under `.agents/skills/`, pointing to the same official mirror plus XCYJ overlay.
