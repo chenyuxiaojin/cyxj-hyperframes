@@ -64,7 +64,6 @@ official/*
 .claude/worktrees/
 
 # 子工程内部 .claude state
-videos/**/.claude/
 视频项目/已发布/**/.claude/
 templates/**/.claude/
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # refresh-zero-usage.sh
 #
-# 扫 videos/ 下所有工程，反查每个工程用过哪些 catalog block / component。
+# 扫 视频项目/已发布/ 下所有工程，反查每个工程用过哪些 catalog block / component。
 # 输出格式与 cyxj/docs/REFERENCE_INDEX.md "真实工程里用过哪些零件" 节一致。
 #
 # 检测规则：
@@ -37,7 +37,7 @@ scan_project() {
     local project_dir="$1"
     local project_name
     project_name=$(basename "$project_dir")
-    local parent_name="videos"
+    local parent_name="视频项目/已发布"
 
     if [ ! -d "$project_dir/compositions" ]; then
         echo "- \`$parent_name/$project_name/\` 用了：_（无 compositions/ 目录，单文件 index.html）_"
@@ -72,14 +72,14 @@ scan_project() {
 
 # 生成 body（不含 marker），由调用方决定要不要包 marker
 generate_body() {
-    echo "> 由 \`scripts/refresh-zero-usage.sh\` 自动扫描 \`videos/\` 下所有工程的 \`compositions/*.html\` 和 \`compositions/components/*.html\` 文件名 vs catalog.json 反查得出。重跑：\`bash scripts/refresh-zero-usage.sh --write\`。手动编辑会被下次重跑覆盖。"
+    echo "> 由 \`scripts/refresh-zero-usage.sh\` 自动扫描 \`视频项目/已发布/\` 下所有工程的 \`compositions/*.html\` 和 \`compositions/components/*.html\` 文件名 vs catalog.json 反查得出。重跑：\`bash scripts/refresh-zero-usage.sh --write\`。手动编辑会被下次重跑覆盖。"
     echo ""
 
     local has_any=false
-    for project_dir in "$ROOT"/videos/*/; do
+    for project_dir in "$ROOT"/视频项目/已发布/*/; do
         [ -d "$project_dir" ] || continue
         if ! $has_any; then
-            echo "**videos/**"
+            echo "**视频项目/已发布/**"
             echo ""
             has_any=true
         fi
