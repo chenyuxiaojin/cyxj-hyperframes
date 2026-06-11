@@ -36,7 +36,7 @@
 视频项目/已发布/                 10 条已归档视频源工程（每条有 README 讲技术选型）
 视频项目/在制/                   当前在做的工程（gitignored）
 templates/
-  tutorial-8beat/               8-beat 教程结构模板（⚠️ 2026-06-10 冷启动渲染失败待修，勿直接复制使用）
+  tutorial-8beat/               8-beat 教程结构真模板（2026-06-11 已过冷启动验证）
   components/                   7 个可复用组件（cc-window 终端 UI / orbit-dots / pulse-bars…）
   inspirations/                 5 大 React 组件库的 vanilla HTML+GSAP 转译版
   catalog.json                  机器可读组件清单（给 skill 用）

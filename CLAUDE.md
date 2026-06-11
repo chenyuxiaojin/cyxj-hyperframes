@@ -20,8 +20,8 @@ XCYJ（陈与小金）的 YouTube 教程视频生产工作台 —— 基于 HeyG
 ```
 视频项目/已发布/<日期>-<slug>/   已发布视频源工程（10 条，原 videos/）
 视频项目/在制/<工程>/            当前在做的工作区（原根目录 2026-MM-DD/ 日期目录）
-templates/                   tutorial-8beat + components + inspirations + catalog.json（只读参考，活工程在 视频项目/在制/）
-                             ⚠️ tutorial-8beat 2026-06-10 冷启动验证失败（渲染即挂，跨版本复现），修复前勿直接复制使用
+templates/                   tutorial-8beat 真模板 + components + inspirations + catalog.json（只读参考，活工程在 视频项目/在制/）
+                             tutorial-8beat 已过冷启动验证（2026-06-11 修复 grain-overlay 裸片段；起新片用 /new-video）
 参考/hyperframes-launches/   HeyGen 上游参考仓（含 SCRIPT.md / STORYBOARD.md / 完整 compositions/，只读，不推送）
 参考/我的作品/                历史作品快照参考池（原 参考库/）
 素材/录屏/                   原始录屏素材
@@ -107,6 +107,17 @@ npx hyperframes render --quality standard \
 | Codex | `AGENTS.md` | `.agents/skills/` |
 
 两边 active official skills 都软链到 `official/skills/`，XCYJ overlay 软链到 `cyxj/skills/cyxj-hyperframes-overlay/`。Legacy workflow sources under `skills/` 暂保留，但 active links 已停用到 `skills-disabled-*`。正在做的视频工程在 `视频项目/在制/<工程>/`，做基础设施修复时先排除。
+
+## 组件晋升规则（作品私有 → 公共层）
+
+做完一条视频后，判断工程里的零件要不要提升进公共层（`templates/components/` + `cyxj/templates/components/` 镜像两份都进）：
+
+1. **被 ≥2 个作品复制或引用** → 晋升候选
+2. **体现品牌 DNA**（logo 用法 / 字体 / 配色 / 字幕样式 / 运镜模式）→ 晋升候选
+3. **仅单作品使用、耦合具体文案或素材** → 留在作品内，不晋升
+4. 拿不准 → 问用户，不擅自晋升
+
+晋升时的硬要求：组件文件必须用 `<template id="<name>-template">` 包裹（裸片段被 `data-composition-src` 引用会让 compile 崩，见 grain-overlay 2026-06-11 修复记录）；同步更新 `templates/catalog.json`。
 
 ## 中文环境
 

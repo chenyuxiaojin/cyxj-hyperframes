@@ -36,7 +36,7 @@ This repo is the production workspace behind the YouTube channel [@cyxj_ai](http
 视频项目/已发布/                 10 archived video source projects (each with a README)
 视频项目/在制/                   active work-in-progress projects (gitignored)
 templates/
-  tutorial-8beat/               The canonical 8-beat tutorial template (⚠️ cold-start render currently broken, 2026-06-10)
+  tutorial-8beat/               The canonical 8-beat tutorial template (cold-start verified 2026-06-11)
   components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
   inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
   catalog.json                  Machine-readable component catalog (used by skills)

@@ -10,8 +10,13 @@
   - speed: change animation duration (default 0.5s)
   - texture: swap the background URL for a different pattern
   - z-index: adjust #grain-overlay z-index to layer correctly
+
+  注：必须保留 <template> 包裹——index.html 通过 data-composition-src 把本文件当
+  block 加载，CLI 编译器（0.6.70+ 实测）对无 template 包裹的裸片段会在 compile
+  阶段崩（documentElement null）。2026-06-11 修复。
 -->
 
+<template id="grain-overlay-template">
 <div
   id="grain-overlay"
   style="
@@ -73,3 +78,4 @@
     animation: hf-grain-noise 0.5s steps(1) infinite;
   }
 </style>
+</template>
