@@ -1,95 +1,101 @@
 {
   "version": 1,
   "skills": {
-    "animejs": {
+    "embedded-captions": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/animejs/SKILL.md",
-      "computedHash": "314c655fbc0df7eacc6f3853435ff8b03c2a771fad7435a58e2c4489a780d1b7"
+      "skillPath": "skills/embedded-captions/SKILL.md",
+      "computedHash": "133c9401ef6b831470fe4256686071a26afb2caeacb2cbe8faad540b96d3473b"
     },
-    "contribute-catalog": {
+    "faceless-explainer": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/contribute-catalog/SKILL.md",
-      "computedHash": "31733d362afeb07d5716e267cf94ae487740c3e52f5e60ad714e085c95a03b73"
+      "skillPath": "skills/faceless-explainer/SKILL.md",
+      "computedHash": "ca36fc6ab615af173e08f6a4f99f39a338bdf98f37cc86b967418b26da229d08"
     },
-    "css-animations": {
+    "general-video": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/css-animations/SKILL.md",
-      "computedHash": "df468749b06a8ec7369cfea69bf71bf65e46cfc376e837e439e26f4230852c6b"
+      "skillPath": "skills/general-video/SKILL.md",
+      "computedHash": "95db6a3704a096e6c438bf4d9f02ccdbf8e58202ed2027994e93d28942acbb3c"
     },
-    "gsap": {
+    "graphic-overlays": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/gsap/SKILL.md",
-      "computedHash": "ef2658b3705d3fd5c8e38d197b31521553a0bee3b40bda2ab70bf22bd6b88854"
+      "skillPath": "skills/graphic-overlays/SKILL.md",
+      "computedHash": "3994532b78c9374556bc329461636e17dff376a4bf94c2223b110ae7efe19cea"
     },
     "hyperframes": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
       "skillPath": "skills/hyperframes/SKILL.md",
-      "computedHash": "5bf0372dfef8aab1085816b3c733f860d2500fa8197d14d208e84464aa0d2b3c"
+      "computedHash": "c7c236d562fd48ea967dd8bc10987b94cac4277f18b88224378118bfd29c45cc"
+    },
+    "hyperframes-animation": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-animation/SKILL.md",
+      "computedHash": "d9da94dd7074eb539ca246260ce46dc32797316a243aa6d3bd17c43fc864f9ac"
     },
     "hyperframes-cli": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
       "skillPath": "skills/hyperframes-cli/SKILL.md",
-      "computedHash": "59dcf8d01b5e21a101d6c1225411b487316436221170e7e1dc9b00bf5c27d359"
+      "computedHash": "17116283a667e6f61b3caa42b7d098ccb0a14a1cb1696371d445e06919b6bda4"
+    },
+    "hyperframes-core": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-core/SKILL.md",
+      "computedHash": "4579d85b85a9df9c2700e89e3f730c1f75f33f35712543cc4cffd3a072476618"
+    },
+    "hyperframes-creative": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/hyperframes-creative/SKILL.md",
+      "computedHash": "d2a3fa822a57e8acd3c9ea8375abf5c3a10717df1970ac8a609ef66da9454b6b"
     },
     "hyperframes-media": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
       "skillPath": "skills/hyperframes-media/SKILL.md",
-      "computedHash": "4dbba9f98b1d354f8b788c290cfab34f1e000d803cca40808da1a69973231dde"
+      "computedHash": "b07f9ef6f08b79373ebdb0f253bfdee80d5644f22a422115e10da5eb29dfffa8"
     },
     "hyperframes-registry": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
       "skillPath": "skills/hyperframes-registry/SKILL.md",
-      "computedHash": "cd10f258cea41d3dcfe914cb1c93fc999cd9361c64a517ffe9389d42bbf89b62"
+      "computedHash": "a65dd053db01700a8c52ee2dd005807bb48962808b6dc32b59699561dea3eabd"
     },
-    "lottie": {
+    "motion-graphics": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/lottie/SKILL.md",
-      "computedHash": "42174a1de29225618166626ed113bfd311a6b53083ddd514ab50991816f77b19"
+      "skillPath": "skills/motion-graphics/SKILL.md",
+      "computedHash": "79ba3f91318733ba6b200a8bc364dee474a6248d6ad49bea936ea303e0017b52"
+    },
+    "pr-to-video": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/pr-to-video/SKILL.md",
+      "computedHash": "dde4bc07b4475a068247bf987e03e278b4f23b718abdacb59219f3939951d3f9"
+    },
+    "product-launch-video": {
+      "source": "heygen-com/hyperframes",
+      "sourceType": "github",
+      "skillPath": "skills/product-launch-video/SKILL.md",
+      "computedHash": "ef9a7d92ce90983ad0d0190be26747533acb4ec4927f264ebc14366e0fd46ad8"
     },
     "remotion-to-hyperframes": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
       "skillPath": "skills/remotion-to-hyperframes/SKILL.md",
-      "computedHash": "ee04c5eca6113d5a3a8aeee9e78792451da57f06450bd034486950142ee05766"
+      "computedHash": "ac3968058e8b13ae4fc8882672b999be12072ccfb0487c1264cf243d4d165bca"
     },
-    "tailwind": {
+    "website-to-video": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
-      "skillPath": "skills/tailwind/SKILL.md",
-      "computedHash": "97bf0007f24e6275dcabc084c4d42f434ba48a84cec5a5b060036220239d6ddc"
-    },
-    "three": {
-      "source": "heygen-com/hyperframes",
-      "sourceType": "github",
-      "skillPath": "skills/three/SKILL.md",
-      "computedHash": "d40f783d8687f93b19657c193811c78304f84dd276ad344c38045e57b03de187"
-    },
-    "typegpu": {
-      "source": "heygen-com/hyperframes",
-      "sourceType": "github",
-      "skillPath": "skills/typegpu/SKILL.md",
-      "computedHash": "768a9b983ac79fc283307cdd39f262ab4da5deeb3726ec65252fb7b4bc04f779"
-    },
-    "waapi": {
-      "source": "heygen-com/hyperframes",
-      "sourceType": "github",
-      "skillPath": "skills/waapi/SKILL.md",
-      "computedHash": "a497e9e3f2ffc5a4c38cbfdd86ff60a23a872173cff0df9489ffa10c3d256744"
-    },
-    "website-to-hyperframes": {
-      "source": "heygen-com/hyperframes",
-      "sourceType": "github",
-      "skillPath": "skills/website-to-hyperframes/SKILL.md",
-      "computedHash": "efd61bd08f79921dba79e353c369c5c28185a47d215a4c2e33974fdbfe45cb1d"
+      "skillPath": "skills/website-to-video/SKILL.md",
+      "computedHash": "6398520768f5962258bdc68147258b202536cef03ceac80284bbfd6121537355"
     }
   }
 }

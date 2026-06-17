@@ -1,6 +1,6 @@
 # 视频工程模板复用指南
 
-> ⚠️ **2026-05-07 状态注释**：本文档前半部分（"以 v2 / codex-intro 为半模板复制"方法论）已废弃。原因：v2 / codex-intro / 7-beat 这些都是早期一次性工程，复制起步会让新视频继承旧工程的 id、底色、特定文案——也就是"伪模板病"。当前唯一从 0 设计的真模板是 `templates/tutorial-8beat/`（见下文 tutorial-8beat 节）。其他形态请**从 0 写工程**，参考 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架。旧 `videos/2026-05-02-*` 工程可看拓扑作参考，但不要 cp 起步。本文档全面重写排在 P2。
+> ⚠️ **状态注释**：本文档前半部分（"以 v2 / codex-intro 为半模板复制"方法论）已废弃。原因：v2 / codex-intro / 7-beat 这些都是早期一次性工程，复制起步会让新视频继承旧工程的 id、底色、特定文案——也就是"伪模板病"。**当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）：起新片一律**从 0 写工程**，`npx hyperframes init <slug> --example blank` 起空白脚手架，参考 `docs/hyperframes-official/getting-started/quickstart.md` 的最小骨架。旧 `videos/2026-05-02-*` 工程可看拓扑作参考，但不要 cp 起步。本文档全面重写排在 P2。
 
 > 两个工程是"半模板"——下次做新视频时复制 + 改内容，不是全自动。
 > 文件位置：`hyperframes-student-kit/video-projects/`（git ignore，git 里只有 `xcyj-progress/*-snapshot/` 快照）
@@ -9,57 +9,34 @@
 
 ## 选哪个模板？
 
-| 视频类型 | 用哪个工程 | 原因 |
+> ⚠️ **当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）。下表的"用哪个工程"只指**拓扑参考**——看结构、不 cp 起步（旧工程 id / 底色 / 文案都绑死了）。起新片从空白脚手架起：`npx hyperframes init <slug> --example blank`。
+
+| 视频类型 | 拓扑参考（看结构，不 cp） | 原因 |
 |---|---|---|
 | 主播口播为主 + 旁边浮动效讲解 | `xcyj-claude-demo-v2` | 录屏铺底 + 4 个 beat overlay 的拓扑 |
 | 含中文文字的"虚构 demo" 整片 + 配音后期加 | `xcyj-codex-claude-intro` | 7 beat 串联，无录屏，输出 H.264 mp4 |
-| **AI/软件工具教程，≥30s，≥6 beat，有hook-痛点-解法-流程结构** | `templates/tutorial-8beat/` | 8 beat 完整教程骨架，占位符文案，面向实战复用 |
 | 混合（片头主播 + 中段演示 + outro 主播） | 拼两个：v2 风格做片头/outro mp4 + codex-intro 风格做中段 mp4，达芬奇里串联 | — |
 
-> 关键词：**"主体是真人 → v2"，"主体是 hyperframes 画面 → codex-intro 或 tutorial-8beat"**
->
-> `codex-intro` vs `tutorial-8beat`：前者是 7 beat 固定结构（debate/terminal/topics/thesis），后者是 8 beat 教程通用结构（hook/pain/verdict/punchline/promise/concept/flow/outro），后者更适合新主题快速复用。
+> 关键词：**"主体是真人 → 参考 v2 拓扑"，"主体是 hyperframes 画面 → 参考 codex-intro 拓扑"**，都从空白起步重写。
 
 ---
 
-## tutorial-8beat 模板
+## 从空白起步（当前唯一路径）
 
-路径：`templates/tutorial-8beat/`  
-详细文档：[templates/tutorial-8beat/README.md](templates/tutorial-8beat/README.md)
-
-### 快速开始
+**当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）。起新片：
 
 ```bash
-# 1. 复制到日期工作区
-cp -R ~/项目/视频制作台/hyperframes/templates/tutorial-8beat \
-       ~/项目/视频制作台/hyperframes/2026-MM-DD/your-topic
+# 在 视频项目/在制/ 下起空白脚手架
+cd ~/项目/视频制作台/hyperframes/视频项目/在制
+npx hyperframes init "$(date +%Y-%m-%d)-your-topic" --example blank
+cd "$(date +%Y-%m-%d)-your-topic"
 
-# 2. 改 meta.json 的 id（xcyj-tutorial-8beat-PLACEHOLDER → 你的 id）
-# 3. 在 index.html 改对应 id（共 2 处）和 data-duration（默认 64.6）
-# 4. 逐 beat 替换 {{...}} 占位符（参见 README.md 的占位符清单）
-# 5. lint + preview
+# 改 meta.json 的 id / name，按官方 hyperframes skill 的最小骨架补 compositions/*.html
 npx hyperframes lint
 npx hyperframes preview
 ```
 
-### Beat 结构一览
-
-```
-01-hook         [0→6.5s]   删除线气泡 + 大字 hero
-02-pain-list    [6.5→13s]  三痛点卡片栈（stagger）
-03-pain-verdict [13→19s]   左右双栏对比（✓ vs ✗）
-04-punchline    [19→25s]   大字 + 终端 + 弧线箭头（⭐ hero beat）
-05-promise      [25→31.5s] 章节卡（数字徽章 + 蓝色 halo）
-06-concept      [31.5→42.5s] 三步流程卡（箭头连接）
-07-flow         [42.5→56.5s] 5步 checkbox 执行计划
-08-outro        [56.5→64.6s] 品牌 hero hold + 粒子爆发
-```
-
-### 关键参数（改 index.html 时）
-
-- `--c-hot: #d97757` → 全局 hot 色（默认 Claude 橙，改此即全局换色）
-- PiP 时序：face 在 18.4s 缩为右上角，60.0s 回归全屏
-- 总时长默认 64.6s，按文案调整时需同步修改 3 处（data-duration + GSAP 锚点 + FULL 第二段时间点）
+可复用零件先查 `templates/components/`（COMPONENTS.json 注册表），没有再从 0 写。骨架参考 `docs/hyperframes-official/getting-started/quickstart.md`。
 
 ---
 

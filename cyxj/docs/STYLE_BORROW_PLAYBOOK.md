@@ -68,7 +68,7 @@ main agent 至少 Read 这些张数：
 | 元素 | DNA 来源 | 怎么补 |
 |---|---|---|
 | Claude 橙必现 | DNA 第 2 条 | 在 PiP halo + 至少 1 个 beat 的 hot 词用 |
-| 透视网格 | DNA 第 3 条 | index.html 顶层加 grid 层（参考 templates/tutorial-8beat/） |
+| 透视网格 | DNA 第 3 条 | index.html 顶层加 grid 层 |
 | ... | ... | ... |
 
 ### 参考素材里**有且 DNA 允许**的元素（这是借鉴的重点）
@@ -144,7 +144,7 @@ main agent 至少 Read 这些张数：
 - [ ] 进度条 / 章节进度 —— 模板 8
 - [ ] 章节切换卡（数字徽章 + 大标题）—— 模板 9
 
-（具体 CSS 在 `templates/tutorial-8beat/` 现成，引用即可）
+（无内置起步模板；可复用零件先查 `templates/components/`，没有再从 0 写）
 
 ## 四、动效规范
 直接引用 DNA 第 6 条（字符 stagger 0.06-0.08，卡片 0.12-0.15，ease 三档）。

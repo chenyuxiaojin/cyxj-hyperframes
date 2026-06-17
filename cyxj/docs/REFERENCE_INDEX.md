@@ -165,24 +165,36 @@ components 跟 blocks 不同：components 是"叠加层"，全局生效；blocks
 
 Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agents/skills/`。两边的自写 wrapper skill 应保持同一套视频生产语义，但内部引用分别指向自己的指令文件。
 
-### 上游 skill（软链跟随更新，7 个）
+### 上游官方 skill（GitHub 直连，npx skills 管理，16 个）
 
 | Skill | 用途 |
 |---|---|
-| `gsap` | GSAP 动画 API 速查 |
-| `hyperframes` | 框架规则（data-* 属性、timeline 注册） |
-| `hyperframes-cli` | CLI 命令清单 |
-| `hyperframes-registry` | registry 安装用法 |
-| `website-to-hyperframes` | 网页转视频管线 |
-| `make-a-video` | 从 0 到成片的 8 步引导 |
-| `short-form-video` | 9:16 竖屏 SOP（10 条质量铁律） |
+| `hyperframes` | 入口 / 路由 skill（READ FIRST，把"做视频"意图分发到具体 workflow） |
+| `hyperframes-core` | HTML 合成契约（结构 / data 属性 / clips / tracks / sub-composition / variables / 确定性渲染 / 校验） |
+| `hyperframes-animation` | 全部动画知识（原子动效规则 + 多阶段镜头蓝图 + 转场 + 七套运行时适配器：GSAP 默认 / Lottie / Three.js / Anime.js / CSS / WAAPI / TypeGPU） |
+| `hyperframes-creative` | 非动画创意方向（design.md / frame.md、配色、排版、旁白、节拍规划、audio-reactive、品牌风格） |
+| `hyperframes-cli` | CLI dev loop（init / add / catalog / capture / lint / validate / inspect / preview / render / publish / lambda / doctor / tts / transcribe / remove-background） |
+| `hyperframes-registry` | 装 / 接 catalog blocks & components，hyperframes.json，贡献新零件上游 |
+| `hyperframes-media` | 资产预处理（多源 TTS / BGM / Whisper 转写 / 抠像 / 字幕） |
+| `embedded-captions` | 给真人口播视频做内嵌特效字幕（32 视觉身份，matte 抠图合成） |
+| `graphic-overlays` | 给现有视频叠加定时图形卡（标题 / 下三分之一 / 数据 callout / 引用 / 画中画） |
+| `motion-graphics` | 短 design-led 动态图形（kinetic type / 数字跳动 / 图表 / logo sting / lower-third），≤10s~30s 无旁白 |
+| `faceless-explainer` | 任意文本 → 自带 TTS 旁白的无人讲解视频（~30-90s） |
+| `general-video` | 兜底：长 / 多镜头 / 无专门 workflow 适配时的自由合成 |
+| `product-launch-video` | 产品发布 / SaaS promo / 功能揭示视频 |
+| `pr-to-video` | GitHub PR → 代码变更讲解视频 |
+| `website-to-video` | 抓网站 → 视频（站点导览 / showcase / 社媒片段） |
+| `remotion-to-hyperframes` | 把 Remotion(React) 合成移植成 HyperFrames HTML |
 
-### 自写 wrapper skill（2 个，两边都应存在）
+### 自写 wrapper skill（active 入口是 `cyxj-hyperframes-overlay`）
+
+> 当前 active 入口只有 `cyxj-hyperframes-overlay`（先读官方规则，再叠 XCYJ 用户层）；`cyxj-new-video` / `cyxj-add-block` 的 legacy active links 已停用，仅作历史流程参考。
 
 | Skill | 触发词 | 干啥 |
 |---|---|---|
-| `cyxj-new-video` | 「新视频」「做视频」「片头」「new video」「做完了」「归档」 | 全生命周期：建工程 → 推参考 → 渲染 → 归档 → 询问抽模板 |
-| `cyxj-add-block` | 「加个零件」「装个 X」「加个转场」「加 macos 通知」 | 从 catalog 推荐 1-3 个 block 并 add，告知怎么引用 |
+| `cyxj-hyperframes-overlay`（**active 入口**） | 「新视频」「做视频」「片头」「加个零件」「加个转场」「做完了」「归档」 | 叠加官方 HyperFrames skills 的 XCYJ overlay：复用扫描 → 视觉 DNA → 硬约束 → 全生命周期 |
+| `cyxj-new-video`（历史参考） | 「新视频」「做视频」「片头」「new video」「做完了」「归档」 | 全生命周期：建工程 → 推参考 → 渲染 → 归档 → 询问抽模板 |
+| `cyxj-add-block`（历史参考） | 「加个零件」「装个 X」「加个转场」「加 macos 通知」 | 从 catalog 推荐 1-3 个 block 并 add，告知怎么引用 |
 
 ### 边界规则
 
@@ -212,19 +224,13 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 
 ---
 
-## 五、模板（仓库根 `templates/`，1 个真模板）
+## 五、模板（仓库根 `templates/`）
 
-跟 videos/ 不同：模板是抽过的精简骨架，**直接 cp 起步**用。当前**只有 1 个**从 0 设计的真模板。
-
-| 模板 | 拓扑 | 输出 | 适用场景 | 对应 DNA 形态 |
-|---|---|---|---|---|
-| `templates/tutorial-8beat/` | 8 beat 教程（hook → pain-list → verdict → punchline → promise → concept → flow → outro），含 face FULL→PiP→FULL 时序 + kicker + 终端 + 卡片栈 + 执行计划列表 + 章节切换卡 | 整片 MP4 | 中文教程视频 ≥30s ≥6 beat（口播 + 多组件） | 教程类 → 暖米色 `#F7F2EA`（19-tips 实战验证） |
-
-详见 `../notes/TEMPLATE_USAGE.md`。
+**当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）。起新片一律从空白起步：`npx hyperframes init <slug> --example blank`，按官方 `hyperframes` skill 的最小骨架补 `compositions/*.html`。通用复用方法论见 `../notes/TEMPLATE_USAGE.md`。
 
 ### 旧形态拓扑回查（看 videos/，不要 cp）
 
-> 这些形态没有抽过真模板。想做这些形态的视频请**从 0 写**，可看下面工程的拓扑作参考，但不要 cp 起步（id / 文案 / DNA 老色都绑死了）。
+> 这些形态没有现成模板。想做这些形态的视频请**从 0 写**，可看下面工程的拓扑作参考，但不要 cp 起步（id / 文案 / DNA 老色都绑死了）。
 
 | 形态 | 看哪个工程 |
 |---|---|
@@ -232,11 +238,9 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 | 仅 overlay alpha 输出（host-overlay-alpha）| `videos/2026-05-02-claude-overlays-only/` |
 | 7 beat 串联无录屏（demo-fullscreen）| `videos/2026-05-02-codex-claude-intro/` |
 
-**⭐ tutorial-8beat 配套资产**：
+**配套资产（做新视频时接入）**：
 - 风格借鉴方法论：`STYLE_BORROW_PLAYBOOK.md`
 - 用户视觉 DNA 基线：`../notes/MY_VISUAL_DNA.md`（仓库根，与 `MOTION_PHILOSOPHY.md` 同级）
-
-用此模板时建议走 `/cyxj-new-video` 阶段 D（风格借鉴），自动接入 DNA + playbook。
 
 ---
 

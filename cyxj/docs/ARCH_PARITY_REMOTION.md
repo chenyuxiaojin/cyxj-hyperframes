@@ -1,0 +1,35 @@
+# 架构对齐：hyperframes ↔ Remotion（两条管线同构核对）
+
+2026-06-17 hyperframes 完成「绕开 Codex、GitHub 直连官方 skill」迁移后，与姊妹管线 `../Remotion/` 的架构逐项对照。
+目标：两条管线**接线方式同构**（换管线零认知成本），差异只保留**有意为之**的部分。
+
+## 同构项（已对齐 ✅）
+
+| 维度 | Remotion (`cyxj-remotion`) | hyperframes（迁移后） |
+|---|---|---|
+| 官方 skill 装法 | `npx skills add remotion-dev/skills` | `npx skills add heygen-com/hyperframes` |
+| 官方 skill 真身 | `.agents/skills/<name>/`（真目录） | `.agents/skills/<name>/`（真目录） |
+| Claude 入口 | `.claude/skills/<name>` 软链 → `.agents/skills` | 同 |
+| 版本真源 | `skills-lock.json`（github 源 + computedHash） | `skills-lock.json`（同格式） |
+| 升级 / 还原 | `npx skills update` / `experimental_install` | `npx skills update -p -y` / `experimental_install` |
+| overlay skill | `cyxj-remotion-overlay`（薄壳叠官方，不重抄） | `cyxj-hyperframes-overlay`（同模式） |
+| 旧 Codex `official/` 镜像 | 已删 | 已删 |
+| 硬规则单源 | `cyxj-remotion/docs/HARD_RULES.md` | `cyxj/docs/HARD_CONSTRAINTS.md` |
+| 设计系统单源 | `design.md` + `theme.ts` | `cyxj/notes/MY_VISUAL_DNA.md` + `templates/components/xcyj-tokens` |
+| **镜头/组件库 + 注册表** | `scenes/` + `sceneMap.ts` + `index.ts` | `templates/components/` + `COMPONENTS.json` + `README.md`（**本次新建对齐**） |
+
+## 有意保留的差异（justified）
+
+| 差异 | Remotion | hyperframes | 为什么不强行对齐 |
+|---|---|---|---|
+| 官方 skill 数 | 1（remotion-best-practices） | 16 | 上游仓库本身不同：hyperframes 官方就发 16 个分工 skill，remotion 发 1 个。 |
+| 用户层命名 | `cyxj/` → 改名 `cyxj-remotion/` + 归档旧层 | `cyxj/` **不改名** | Remotion 当时有新旧两层要消歧 + 独立 git 仓；hyperframes `cyxj/` 是唯一真源、随主仓提交，改名只徒增路径改动。 |
+| 旧 sync 脚本处理 | 加 `exit 1` fail-fast 保留 | 直接删除 | hyperframes 的 sync 脚本是纯 Codex-cache rsync，迁移后完全无意义 → 删；Remotion 旧脚本另有上下文 → 中和保留。 |
+| 文档 MCP | `.mcp.json` 挂 `@remotion/mcp`（官方文档实时查） | **不加 MCP** | hyperframes 官方文档已本地镜像在 `docs/hyperframes-official/`（78 页，`refresh-docs.sh` 维护）；HeyGen 托管 MCP 对 CLI 端禁用 compose/render，无本地文档 MCP 等价物。 |
+
+## 尚存差距（建议后续，未在本次动）
+
+1. **双模板树**：hyperframes 有 `templates/`（真源，`/new-video` 取源）与 `cyxj/templates/`（99.9% 镜像，overlay 旧引用指向它）两棵。Remotion 是单一 `cyxj-remotion/scenes/`。建议合并到单源 `templates/`、更新 overlay 引用后删除镜像——属删committed 文件 + 改 skill 引用，需用户确认再动。
+2. ~~**tutorial-8beat lint 债**~~：模板已于 2026-06-17 删除（两份镜像皆删，无替代模板），此 lint 债作废。
+
+> 维护提醒：两条管线的 skill 升级都走 `npx skills update`；升级后各自重核硬规则单源（HARD_RULES.md / HARD_CONSTRAINTS.md）。

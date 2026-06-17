@@ -22,8 +22,7 @@ templates/components/xcyj-tokens/xcyj-tokens.css       ← 单源宪法
                   │
                   │ bash scripts/sync-tokens.sh apply
                   ▼
-templates/tutorial-8beat/assets/xcyj-tokens.css        ← mirror（cp 时自带）
-2026-MM-DD/<slug>/assets/xcyj-tokens.css               ← mirror（cp 时自带）
+视频项目/在制/<slug>/assets/xcyj-tokens.css            ← mirror（起工程时 cp 进去）
 ...
 ```
 
@@ -45,31 +44,13 @@ DNA 修订时跑 sync 脚本把单源覆盖到所有 mirror。
 
 ## 用法
 
-### 1. 模板已接入
+> **当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）。起新工程一律从空白脚手架起步，按下文手动接入 token。
 
-`templates/tutorial-8beat/` 已用此 token：
-- `assets/xcyj-tokens.css` 是 mirror
-- `index.html` 顶部 `<link>` 引用，移除原 `<style> :root {...} </style>` 块
-- 各 beat composition 继续用 `var(--c-bg)` / `var(--c-hot)` 等变量，零改动
-
-### 2. 起新工程时
+### 起新工程时（从空白脚手架）
 
 ```bash
-cp -R templates/tutorial-8beat 2026-MM-DD/<slug>/
-# assets/xcyj-tokens.css 自动带过去
-```
-
-cp 后无需额外动作——除非单源在你 cp 之前已被改而模板 mirror 还没同步，这种情况跑：
-
-```bash
-bash scripts/sync-tokens.sh apply
-```
-
-### 3. 从 0 写工程时
-
-```bash
-mkdir 2026-MM-DD/<slug>/assets
-cp templates/components/xcyj-tokens/xcyj-tokens.css 2026-MM-DD/<slug>/assets/xcyj-tokens.css
+mkdir -p 视频项目/在制/<slug>/assets
+cp templates/components/xcyj-tokens/xcyj-tokens.css 视频项目/在制/<slug>/assets/xcyj-tokens.css
 ```
 
 `index.html` 顶部加：
@@ -77,6 +58,8 @@ cp templates/components/xcyj-tokens/xcyj-tokens.css 2026-MM-DD/<slug>/assets/xcy
 ```html
 <link rel="stylesheet" href="assets/xcyj-tokens.css" />
 ```
+
+各 composition 直接用 `var(--c-bg)` / `var(--c-hot)` 等变量。若单源在你接入后又被改，跑 `bash scripts/sync-tokens.sh apply` 把单源覆盖到所有 mirror。
 
 ---
 
@@ -94,11 +77,9 @@ cp templates/components/xcyj-tokens/xcyj-tokens.css 2026-MM-DD/<slug>/assets/xcy
 
 ## 当前已加入的工程清单
 
-跑 `bash scripts/sync-tokens.sh`（dry-run）看实时清单。截至 2026-05-07：
+跑 `bash scripts/sync-tokens.sh`（dry-run）看实时清单。
 
-- `templates/tutorial-8beat/assets/xcyj-tokens.css`（首批接入）
-
-后续做新视频时若是从 tutorial-8beat cp 起步，工程的 mirror 会自动跟上单源；若从 0 写，按上文 §2 / §3 步骤接入。
+后续做新视频时（从空白脚手架起步），按上文步骤把单源 cp 进工程 `assets/`，工程的 mirror 即纳入 sync 范围。
 
 ---
 

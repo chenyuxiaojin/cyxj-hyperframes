@@ -1,6 +1,6 @@
 # HyperFrames Overlay Rules
 
-这是 XCYJ 的 HyperFrames 专属 overlay。官方能力仍以官方 `hyperframes`、`hyperframes-cli`、`gsap`、`hyperframes-registry`、`website-to-hyperframes` 等 skill 为准。
+这是 XCYJ 的 HyperFrames 专属 overlay。官方能力以当前官方 16 个 skill 为准：入口看 `hyperframes`，动画看 `hyperframes-animation`（`gsap` 已并入），网页转视频是 `website-to-video`。
 
 ## 必读
 

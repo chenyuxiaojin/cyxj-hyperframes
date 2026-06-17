@@ -26,15 +26,15 @@
 # ============================================================
 hyperframes-student-kit/
 hyperframes-launches/
-official/*
-!official/REUSE.md
 
 # ============================================================
-# active skill discovery / .agents 真物理位置（official 镜像入口默认不进 git）
+# active skill discovery / .agents 真物理位置
 # 规则：
-#   - .claude/skills/* 和 .agents/skills/* 默认 ignore（上游官方 skill 软链 / 真目录）
+#   - 官方 16 skill 由 `npx skills add/update heygen-com/hyperframes` 管理：
+#     真身落 .agents/skills/<name>/，.claude/skills/<name> 软链过去，均不进 git
+#   - 版本真源是 skills-lock.json（进 git）；换机器跑 `npx skills experimental_install` 还原
 #   - cyxj-* 反向 include → 本仓库 wrapper skill 入口必须 commit
-# official/ 从 Codex plugin cache 同步；不要用 npx skills update 管理 official/
+# （2026-06-17 弃用 Codex official/ 镜像，改 GitHub 直连；详见 cyxj/docs/ops.md）
 # ============================================================
 /MOTION_PHILOSOPHY.md
 .claude/skills/*

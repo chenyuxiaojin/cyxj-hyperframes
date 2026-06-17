@@ -36,7 +36,6 @@ This repo is the production workspace behind the YouTube channel [@cyxj_ai](http
 视频项目/已发布/                 10 archived video source projects (each with a README)
 视频项目/在制/                   active work-in-progress projects (gitignored)
 templates/
-  tutorial-8beat/               The canonical 8-beat tutorial template (cold-start verified 2026-06-11)
   components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
   inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
   catalog.json                  Machine-readable component catalog (used by skills)
@@ -57,18 +56,20 @@ scripts/                        Maintenance scripts (refresh catalog, lint proje
 
 ## Quick Start
 
+> There is **no built-in starter template** anymore — start from a blank scaffold.
+
 ```bash
 # 1. Verify the HyperFrames CLI is available (downloads on first run)
 npx hyperframes --version
 
-# 2. Copy the template into a dated work directory
+# 2. Scaffold a blank project under 视频项目/在制/
 DATE=$(date +%Y-%m-%d)
-mkdir -p "$DATE"
-cp -R templates/tutorial-8beat "$DATE/my-first-video"
-cd "$DATE/my-first-video"
+cd 视频项目/在制
+npx hyperframes init "$DATE-my-first-video" --example blank
+cd "$DATE-my-first-video"
 
 # 3. Edit meta.json: change the `id` field to something unique
-# 4. Edit index.html and compositions/*.html: replace {{PLACEHOLDER}} tokens with your content
+# 4. Author compositions/*.html following the hyperframes skill's minimal skeleton
 
 # 5. Validate and preview
 npx hyperframes lint
@@ -79,7 +80,7 @@ npx hyperframes render --quality standard --format mp4 \
   --output renders/final.mp4
 
 # 7. When done, archive into 视频项目/已发布/
-mv ../my-first-video ../../已发布/$DATE-my-first-video
+mv "../$DATE-my-first-video" "../../已发布/$DATE-my-first-video"
 ```
 
 Full checklist: [`cyxj/notes/TEMPLATE_USAGE.md`](cyxj/notes/TEMPLATE_USAGE.md)
@@ -88,7 +89,7 @@ Full checklist: [`cyxj/notes/TEMPLATE_USAGE.md`](cyxj/notes/TEMPLATE_USAGE.md)
 
 ## Usage: AI Collaboration Workflow
 
-The intended way to use this repo is to open a Claude Code or Codex session in `hyperframes/` and say **"make a new video about X"**. Active discovery now routes through `cyxj-hyperframes-overlay`: read `official/` first for Codex `@hyperframes` rules, then read `cyxj/` for XCYJ assets, templates, visual DNA, and production discipline. The legacy workflow under `skills/` remains only as a reference for the loop:
+The intended way to use this repo is to open a Claude Code or Codex session in `hyperframes/` and say **"make a new video about X"**. Active discovery now routes through `cyxj-hyperframes-overlay`: read the official HyperFrames skills (start at the `hyperframes` entry skill), then read `cyxj/` for XCYJ assets, templates, visual DNA, and production discipline. Legacy `cyxj-new-video` / `cyxj-add-block` workflows remain only as a reference for the loop:
 
 1. Ask for format / topic / duration
 2. Read [`cyxj/docs/REFERENCE_INDEX.md`](cyxj/docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
@@ -96,10 +97,10 @@ The intended way to use this repo is to open a Claude Code or Codex session in `
 4. Wait for your script → populate beats → lint → preview
 5. When you say "done" → auto-archive into `视频项目/已发布/<date>-<slug>/`
 
-**Claude Code users:** active skills are under `.claude/skills/`, pointing to `official/skills/` plus `cyxj/skills/cyxj-hyperframes-overlay`.  
-**OpenAI Codex users:** active skills are under `.agents/skills/`, pointing to the same official mirror plus XCYJ overlay.
+**Claude Code users:** active skills are under `.claude/skills/`, pointing to `.agents/skills/` (npx-installed) via symlink, plus `cyxj/skills/cyxj-hyperframes-overlay`.  
+**OpenAI Codex users:** active skills are under `.agents/skills/` — the npx-installed official skills (real dirs) plus the XCYJ overlay.
 
-Do not edit `official/` by hand; sync it from Codex plugin cache with `cyxj/scripts/sync-official-from-codex-cache.sh`. Edit XCYJ production rules in `cyxj/`.
+Official skills are managed by `npx skills add/update heygen-com/hyperframes` (no more `official/` mirror). Edit XCYJ production rules in `cyxj/`.
 
 ---
 
@@ -110,7 +111,7 @@ Do not edit `official/` by hand; sync it from Codex plugin cache with `cyxj/scri
 | Language | HTML + GSAP | React + TypeScript | TypeScript | HTML + GSAP |
 | Setup | `npx hyperframes` | `npm create video` | `npm create motion-canvas` | same CLI |
 | AI-friendly | Yes — plain HTML, prompt-friendly | Harder — React component tree | Moderate | No AI workflow |
-| Templates for tutorials | `tutorial-8beat` + 7 components | None included | None included | Basic examples |
+| Reusable building blocks | 7 components (no full starter template) | None included | None included | Basic examples |
 | Skills (Claude/Codex) | Yes | No | No | No |
 | Chinese font support | Yes (Noto Sans SC, local woff2) | Yes | Limited | No guidance |
 | Output | MP4 via headless Chromium | MP4 via headless Chromium | MP4 | MP4 |
@@ -124,13 +125,13 @@ Do not edit `official/` by hand; sync it from Codex plugin cache with `cyxj/scri
 HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial videos. Remotion: React + TypeScript, better for data-driven or programmatically generated videos. This repo has a sister project [`cyxj-remotion`](https://github.com/chenyuxiaojin/cyxj-remotion) for the Remotion pipeline.
 
 **I can't write code — can I still use this?**  
-Yes. Copy `templates/tutorial-8beat/`, find the `{{PLACEHOLDER}}` tokens in each composition file, and replace them with your text. The template README has a full placeholder table. Claude Code can fill them in for you if you paste the script.
+Yes. There's no built-in starter template — scaffold a blank project with `npx hyperframes init <slug> --example blank`, then paste your script to Claude Code and let it author the composition files for you.
 
 **Chinese subtitle rendering issues?**  
 Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`cyxj/docs/HARD_CONSTRAINTS.md`](cyxj/docs/HARD_CONSTRAINTS.md) §4 and §8.
 
 **Can OpenAI Codex users use this?**  
-Yes. Skills are symlinked at `.agents/skills/` which follows the OpenAI Agents format. Active official skills mirror `official/skills/`, and the XCYJ overlay points to `cyxj/skills/cyxj-hyperframes-overlay`. Rebuild `official/` from Codex plugin cache, not `npx skills update`.
+Yes. Official skills install to `.agents/skills/` (OpenAI Agents format) via `npx skills`, and the XCYJ overlay points to `cyxj/skills/cyxj-hyperframes-overlay`. Restore them with `npx skills experimental_install` from `skills-lock.json`.
 
 ---
 

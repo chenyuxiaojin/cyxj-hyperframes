@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/scripts/hf-guard-upstream.sh\"",
+            "timeout": 10,
+            "statusMessage": "上游只读守卫…"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/scripts/hf-lint-hook.sh\"",
+            "timeout": 10,
+            "statusMessage": "HARD_CONSTRAINTS 自检…"
+          }
+        ]
+      }
+    ]
+  }
+}

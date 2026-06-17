@@ -6,7 +6,7 @@
 约束分两层：
 
 - **§1–§19 本仓库实战坑**：每条来自 XCYJ 工程里至少一次翻车记录。中文 / 视觉 / 工作流场景沉淀。
-- **§20–§30 官方非可商量底线**：来自上游 `skills/hyperframes/SKILL.md` + Mintlify docs（同步 2026-05-22 / hyperframes@0.6.33）。违反 = composition broken（capture engine 边界），跟有没有踩坑无关。
+- **§20 起官方非可商量底线**（§31 / §33 例外，标注为本仓库实战推断）：来自**本地官方 skill 正文**（`heygen-com/hyperframes`，`skills-lock.json` 按 GitHub hash 钉死，对齐 hyperframes@0.6.109 / 重核 2026-06-17）。0.6.33→0.6.109 期间规则已从单一 `skills/hyperframes/SKILL.md`「Never do」列表**重组**进 `hyperframes-core` / `hyperframes-animation` / `hyperframes-cli` 各子 skill；引用锚点见各条「来源」。违反 = composition broken（capture engine 边界），跟有没有踩坑无关。
 
 理论上的"最佳实践"不算硬约束——只有「实战翻车」或「官方非可商量」才进本文件。
 
@@ -416,7 +416,7 @@ tl.to('.sec-b', { opacity: 1, duration: 0.3 }, 6.0);
 
 ---
 
-> **以下 §20–§30 是上游 HyperFrames 官方非可商量底线**。来自 `skills/hyperframes/SKILL.md` + Mintlify docs（同步日期 2026-05-22 / hyperframes@0.6.33）。违反 = composition 直接 broken（capture engine 边界），与本仓库有没有踩过这个坑无关。
+> **以下是上游 HyperFrames 官方非可商量底线**（§31 / §33 为本仓库实战推断，已单独标注）。来自**本地官方 skill 正文**（`heygen-com/hyperframes`，`skills-lock.json` 按 hash 钉死，对齐 hyperframes@0.6.109 / 重核 2026-06-17）。0.6.109 起入口 `skills/hyperframes/SKILL.md` 已变**纯 router**，硬规则重组到 `hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `references/`、`hyperframes-animation/adapters/`、`hyperframes-cli/references/`。违反 = composition 直接 broken（capture engine 边界），与本仓库有没有踩过这个坑无关。
 
 ---
 
@@ -426,23 +426,25 @@ tl.to('.sec-b', { opacity: 1, duration: 0.3 }, 6.0);
 // ❌ infinite repeat 让 capture engine 永远拿不到 finite frame count
 gsap.to('.spinner', { rotation: 360, duration: 1, repeat: -1 });
 
-// ✅ 算出有限循环次数 = ceil(总时长 / 单 cycle 时长) - 1
-const cycles = Math.ceil(totalDuration / 1) - 1;
+// ✅ 算出有限循环次数 = max(0, floor(总时长 / 单 cycle 时长) - 1)
+//    必须 floor 不是 ceil —— ceil 会 overshoot data-duration，触发 lint gsap_repeat_ceil_overshoot
+const cycles = Math.max(0, Math.floor(totalDuration / 1) - 1);
 gsap.to('.spinner', { rotation: 360, duration: 1, repeat: cycles });
 ```
 
 **为什么**：HyperFrames 是 seek-driven 不是 clock-driven —— engine 调 `tl.progress(t / duration)` 逐帧 scrub，需要确定的 `duration`。`repeat: -1` 把 duration 推到 Infinity，frame count 算不出来，capture 卡死或丢帧。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` "Never do" #8 + Non-negotiable："`repeat: -1`: Infinite-repeat timelines break the capture engine."
+**来源**：`hyperframes-core/SKILL.md`「Non-Negotiable Rules」(禁 `repeat:-1`) + `references/determinism-rules.md`。**floor 公式**见 `hyperframes-core/SKILL.md`："`Math.max(0, Math.floor(duration / cycleDuration) - 1)` — floor, not ceil（ceil overshoots `data-duration`）"，有具名 lint `gsap_repeat_ceil_overshoot` 背书（旧版本写 ceil 是错的）。
 
 ---
 
 ## 21. 禁 `Math.random()` / `Date.now()` / 任何 wall-clock 依赖
 
 ```js
-// ❌ 每次 capture 同一帧拿到不同随机值，render 不可复现
+// ❌ 每次 capture 同一帧拿到不同值，render 不可复现
 const x = Math.random() * 100;
 const ts = Date.now();
+const t  = performance.now();   // 0.6.109 起明确：performance.now() 同样禁，任何 wall-clock 都不行
 
 // ✅ 用 seeded PRNG（mulberry32 最简单）
 function mulberry32(seed) {
@@ -459,7 +461,9 @@ const x = rng() * 100;
 
 **为什么**：render = 同一 composition 在 capture engine 里跑无数次（worker pool / 重试 / docker 复渲）。`Math.random()` 每次给不同值 → 同一秒的同一帧两次 capture 出不同像素 → encoder 看到的不是 deterministic frame sequence。**Determinism 是 capture engine 的硬契约**。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Non-negotiable："Deterministic: No `Math.random()`, `Date.now()`, or time-based logic. Use a seeded PRNG if you need pseudo-random values (e.g. mulberry32)."
+**来源**：`hyperframes-core/references/determinism-rules.md`（"No `Math.random()`, `Date.now()`, `performance.now()`, or time-based logic… use a seeded PRNG e.g. mulberry32"）+ `hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `hyperframes-animation/adapters/gsap.md`。
+
+**0.6.109 扩展（同属确定性禁区）**：`determinism-rules.md` 还禁**输入状态依赖** —— `:hover` / scroll 位置 / pointer / focus 等（renderer 没有输入事件，这些状态永不触发或值不定）。
 
 **关联本仓库**：../notes/MY_MOTION_NOTES.md §11 提到 onUpdate 里 new mulberry32 closure 每帧重建（性能坑）——同样用 mulberry32，但解决的是另一类问题。
 
@@ -490,31 +494,31 @@ window.__timelines['main'] = tl;
 
 **为什么**：engine 在 page load 完成后**同步**读 `window.__timelines` —— 如果 key 不存在或值还没绑定，那个 composition 被当成 0 时长跳过。Fonts 是 compiler 内嵌的，不需要等 `document.fonts.ready`；数据应该 inline 写死，不要 fetch。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Non-negotiable："Synchronous timeline construction: Never build timelines inside `async/await`, `setTimeout`, or Promises." + Never do #9。
+**来源**：`hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `references/determinism-rules.md`："Do not build timelines inside `async`, `Promise`, `setTimeout`, or event handlers — the renderer can sample before they finish."
 
 ---
 
-## 23. 禁 animate `<video>` element 自身的 dimensions
+## 23. 禁 animate `<video>` 的尺寸（width / height）—— 用 transform `scale` 直接动 media 元素
+
+> ⚠️ 0.6.109 校正：旧版教「包 non-timed wrapper 动 wrapper」，与 §28 非可商量项（media 必须 host root 直接子元素、禁 wrapper）冲突。正解是**不改尺寸、直接对 media 元素动 transform**。
 
 ```html
-<!-- ❌ 直接动 video 的 scale / width / height -->
-<video id="clip-a" class="clip" data-start="0" src="..."></video>
+<!-- ❌ 动 video 的 width/height/dimensions → 触发 reflow（§40）+ 跟 capture 解码错位 -->
+<video id="clip-a" class="clip" data-start="0" src="..." muted playsinline></video>
 <script>
-  tl.to('#clip-a', { scale: 1.5, width: '120%' }, 0);
+  tl.to('#clip-a', { width: '120%' }, 0);
 </script>
 
-<!-- ✅ 用 non-timed wrapper 包，动 wrapper -->
-<div id="clip-a-wrap">
-  <video class="clip" data-start="0" src="..."></video>
-</div>
+<!-- ✅ 直接对 media 元素动 transform（scale / opacity / filter），不触发 reflow，不需要 wrapper -->
+<video id="clip-a" class="clip" data-start="0" src="..." muted playsinline></video>
 <script>
-  tl.to('#clip-a-wrap', { scale: 1.5 }, 0);
+  tl.to('#clip-a', { scale: 1.5 }, 0);   // 写在 MAIN timeline 全局时间（见 §28）
 </script>
 ```
 
-**为什么**：engine 用 Chrome 的 `HeadlessExperimental.beginFrame` 抓帧 —— video element 自己的 transform 跟 capture pipeline 的视频解码同步会错位，丢帧 / 撕裂 / 黑屏。包一层 div 让 video 保持原始尺寸，只动外层 transform。
+**为什么**：动 `width/height` 触发布局 reflow（render 不确定、性能差，§40）；而 `scale/opacity/filter` 是 transform/compositor 层，seek-safe。官方明确 host media 的 scale/opacity/morph/tilt/breathing **就写在 media 元素上、走 main timeline 全局时间**（不靠 wrapper）。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #5："Animate video element dimensions — animate a wrapper div."（lint 会直接 error）
+**来源**：`hyperframes-core/references/variables-and-media.md`（Media Rules："Do not animate timed media element dimensions"；L53 "all per-scene motion on host media (scale/opacity/morph/tilt/breathing) must be authored on the MAIN timeline"）+ `hyperframes-animation/adapters/gsap-transforms-and-perf.md`（禁 reflow 属性）。与 §28 / §40 联读。
 
 ---
 
@@ -532,7 +536,7 @@ videoEl.currentTime = 5;
 
 **为什么**：engine 是 seek-driven —— 每帧调 `videoEl.fastSeek(targetTime)` 而不是 play。手动 play 会让 video 元素进入 "playing" 状态，跟 seek 模式冲突，渲出来要么超前要么 freeze。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #6 + Non-negotiable："Do NOT animate `visibility`, `display`, or call `video.play()`/`audio.play()`."
+**来源**：`hyperframes-core/references/variables-and-media.md`（Media Rules：禁 `video.play()` / `audio.play()` / `currentTime`，"The framework owns playback"）+ `hyperframes-core/SKILL.md`「Non-Negotiable Rules」。
 
 ---
 
@@ -555,7 +559,7 @@ videoEl.currentTime = 5;
 
 **为什么**：换字体后字宽变化、换语言（中→英）单词长度变化、scale animation 改尺寸 —— 硬 `<br>` 会出现孤儿字 / 断在错误语义单元 / 布局崩溃。`max-width` 让排版自适应。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #11："Use `<br>` in content text — let text wrap via `max-width` (exception: short deliberate display titles)."
+**来源**：`hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `references/determinism-rules.md`："let text wrap via `max-width` (exception: short display titles where each word is deliberately on its own line)."
 
 ---
 
@@ -575,7 +579,7 @@ tl.from('.scene-2 .card', { y: 50 }, 5.0);
 
 **为什么 `tl.set(selector, vars, timePos)` 行**：timeline 里的 `.set()` 是 scrub 到 timePos 时才执行，那时元素已经在 DOM。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #10："Use `gsap.set()` on clip elements from later scenes — they don't exist in the DOM at page load. Use `tl.set(selector, vars, timePosition)` inside the timeline instead."
+**来源**：`hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `references/determinism-rules.md`："Use `tl.set(selector, vars, time)` inside the timeline at or after the clip's `data-start`"（later scene 的元素在 page load 时不在 DOM）。
 
 ### §26.b sub-composition 入场用 `tl.fromTo()` 不用 `tl.from()`
 
@@ -618,29 +622,43 @@ tl.fromTo('.scene-card',
 
 **为什么**：engine seek-driven 渲视频帧，但音频是 FFmpeg 在 encode 阶段按 timeline 时间轴拼进去 —— video element 自己的音轨在 capture 时被 Chrome `muted` 强制吃掉，最后 mp4 里听不到声音。`<audio>` 必须独立元素 + 独立 track + **不加 `class="clip"`**（`class="clip"` 是视觉生命周期，audio 没有视觉）。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #2 + #4 + HTML schema reference："`<audio>` (no `class=\"clip\"`)"。
+**来源**：`hyperframes-core/references/variables-and-media.md`（Media Rules："Audio always lives on a separate `<audio>` element — even if its source file is the same as a `<video>`. The `<video>` is muted; the `<audio>` carries sound"）+ `data-attributes.md`。
 
 ---
 
-## 28. video 不嵌在 timed div 里，用 non-timed wrapper
+## 28. `<video>` / `<audio>` 必须是 host root（index.html）的直接子元素 —— 禁 wrapper div、禁 sub-comp template
+
+> ⚠️ **0.6.109 推翻了旧 §28**。旧版教「用 non-timed wrapper div 包 video」——现在那是**违规**写法。
 
 ```html
-<!-- ❌ video 在带 data-start 的 div 里 -->
-<div class="clip" data-start="0" data-duration="10" data-track-index="1">
-  <video src="..."></video>
+<!-- ❌ media 包进任何 wrapper div，或放进 sub-composition <template> → 永不 seek/decode，那段 snapshot 空白/黑屏 -->
+<div class="video-frame">
+  <video class="clip" data-start="0" src="..."></video>
 </div>
 
-<!-- ✅ 父级是普通 div（没有 data-start），video 自己带 timed attrs -->
-<div class="video-frame">
-  <!-- 没 class="clip"，没 data-start -->
-  <video class="clip" data-start="0" data-track-index="1"
-         muted playsinline src="..."></video>
-</div>
+<!-- ✅ media 直接挂 index.html root；外框/装饰（如需要）用单独 sub-composition，media 是盖在其上的 sibling host 元素 -->
+<!-- index.html -->
+<video id="demo" class="clip" src="assets/demo.mp4"
+       data-start="2" data-duration="6" data-track-index="2" muted playsinline
+       style="position:absolute; left:360px; top:100px; width:1200px; height:680px"></video>
+<script>
+  // host media 的逐段运镜必须写在 MAIN timeline 的全局时间（= 段本地时间 + slot data-start），
+  // 且只用 transform/opacity/filter（scale 不是 width/height —— 见 §23 / §40），不需要也不准包 wrapper
+  window.__timelines["main"].fromTo("#demo",
+    { scale: 1.4, filter: "blur(14px)" },
+    { scale: 1.0, filter: "blur(0px)", duration: 0.9 }, 2);   // 2 = data-start
+</script>
 ```
 
-**为什么**：lifecycle 双重计算冲突 —— 外层 timed div 在 t=0 才挂进 active layer，内层 video 也在 t=0 才被 engine 接管 seek。两个 lifecycle 谁先谁后未定义，video 可能首帧黑屏 / 抢拍。
+**为什么**：runtime **只** register + seek/decode 作为 host root 直接子元素的 media。放进任何中间 `<div>` 或 sub-composition `<template>` 的 media 永不被接管 → 渲染空白/黑屏。且 sub-composition 的 timeline **无法跨边界驱动 host 元素**（`querySelector("#host-id")` 和 gsap selector 字符串都不解析），所以 host media 的逐段动画（scale / opacity / blur / tilt / breathing）必须写在 main timeline 全局时间。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #3："Nest video inside a timed div — use a non-timed wrapper."
+**lint / validate / inspect 咬不住（只有逐帧 snapshot 抓得到），render 前手检**：
+```bash
+grep -nE '<(video|audio)\b' compositions/*.html   # 期望 0 匹配；非空 = media 跑进了 sub-comp，缺陷
+```
+
+**来源**：`hyperframes-core/SKILL.md`「Non-Negotiable Rules」+ `references/variables-and-media.md`（"NON-NEGOTIABLE: `<video>`/`<audio>` must be a DIRECT child of the host composition root"，Media Rules L82-83）+ `references/composition-patterns.md`（archetype B）+ `hyperframes-cli/references/lint-validate-inspect.md`（lint blind spot + grep 手检）。
+> 注：官方正文 Media Rules L84「animate a non-timed wrapper」与本条 no-wrapper 非可商量项自相矛盾；干净解法是**不改尺寸、用 transform `scale` 直接动 media 元素**（同时满足 §40 禁 reflow），不要为动画引入 wrapper。
 
 ---
 
@@ -661,7 +679,7 @@ tl.fromTo('.scene-card',
 
 **为什么 split**：v0 把"什么时候出现"和"叠在第几层"耦合在 `data-layer` 里 —— 但同一条 track 上多个 clip 不能重叠，跟 z-order 是两件事。新 schema 解耦：`data-track-index` 管"不能跟谁同时存在"，CSS `z-index` 管"叠在谁上面"。
 
-**来源**：官方 `skills/hyperframes/SKILL.md` Never do #4 + HTML schema reference："`data-track-index`: Integer; clips on the same track cannot overlap. Does **not** control z-order — use CSS `z-index`."
+**来源**：`hyperframes-core/references/data-attributes.md`「Legacy / Removed Attributes」表（`data-layer → data-track-index`、`data-end → data-duration`）+ `tracks-and-clips.md`："clips on the same track cannot overlap. Does **not** control z-order — use CSS `z-index`."
 
 ---
 
@@ -702,7 +720,7 @@ tl.fromTo('.scene-card',
 
 **关联本仓库 §9（bundler strip 内层 wrapper）**：sub-composition 包 template + 内层 `<div data-composition-id="X">`，bundler 把内层 div strip 掉但保留 template content + 外层 scene-layer 自动带 `data-composition-id` 属性 → 所以 CSS / GSAP selector 用 `[data-composition-id="X"]` 而不是 `#X`。
 
-**来源**：官方 Mintlify docs Composition Model："Root composition (no `<template>` wrapper at the top level — that breaks rendering for the standalone `index.html`)" + 本仓库 §9。
+**来源**：`hyperframes-core/SKILL.md`（root composition 不用 `<template>`）+ `references/sub-compositions.md`（sub-comp 才用 `<template>`，且 transport 规则见 §38）+ 本仓库 §9。
 
 ---
 
@@ -810,13 +828,15 @@ assets/screenshots/claude-cowork-hero.png
 
 ---
 
-> **以下 §35–§37 是 2026-05-23 联网拉真官方 `heygen-com/hyperframes@0.6.38` 真 SKILL.md + references/ 发现的**新规则。本仓库 §20-§30 早期是基于 `nateherkai/hyperframes-student-kit` fork 沉淀的（fork 是 2026-04-18 一次性发布，已停更，比真官方少 6 个 reference 文件 + 7 条新规）。学院 fork 教学样本工程仍保留参考，但 SKILL 规则全部以真官方 `.agents/skills/hyperframes/` 为准。
+> **以下 §35–§37 是真官方规则**（2026-05-23 首拉 @0.6.38 发现，2026-06-17 重核到 @0.6.109）。本仓库 §20–§30 早期基于 `nateherkai/hyperframes-student-kit` fork 沉淀（fork 2026-04-18 一次性发布、已停更）。0.6.109 起 §35 design spec 优先级为 **`frame.md` → `design.md` → `DESIGN.md`**（`frame.md` 是视频项目首选）；§35 / §36 锚点已迁至 `hyperframes-creative/`（`SKILL.md`、`references/prompt-expansion.md`）。SKILL 规则一律以本地 `.agents/skills/`（`npx skills` 装的真官方）为准。
 
 ---
 
-## 35. 工程内 `design.md` / `DESIGN.md` 是品牌单源，颜色 / 字体 / 字体 fallback 都按它
+## 35. 工程内 `frame.md` / `design.md` / `DESIGN.md` 是品牌单源，颜色 / 字体 / 字体 fallback 都按它
 
-工程根放一份 `design.md`（小写）或 `DESIGN.md`（大写，**Linux 区分大小写所以是不同文件**，两份都检查）。任何格式均可（YAML frontmatter / prose / 表格），只要能从里面提取出：
+> 0.6.109 优先级：**`frame.md` → `design.md` → `DESIGN.md`**。`frame.md` 是 HyperFrames 为「相机/视频」反转过的 design spec，视频项目**首选**；没有 frame.md 才回落 design.md / DESIGN.md。
+
+工程根放一份 `frame.md`（首选）/ `design.md`（小写）/ `DESIGN.md`（大写，**Linux 区分大小写所以是不同文件**，都检查）。任何格式均可（YAML frontmatter / prose / 表格），只要能从里面提取出：
 
 - **品牌色板**（含 hex 值 + 角色：primary / accent / text / bg / hot）
 - **字体家族**（1-2 个，含 fallback）
@@ -843,7 +863,7 @@ assets/screenshots/claude-cowork-hero.png
 
 **字体不存在的警告**：design.md 指定的字体本地 `fonts/` 目录里没有对应 .woff2、也不是 HF built-in font → **写 HTML 之前先告诉用户 `"design.md specifies [字体名] but no font files found. Please add .woff2 files to fonts/ or I'll fall back to [最近可用替代]."`**，不要默默 fallback。
 
-**来源**：真官方 `skills/hyperframes/SKILL.md` Step 1 Design system："If `design.md` or `DESIGN.md` exists in the project, read it first (check both casings — they're different files on Linux). It's the source of truth for brand colors, fonts, and constraints. Use its exact values — don't invent colors or substitute fonts."
+**来源**：`hyperframes-creative/SKILL.md`（design spec 优先级 `frame.md` → `design.md` → `DESIGN.md`）+ `references/prompt-expansion.md`："It's the source of truth for brand colors, fonts, and constraints. Use its exact values — don't invent colors or substitute fonts."
 
 **关联本仓库**：`../notes/MY_VISUAL_DNA.md`（仓库级 DNA 单源）+ 工程内 `STYLE_BRIEF.md`（参考素材借鉴时的 DNA 对照表）—— `design.md` 是真官方流程入口，DNA 是仓库本地纪律，二者互补不冲突。新工程从 0 写时先生成 `design.md` 引用 DNA token。
 
@@ -859,7 +879,7 @@ assets/screenshots/claude-cowork-hero.png
 
 **为什么**：用户原话是高度压缩的（"做个 10 秒 product intro"），直接交给 agent → 不同 agent 理解不同 → 风格漂移。prompt-expansion 是**显式扩词** → 让所有 agent 看同一份"扩展后的意图"。
 
-**来源**：真官方 `skills/hyperframes/SKILL.md` Step 2 + `references/prompt-expansion.md`（完整流程 + 输出格式）。
+**来源**：`hyperframes-creative/SKILL.md` + `hyperframes-creative/references/prompt-expansion.md`（完整流程 + 输出格式；产物落 `.hyperframes/expanded-prompt.md`）。
 
 **触发**：本仓库 `cyxj-new-video` 阶段 A 接收文案 / 写 PLAN 之前。新视频开工跑一次，整片复用，每段不重复跑。
 
@@ -903,9 +923,63 @@ npx hyperframes render --variables-file vars.json --strict-variables
 
 **触发**：本仓库 `cyxj-new-video` 阶段 C 抽模板。`templates/<name>/` 抽出来的可复用模板必走 variables 路径，**不再用 `{{PLACEHOLDER}}` 字符串替换**。
 
-**来源**：真官方 `skills/hyperframes/SKILL.md` Variables 段（"Three-step pattern: Declare → Read → Override"）+ `skills/hyperframes-cli/SKILL.md` Parametrized renders 段。
+**0.6.109 新增**：`data-color-grading` 的 JSON 里可引用变量（`$gradingPreset` / `${gradingIntensity}`），调色也走 variables。
+
+**来源**：`hyperframes-core/references/variables-and-media.md`（5 type、per-instance `data-variable-values`、`--strict-variables`、`--variables-file`、color-grading 引用变量）+ `hyperframes-cli/references/preview-render.md` + `hyperframes-cli/SKILL.md`。
 
 **关联本仓库**：`cyxj-new-video` SKILL.md 阶段 C line 182 已经提到 variables 路径 —— 本条是把它升级为硬约束。
+
+---
+
+## 38. sub-composition 的 `<style>` / `<script>` / `<link>` 必须放进 `<template>` 内，不能放 `<head>`
+
+```html
+<!-- ❌ <style>/<script> 在 <head> 或 <template> 外 → runtime 丢弃，文字变左上角无样式默认字、SVG 撑满 canvas -->
+<head><style>.chart-root { font-size: 88px }</style></head>
+<body><template><div class="chart-root" data-composition-id="data-chart">…</div></template></body>
+
+<!-- ✅ 全部进 <template> 内 -->
+<head></head>
+<body><template>
+  <style>.chart-root { font-size: 88px }</style>
+  <div class="chart-root" data-composition-id="data-chart">…</div>
+  <script>window.__timelines["data-chart"] = tl;</script>
+</template></body>
+```
+
+**为什么**：runtime 加载 sub-comp 时**只 clone `<template>` 的 contents** 进 host slot，`<template>` 之外的一切（含整个 `<head>`）全部丢弃。标准 HTML 习惯把 `<style>` 放 `<head>`，standalone 文件对、sub-comp 里灾难性错——lint / validate / inspect 全过、render 也完成，但样式根本没进 live DOM。
+
+**来源**：`hyperframes-core/SKILL.md`（"Sub-composition transport rule: the runtime only clones `<template>` contents… Put `<style>` and `<script>` inside `<template>`, not in `<head>`"）+ `references/sub-compositions.md`（Pitfall 1）。
+
+---
+
+## 39. Tailwind v4 浏览器运行时硬规则（仅 `init --tailwind` 工程）
+
+适用：`npx hyperframes init --tailwind` 起的工程（`index.html` 含 `window.__tailwindReady`）。**Studio 是 v3、本地工程是 v4，二者不同**。每条都是 render footgun：
+
+- 版本钉死 `@tailwindcss/browser@4.2.4`，**禁** `cdn.tailwindcss.com`（unpinned 破坏复现）
+- 只用稳定尺寸 `w-[…]` / `h-[…]` / `aspect-video` / grid / flex，**禁断点** `md:` / `lg:`（renderer 固定视口）
+- 动画只走 transform/opacity 类，**render-critical 禁 `transition-*`**（动画必须 GSAP 拥有状态）
+- **禁交互变体** `hover:` / `focus:` / `active:` / `group-*:` / `peer-*:`（render 期永不触发）
+- v4 裸 `border` 是坏的（默认 `currentColor`，v3 是 gray-200），必须写颜色 `border border-white/20`
+- v4 改名：`shadow-sm→shadow-xs`、`rounded-sm→rounded-xs`、`outline-none→outline-hidden`、`flex-shrink-*→shrink-*`、`flex-grow-*→grow-*`
+- 用 `@theme` / `@utility`（`<style type="text/tailwindcss">`），**禁 v3 的 `@tailwind base/components/utilities`**；迁 v3 config 用 `@config "./tailwind.config.js";`（v4 不自动探测）
+- 动态 class 不安全（`` `bg-${c}-500` `` runtime 可能扫不到）→ 用完整静态 token
+
+**来源**：`hyperframes-core/references/tailwind.md`（整篇，明文 "Every bullet is a hard rule"）。
+
+---
+
+## 40. 确定性禁区扩展 + GSAP 动画属性白名单
+
+§20 / §21 之外，官方正文还有几条确定性硬边界 + 属性白名单：
+
+- 禁同一元素同一属性被多个 timeline 同时动（GSAP overwrite 顺序相关，render 间会翻）—— 必要时 `overwrite: "auto"`
+- 禁 animate `display` / `visibility`（离散属性），用 `autoAlpha`（同时管 opacity + visibility）
+- **render-critical 动画禁** `width` / `height` / `top` / `left` / `margin` / `padding`（触发 reflow，不确定 + 慢），用 transform alias（`x` / `y` / `scale` / `rotation`）
+- 元信息：官方 docs 的 "Supported Properties" 列了 width/height/visibility，但 skill 明说「那个列表对 HF 太宽松，以本 allowlist 为准」（证据协议：以 skill 正文为准）
+
+**来源**：`hyperframes-core/references/determinism-rules.md` + `hyperframes-animation/adapters/gsap.md` + `gsap-transforms-and-perf.md`。
 
 ---
 
@@ -918,6 +992,6 @@ npx hyperframes render --variables-file vars.json --strict-variables
 
 新增判定标准（二选一）：
 - 进 **§1–§19（本仓库实战坑）**：至少 1 次本仓库实战翻车记录。理论"最佳实践"不算。
-- 进 **§20–§30（官方非可商量底线）**：官方明文 non-negotiable —— 引用 `skills/hyperframes/SKILL.md` 原话或 Mintlify docs 链接。新增时标注来源。
+- 进 **官方非可商量底线（§20 起）**：官方明文 non-negotiable —— 引用本地 `.agents/skills/` 正文原话（`hyperframes-core` / `hyperframes-animation` / `hyperframes-cli`）。新增时标注来源文件。
 
-§20–§30 跟上游同步节奏：发现 hyperframes 升级新增 non-negotiable 时同步补。当前对齐到 **hyperframes@0.6.33 + Mintlify docs 2026-05-22 快照**。下次同步时间：随 hyperframes 0.7.x 发版重审一次。
+官方底线跟上游同步节奏：`npx skills update` 升级官方 skill 后重核一次。当前对齐到 **hyperframes@0.6.109**（本地官方 skill 正文，`skills-lock.json` 按 GitHub hash 钉死，2026-06-17 重核）。本轮重核结论：§28 被推翻重写（media 必须 host root 直接子元素、禁 wrapper）、§20 公式 ceil→floor、§21 补 `performance.now()`、§23 改 transform `scale`、新增 §38（sub-comp template transport）/ §39（Tailwind v4）/ §40（确定性+GSAP白名单）；§31 / §33 经核为本仓库实战推断、非官方明文。注：lock 用 hash 钉死、无 semver 字段，"0.6.109" 对应同步时的 release tag。下次同步：随 0.7.x 发版重审。
