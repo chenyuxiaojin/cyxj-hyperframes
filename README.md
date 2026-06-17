@@ -35,21 +35,34 @@ This repo is the production workspace behind the YouTube channel [@cyxj_ai](http
 ```
 视频项目/已发布/                 10 archived video source projects (each with a README)
 视频项目/在制/                   active work-in-progress projects (gitignored)
-templates/
-  components/                   7 reusable components (cc-window, orbit-dots, pulse-bars…)
-  inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
-  catalog.json                  Machine-readable component catalog (used by skills)
-cyxj/
+制作规范/                        XCYJ production rules layer (user-owned)
+  docs/
+    HARD_CONSTRAINTS.md         30 hard constraints distilled from real failures
+    STYLE_BORROW_PLAYBOOK.md    How to legally borrow visual style from reference videos
+    REFERENCE_INDEX.md          Index of upstream reference projects
+    ops.md                      CLI versions, maintenance scripts, symlink architecture
+  notes/
+    MY_VISUAL_DNA.md            Personal aesthetic constitution (color / type / rhythm)
+    MY_MOTION_NOTES.md          19 battle-tested motion techniques
+    TEMPLATE_USAGE.md           Component-reuse checklist
+  rules/                        Shared motion vocabulary & hyperframes rules
   skills/cyxj-hyperframes-overlay/
-                                  Active XCYJ overlay: official rules → user layer → project
-assets/logos/                   33 AI vendor / tool SVG logos (Claude, OpenAI, GitHub…)
-cyxj/docs/
-  HARD_CONSTRAINTS.md           30 hard constraints distilled from real failures
-  STYLE_BORROW_PLAYBOOK.md      How to legally borrow visual style from reference videos
-  REFERENCE_INDEX.md            Index of upstream reference projects
+                                Active XCYJ overlay: official rules → user layer → project
+组件库/                          Reusable components, single source of truth
+  <id>/                         Each component: <id>.html + <id>.css + README.md
+  COMPONENTS.json               Machine-readable component registry
+参考/                            Reference asset layer (read-only)
+  inspirations/                 5 React UI libraries ported to vanilla HTML+GSAP
+  catalog.json                  Machine-readable official catalog (used by skills)
+  hyperframes-launches/         HeyGen upstream reference repo (SCRIPT/STORYBOARD/compositions)
+  我的作品/                       Snapshot pool of past works
+资源库/
+  logos/                        33 AI vendor / tool SVG logos (Claude, OpenAI, GitHub…)
+  录屏/                          Raw screen-recording footage
 docs/
-  hyperframes-official/         78-page local mirror of HyperFrames official docs
-scripts/                        Maintenance scripts (refresh catalog, lint projects…)
+  hyperframes-official/         78-page local mirror of HyperFrames official docs (English)
+scripts/                        Maintenance scripts (refresh catalog, lint projects, lint-dead-css…)
+〔official layer, gitignored〕   .agents/skills/ + .claude/skills/ + .codex/ (npx-managed)
 ```
 
 ---
@@ -83,24 +96,24 @@ npx hyperframes render --quality standard --format mp4 \
 mv "../$DATE-my-first-video" "../../已发布/$DATE-my-first-video"
 ```
 
-Full checklist: [`cyxj/notes/TEMPLATE_USAGE.md`](cyxj/notes/TEMPLATE_USAGE.md)
+Full checklist: [`制作规范/notes/TEMPLATE_USAGE.md`](制作规范/notes/TEMPLATE_USAGE.md)
 
 ---
 
 ## Usage: AI Collaboration Workflow
 
-The intended way to use this repo is to open a Claude Code or Codex session in `hyperframes/` and say **"make a new video about X"**. Active discovery now routes through `cyxj-hyperframes-overlay`: read the official HyperFrames skills (start at the `hyperframes` entry skill), then read `cyxj/` for XCYJ assets, templates, visual DNA, and production discipline. Legacy `cyxj-new-video` / `cyxj-add-block` workflows remain only as a reference for the loop:
+The intended way to use this repo is to open a Claude Code or Codex session in `hyperframes/` and say **"make a new video about X"**. Active discovery now routes through `cyxj-hyperframes-overlay`: read the official HyperFrames skills (start at the `hyperframes` entry skill), then read `制作规范/` for XCYJ production rules, visual DNA, and discipline (components live in `组件库/`, reference assets in `参考/`). The workflow loop:
 
 1. Ask for format / topic / duration
-2. Read [`cyxj/docs/REFERENCE_INDEX.md`](cyxj/docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
+2. Read [`制作规范/docs/REFERENCE_INDEX.md`](制作规范/docs/REFERENCE_INDEX.md) and recommend 2-3 reference projects
 3. Copy the template into `视频项目/在制/<slug>/`, update `meta.json` and `index.html`
 4. Wait for your script → populate beats → lint → preview
 5. When you say "done" → auto-archive into `视频项目/已发布/<date>-<slug>/`
 
-**Claude Code users:** active skills are under `.claude/skills/`, pointing to `.agents/skills/` (npx-installed) via symlink, plus `cyxj/skills/cyxj-hyperframes-overlay`.  
+**Claude Code users:** active skills are under `.claude/skills/`, pointing to `.agents/skills/` (npx-installed) via symlink, plus `制作规范/skills/cyxj-hyperframes-overlay`.  
 **OpenAI Codex users:** active skills are under `.agents/skills/` — the npx-installed official skills (real dirs) plus the XCYJ overlay.
 
-Official skills are managed by `npx skills add/update heygen-com/hyperframes` (no more `official/` mirror). Edit XCYJ production rules in `cyxj/`.
+Official skills are managed by `npx skills add/update heygen-com/hyperframes` (no more `official/` mirror). Edit XCYJ production rules in `制作规范/`.
 
 ---
 
@@ -128,10 +141,10 @@ HyperFrames: HTML + GSAP, lower barrier, great for narrator-style tutorial video
 Yes. There's no built-in starter template — scaffold a blank project with `npx hyperframes init <slug> --example blank`, then paste your script to Claude Code and let it author the composition files for you.
 
 **Chinese subtitle rendering issues?**  
-Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`cyxj/docs/HARD_CONSTRAINTS.md`](cyxj/docs/HARD_CONSTRAINTS.md) §4 and §8.
+Two known gotchas: (1) Do not use `npx hyperframes transcribe` for Chinese audio — use `whisper-cli` directly. (2) Chinese fonts in headless Chromium occasionally fall back if Google Fonts CDN times out — self-host the woff2 files (the `karpathy-anthropic` project under `2026-05-20/` has a local font bundle you can copy). Full details: [`制作规范/docs/HARD_CONSTRAINTS.md`](制作规范/docs/HARD_CONSTRAINTS.md) §4 and §8.
 
 **Can OpenAI Codex users use this?**  
-Yes. Official skills install to `.agents/skills/` (OpenAI Agents format) via `npx skills`, and the XCYJ overlay points to `cyxj/skills/cyxj-hyperframes-overlay`. Restore them with `npx skills experimental_install` from `skills-lock.json`.
+Yes. Official skills install to `.agents/skills/` (OpenAI Agents format) via `npx skills`, and the XCYJ overlay points to `制作规范/skills/cyxj-hyperframes-overlay`. Restore them with `npx skills experimental_install` from `skills-lock.json`.
 
 ---
 

@@ -1,0 +1,1945 @@
+[
+  {
+    "name": "data-chart",
+    "type": "block",
+    "title": "Data Chart",
+    "description": "Animated bar + line chart with staggered reveal, NYT-style typography, and value labels",
+    "tags": [
+      "data",
+      "chart",
+      "statistics"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "us-map",
+    "type": "block",
+    "title": "US Map",
+    "description": "Animated US choropleth map with staggered state reveals, value labels, and gradient legend — pure inline SVG with GSAP",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "usa",
+      "choropleth"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "us-map-bubble",
+    "type": "block",
+    "title": "US Bubble Map",
+    "description": "Animated US bubble map with proportional city markers, value callouts, and connection lines — composable with us-map",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "usa",
+      "bubble",
+      "cities"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "us-map-hex",
+    "type": "block",
+    "title": "US Hex Grid Map",
+    "description": "Animated hexagonal tile grid map — each state as an equal-weight hex with data fill and abbreviation label",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "usa",
+      "hexgrid",
+      "tilegrid"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 10
+  },
+  {
+    "name": "us-map-flow",
+    "type": "block",
+    "title": "US Flow Map",
+    "description": "Animated connection arcs between US cities over a base map — composable origin-destination flow visualization",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "usa",
+      "flow",
+      "connections",
+      "arcs"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "world-map",
+    "type": "block",
+    "title": "World Map",
+    "description": "Animated world choropleth with country-by-country reveal, tooltip labels, and rotating globe inset — D3 Natural Earth projection",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "world",
+      "choropleth"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 14
+  },
+  {
+    "name": "spain-map",
+    "type": "block",
+    "title": "Spain Map",
+    "description": "Animated Spain choropleth by autonomous community with staggered reveals and gradient legend — D3 conic conformal projection",
+    "tags": [
+      "data",
+      "map",
+      "geography",
+      "spain",
+      "europe",
+      "choropleth"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "flowchart",
+    "type": "block",
+    "title": "Flowchart",
+    "description": "Animated decision tree with SVG connectors, sticky-note nodes, cursor interaction, and typing correction",
+    "tags": [
+      "diagram",
+      "flowchart",
+      "interactive"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "logo-outro",
+    "type": "block",
+    "title": "Logo Outro",
+    "description": "Cinematic logo reveal with piece-by-piece assembly, glow bloom, tagline fade-in, and URL pill",
+    "tags": [
+      "branding",
+      "outro",
+      "logo"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "grain-overlay",
+    "type": "component",
+    "title": "Grain Overlay",
+    "description": "Animated film grain texture overlay using CSS keyframes — adds warmth and analog character to any composition",
+    "tags": [
+      "texture",
+      "grain",
+      "overlay",
+      "film"
+    ]
+  },
+  {
+    "name": "shimmer-sweep",
+    "type": "component",
+    "title": "Shimmer Sweep",
+    "description": "Animated light sweep across text or elements using a CSS gradient mask — ideal for AI accents and premium reveals",
+    "tags": [
+      "text",
+      "shimmer",
+      "highlight",
+      "effect"
+    ]
+  },
+  {
+    "name": "grid-pixelate-wipe",
+    "type": "component",
+    "title": "Grid Pixelate Wipe",
+    "description": "Transition effect where the screen dissolves into a grid of squares that fade out with staggered timing — use between scenes",
+    "tags": [
+      "transition",
+      "wipe",
+      "grid",
+      "pixelate"
+    ]
+  },
+  {
+    "name": "motion-blur",
+    "type": "component",
+    "title": "Motion Blur",
+    "description": "Velocity-driven motion blur — samples element position each frame and applies a one-sided SVG feGaussianBlur ghost trail proportional to speed",
+    "tags": [
+      "effect",
+      "motion-blur",
+      "velocity",
+      "animation",
+      "physics"
+    ]
+  },
+  {
+    "name": "texture-mask-text",
+    "type": "component",
+    "title": "Texture Mask Text",
+    "description": "CSS luminance masks that cut holes through letterforms - 66 pre-built texture masks from ambientCG PBR color maps",
+    "tags": [
+      "text",
+      "text-effect",
+      "effect",
+      "texture",
+      "mask"
+    ]
+  },
+  {
+    "name": "vignette",
+    "type": "component",
+    "title": "Vignette",
+    "description": "Cinematic radial vignette overlay using a pure-CSS gradient — darkens the edges to pull focus toward the center",
+    "tags": [
+      "vignette",
+      "overlay",
+      "cinematic",
+      "effect"
+    ]
+  },
+  {
+    "name": "caption-pill-karaoke",
+    "type": "component",
+    "title": "Pill Karaoke",
+    "description": "Pill-shaped container with per-word karaoke color highlight",
+    "tags": [
+      "captions",
+      "caption-style",
+      "karaoke",
+      "pill"
+    ]
+  },
+  {
+    "name": "caption-neon-accent",
+    "type": "component",
+    "title": "Neon Accent",
+    "description": "Multi-color neon glow accents with wiggle drift animation",
+    "tags": [
+      "captions",
+      "caption-style",
+      "neon",
+      "glow",
+      "accent"
+    ]
+  },
+  {
+    "name": "caption-weight-shift",
+    "type": "component",
+    "title": "Weight Shift",
+    "description": "Elegant font-weight transition between caption lines",
+    "tags": [
+      "captions",
+      "caption-style",
+      "minimal",
+      "typography"
+    ]
+  },
+  {
+    "name": "caption-emoji-pop",
+    "type": "component",
+    "title": "Emoji Pop",
+    "description": "Emoji integration with stroked text and horizontal squeeze entrance",
+    "tags": [
+      "captions",
+      "caption-style",
+      "emoji",
+      "social"
+    ]
+  },
+  {
+    "name": "caption-editorial-emphasis",
+    "type": "component",
+    "title": "Editorial Emphasis",
+    "description": "Dual-font system with dramatic size contrast for emphasis words",
+    "tags": [
+      "captions",
+      "caption-style",
+      "editorial",
+      "typography",
+      "emphasis"
+    ]
+  },
+  {
+    "name": "caption-parallax-layers",
+    "type": "component",
+    "title": "Parallax Layers",
+    "description": "Behind-subject 3D text layering with vertical stretch effect",
+    "tags": [
+      "captions",
+      "caption-style",
+      "parallax",
+      "3d",
+      "depth"
+    ]
+  },
+  {
+    "name": "caption-glitch-rgb",
+    "type": "component",
+    "title": "Glitch RGB",
+    "description": "RGB chromatic aberration with CRT scanline overlay",
+    "tags": [
+      "captions",
+      "caption-style",
+      "glitch",
+      "cyber",
+      "tech"
+    ]
+  },
+  {
+    "name": "caption-matrix-decode",
+    "type": "component",
+    "title": "Matrix Decode",
+    "description": "Character scramble animation before text reveal",
+    "tags": [
+      "captions",
+      "caption-style",
+      "matrix",
+      "scramble",
+      "decode"
+    ]
+  },
+  {
+    "name": "caption-particle-burst",
+    "type": "component",
+    "title": "Particle Burst",
+    "description": "Keyword words trigger colored particle explosions",
+    "tags": [
+      "captions",
+      "caption-style",
+      "particles",
+      "burst",
+      "effects"
+    ]
+  },
+  {
+    "name": "caption-texture",
+    "type": "component",
+    "title": "Texture",
+    "description": "Flowing texture mask over large uppercase text — ships with 6 textures (lava, marble, metal, wood, concrete, rock), configurable via the texture variable",
+    "tags": [
+      "captions",
+      "caption-style",
+      "texture",
+      "mask"
+    ]
+  },
+  {
+    "name": "caption-clip-wipe",
+    "type": "component",
+    "title": "Clip Wipe",
+    "description": "Left-to-right clip-path wipe reveal per word",
+    "tags": [
+      "captions",
+      "caption-style",
+      "wipe",
+      "clip-path",
+      "reveal"
+    ]
+  },
+  {
+    "name": "caption-kinetic-slam",
+    "type": "component",
+    "title": "Kinetic Slam",
+    "description": "Full-screen single-word display with alternating entrance directions",
+    "tags": [
+      "captions",
+      "caption-style",
+      "kinetic",
+      "typography",
+      "slam"
+    ]
+  },
+  {
+    "name": "caption-gradient-fill",
+    "type": "component",
+    "title": "Gradient Fill",
+    "description": "Gradient-clipped text with elastic bounce entrance",
+    "tags": [
+      "captions",
+      "caption-style",
+      "gradient",
+      "colorful"
+    ]
+  },
+  {
+    "name": "caption-neon-glow",
+    "type": "component",
+    "title": "Neon Glow",
+    "description": "Cyan and magenta neon glow with keyword accent colors",
+    "tags": [
+      "captions",
+      "caption-style",
+      "neon",
+      "glow",
+      "gaming"
+    ]
+  },
+  {
+    "name": "caption-highlight",
+    "type": "component",
+    "title": "Highlight",
+    "description": "Red background sweep behind each active word, TikTok-style",
+    "tags": [
+      "captions",
+      "caption-style",
+      "highlight",
+      "social",
+      "tiktok"
+    ]
+  },
+  {
+    "name": "caption-blend-difference",
+    "type": "component",
+    "title": "Blend Difference",
+    "description": "Auto-inverting text using mix-blend-mode: difference — flips between white and black per-pixel against the background",
+    "tags": [
+      "text",
+      "text-effect",
+      "effect",
+      "blend-mode",
+      "contrast",
+      "inversion"
+    ]
+  },
+  {
+    "name": "morph-text",
+    "type": "component",
+    "title": "Morph Text",
+    "description": "Gooey text morph — cycles through an editable word list using SVG threshold + GSAP-driven blur for a fluid, satisfying transition effect",
+    "tags": [
+      "text",
+      "text-effect",
+      "typography",
+      "morph",
+      "gooey",
+      "kinetic",
+      "animation"
+    ]
+  },
+  {
+    "name": "instagram-follow",
+    "type": "block",
+    "title": "Instagram Follow",
+    "description": "Animated Instagram follow overlay with profile card and follow button",
+    "tags": [
+      "social",
+      "overlay",
+      "instagram"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "tiktok-follow",
+    "type": "block",
+    "title": "TikTok Follow",
+    "description": "Animated TikTok follow overlay with profile card and follow button",
+    "tags": [
+      "social",
+      "overlay",
+      "tiktok"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "yt-lower-third",
+    "type": "block",
+    "title": "YouTube Lower Third",
+    "description": "Animated YouTube subscribe lower third with avatar and channel info",
+    "tags": [
+      "social",
+      "overlay",
+      "youtube"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4.5
+  },
+  {
+    "name": "x-post",
+    "type": "block",
+    "title": "X Post Card",
+    "description": "Animated X/Twitter post card overlay with engagement metrics",
+    "tags": [
+      "social",
+      "overlay",
+      "twitter"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "reddit-post",
+    "type": "block",
+    "title": "Reddit Post Card",
+    "description": "Animated Reddit post card overlay with upvotes and comments",
+    "tags": [
+      "social",
+      "overlay",
+      "reddit"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "spotify-card",
+    "type": "block",
+    "title": "Spotify Now Playing",
+    "description": "Animated Spotify now-playing card with album art and progress bar",
+    "tags": [
+      "social",
+      "overlay",
+      "spotify"
+    ],
+    "dimensions": {
+      "width": 1080,
+      "height": 1920
+    },
+    "duration": 5
+  },
+  {
+    "name": "macos-notification",
+    "type": "block",
+    "title": "macOS Notification",
+    "description": "Animated macOS-style notification banner with app icon and message",
+    "tags": [
+      "social",
+      "overlay",
+      "notification"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "app-showcase",
+    "type": "block",
+    "title": "App Showcase",
+    "description": "Fitness app product showcase with three floating smartphone screens",
+    "tags": [
+      "showcase",
+      "app",
+      "3d"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5.5
+  },
+  {
+    "name": "north-korea-locked-down",
+    "type": "block",
+    "title": "North Korea Locked Down",
+    "description": "Realistic map zoom into North Korea with a red scribble circle, locked-down pop-up label, and reddish editorial wash.",
+    "tags": [
+      "showcase",
+      "map",
+      "annotation",
+      "youtube",
+      "kinetic"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "apple-money-count",
+    "type": "block",
+    "title": "Apple Money Count",
+    "description": "Apple-style finance counter that counts from $0 to $10,000, flashes green, and bursts money icons with sound.",
+    "tags": [
+      "showcase",
+      "finance",
+      "kinetic",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "vpn-youtube-spot",
+    "type": "block",
+    "title": "VPN YouTube Spot",
+    "description": "Snappy Apple-style YouTube insert showing a phone finding and installing a friendly VPN app with sound effects.",
+    "tags": [
+      "app",
+      "showcase",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "blue-sweater-intro-video",
+    "type": "block",
+    "title": "Blue Sweater Intro Video",
+    "description": "Warm AI creator intro sequence that resolves into an X follow card for @_blue_sweater_.",
+    "tags": [
+      "showcase",
+      "ai",
+      "creator",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "nyc-paris-flight",
+    "type": "block",
+    "title": "NYC Paris Flight",
+    "description": "Apple-style realistic map animation with a plane flying from New York to Paris, marker circle, landing pop, and sound effects.",
+    "tags": [
+      "showcase",
+      "travel",
+      "map",
+      "youtube",
+      "sfx"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "ui-3d-reveal",
+    "type": "block",
+    "title": "3D UI Reveal",
+    "description": "Perspective 3D reveal animation for UI elements",
+    "tags": [
+      "showcase",
+      "3d",
+      "reveal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 13
+  },
+  {
+    "name": "domain-warp-dissolve",
+    "type": "block",
+    "title": "Domain Warp Dissolve",
+    "description": "Shader transition with fractal noise domain warping",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "ridged-burn",
+    "type": "block",
+    "title": "Ridged Burn",
+    "description": "Shader transition with ridged turbulence burn effect",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "whip-pan",
+    "type": "block",
+    "title": "Whip Pan",
+    "description": "Shader transition simulating a fast camera whip pan",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "sdf-iris",
+    "type": "block",
+    "title": "SDF Iris",
+    "description": "Shader transition with signed distance field iris reveal",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "ripple-waves",
+    "type": "block",
+    "title": "Ripple Waves",
+    "description": "Shader transition with concentric ripple wave distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "gravitational-lens",
+    "type": "block",
+    "title": "Gravitational Lens",
+    "description": "Shader transition with gravitational lensing distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "cinematic-zoom",
+    "type": "block",
+    "title": "Cinematic Zoom",
+    "description": "Shader transition with dramatic zoom blur",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "chromatic-radial-split",
+    "type": "block",
+    "title": "Chromatic Radial Split",
+    "description": "Shader transition with chromatic aberration radial split",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "glitch",
+    "type": "block",
+    "title": "Glitch",
+    "description": "Shader transition with digital glitch artifacts",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "swirl-vortex",
+    "type": "block",
+    "title": "Swirl Vortex",
+    "description": "Shader transition with swirling vortex distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "thermal-distortion",
+    "type": "block",
+    "title": "Thermal Distortion",
+    "description": "Shader transition with heat haze thermal distortion",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "flash-through-white",
+    "type": "block",
+    "title": "Flash Through White",
+    "description": "Shader transition with white flash crossfade",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "cross-warp-morph",
+    "type": "block",
+    "title": "Cross Warp Morph",
+    "description": "Shader transition with cross-warped morphing",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "light-leak",
+    "type": "block",
+    "title": "Light Leak",
+    "description": "Shader transition with cinematic light leak overlay",
+    "tags": [
+      "transition",
+      "shader"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 4
+  },
+  {
+    "name": "transitions-3d",
+    "type": "block",
+    "title": "3D Transitions",
+    "description": "Showcase of 3D perspective flip and rotate transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "transitions-blur",
+    "type": "block",
+    "title": "Blur Transitions",
+    "description": "Showcase of blur-based transitions between scenes",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-cover",
+    "type": "block",
+    "title": "Cover Transitions",
+    "description": "Showcase of cover/uncover slide transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-destruction",
+    "type": "block",
+    "title": "Destruction Transitions",
+    "description": "Showcase of destructive break-apart transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 14
+  },
+  {
+    "name": "transitions-dissolve",
+    "type": "block",
+    "title": "Dissolve Transitions",
+    "description": "Showcase of dissolve and fade transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 24
+  },
+  {
+    "name": "transitions-distortion",
+    "type": "block",
+    "title": "Distortion Transitions",
+    "description": "Showcase of warp and distortion transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-grid",
+    "type": "block",
+    "title": "Grid Transitions",
+    "description": "Showcase of grid-based tile transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "transitions-light",
+    "type": "block",
+    "title": "Light Transitions",
+    "description": "Showcase of light-based glow and flash transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 21
+  },
+  {
+    "name": "transitions-mechanical",
+    "type": "block",
+    "title": "Mechanical Transitions",
+    "description": "Showcase of mechanical shutter and iris transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "transitions-other",
+    "type": "block",
+    "title": "Other Transitions",
+    "description": "Showcase of miscellaneous creative transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-push",
+    "type": "block",
+    "title": "Push Transitions",
+    "description": "Showcase of push and slide transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 24
+  },
+  {
+    "name": "transitions-radial",
+    "type": "block",
+    "title": "Radial Transitions",
+    "description": "Showcase of radial wipe and reveal transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "transitions-scale",
+    "type": "block",
+    "title": "Scale Transitions",
+    "description": "Showcase of scale and zoom transitions",
+    "tags": [
+      "transition",
+      "showcase"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-text-cursor",
+    "type": "block",
+    "title": "VFX Text Cursor",
+    "description": "Dramatic text reveal with cursor glow, chromatic shadow rays, and directional lighting on a black stage. Canvas-based shader post-processing with spectral color edges.",
+    "tags": [
+      "html-in-canvas",
+      "text",
+      "shader",
+      "cursor",
+      "chromatic"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "vfx-liquid-background",
+    "type": "block",
+    "title": "Liquid Background",
+    "description": "Organic liquid simulation with vertex displacement on a subdivided plane. HTML content floats above rippling fluid surface with real-time wave dynamics.",
+    "tags": [
+      "html-in-canvas",
+      "liquid",
+      "webgl",
+      "displacement",
+      "background"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "vfx-iphone-device",
+    "type": "block",
+    "title": "iPhone & MacBook 3D Showcase",
+    "description": "Real GLTF iPhone 15 Pro Max and MacBook Pro models with live HTML-in-Canvas screen content, morphing glass lens, product review camera choreography, and 360° turntable.",
+    "tags": [
+      "html-in-canvas",
+      "3d",
+      "device",
+      "iphone",
+      "macbook",
+      "gltf"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-magnetic",
+    "type": "block",
+    "title": "Magnetic",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-portal",
+    "type": "block",
+    "title": "Portal",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 10
+  },
+  {
+    "name": "liquid-glass-notification",
+    "type": "block",
+    "title": "Liquid Glass Notification",
+    "description": "Frosted glass notification cards floating over an aurora shader background",
+    "tags": [
+      "html-in-canvas",
+      "liquid-glass-html-in-canvas",
+      "webgpu"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "liquid-glass-context-menu",
+    "type": "block",
+    "title": "Liquid Glass Context Menu",
+    "description": "Frosted glass context menu panel drifting over an aurora shader background",
+    "tags": [
+      "html-in-canvas",
+      "liquid-glass-html-in-canvas",
+      "webgpu"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "liquid-glass-media-controls",
+    "type": "block",
+    "title": "Liquid Glass Media Controls",
+    "description": "Frosted glass media control panels spreading over an aurora shader background",
+    "tags": [
+      "html-in-canvas",
+      "liquid-glass-html-in-canvas",
+      "webgpu"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "liquid-glass-widgets",
+    "type": "block",
+    "title": "Liquid Glass Widgets",
+    "description": "Frosted glass stat cards, showcase panel and pill chips over an aurora shader background",
+    "tags": [
+      "html-in-canvas",
+      "liquid-glass-html-in-canvas",
+      "webgpu"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "ios26-liquid-glass",
+    "type": "block",
+    "title": "iOS 26 Liquid Glass Home Screen",
+    "description": "3D iPhone with a normal iOS 26 home screen, liquid glass app icons, shader wallpaper, dock, and fluid glass notifications that drop from the status area onto a GLTF device model.",
+    "tags": [
+      "liquid-glass-html-in-canvas",
+      "webgpu",
+      "3d",
+      "iphone",
+      "ios26",
+      "notifications",
+      "gltf",
+      "html-in-canvas"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "macos-tahoe-liquid-glass",
+    "type": "block",
+    "title": "macOS Tahoe Liquid Glass Desktop",
+    "description": "3D MacBook with a macOS Tahoe-style desktop, glass menu bar, Finder window, dock, and cinematic device camera move.",
+    "tags": [
+      "html-in-canvas",
+      "3d",
+      "macos",
+      "tahoe",
+      "gltf"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 15
+  },
+  {
+    "name": "vfx-shatter",
+    "type": "block",
+    "title": "Shatter",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-basic",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Basic",
+    "description": "Apple Terminal Basic profile: white background, black text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-clear-dark",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Clear Dark",
+    "description": "Apple Terminal Clear Dark profile: semi-transparent dark background, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-clear-light",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Clear Light",
+    "description": "Apple Terminal Clear Light profile: semi-transparent light background, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-grass",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Grass",
+    "description": "Apple Terminal Grass profile: black background with green text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-homebrew",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Homebrew",
+    "description": "Apple Terminal Homebrew profile: black background with bright green text and lime cursor, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-man-page",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Man Page",
+    "description": "Apple Terminal Man Page profile: pale yellow background with black text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-novel",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Novel",
+    "description": "Apple Terminal Novel profile: warm parchment background with dark brown text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-ocean",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Ocean",
+    "description": "Apple Terminal Ocean profile: deep blue background with white text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-pro",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Pro",
+    "description": "Apple Terminal Pro profile: black background with grey text and lime green cursor, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-red-sands",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Red Sands",
+    "description": "Apple Terminal Red Sands profile: deep red background with sandy text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-silver-aerogel",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Silver Aerogel",
+    "description": "Apple Terminal Silver Aerogel profile: dark grey background with white text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-apple-terminal-solid-colors",
+    "type": "block",
+    "title": "Code Snippet - Apple Terminal Solid Colors",
+    "description": "Apple Terminal Solid Colors profile: deep purple background with white text, per-character typing animation of a shell session.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "terminal",
+      "apple",
+      "apple-terminal"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 12
+  },
+  {
+    "name": "code-snippet-dark-2026",
+    "type": "block",
+    "title": "Code Snippet - Dark 2026",
+    "description": "VS Code workbench with per-character typing animation in the Dark 2026 theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-dark-modern",
+    "type": "block",
+    "title": "Code Snippet - Dark Modern",
+    "description": "VS Code workbench with per-character typing animation in the Dark Modern theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-dark-plus",
+    "type": "block",
+    "title": "Code Snippet - Dark+",
+    "description": "VS Code workbench with per-character typing animation in the Dark+ theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-high-contrast",
+    "type": "block",
+    "title": "Code Snippet - High Contrast",
+    "description": "VS Code workbench with per-character typing animation in the High Contrast theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-high-contrast-light",
+    "type": "block",
+    "title": "Code Snippet - High Contrast Light",
+    "description": "VS Code workbench with per-character typing animation in the High Contrast Light theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-light-2026",
+    "type": "block",
+    "title": "Code Snippet - Light 2026",
+    "description": "VS Code workbench with per-character typing animation in the Light 2026 theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-light-modern",
+    "type": "block",
+    "title": "Code Snippet - Light Modern",
+    "description": "VS Code workbench with per-character typing animation in the Light Modern theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-light-plus",
+    "type": "block",
+    "title": "Code Snippet - Light+",
+    "description": "VS Code workbench with per-character typing animation in the Light+ theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-monokai",
+    "type": "block",
+    "title": "Code Snippet - Monokai",
+    "description": "VS Code workbench with per-character typing animation in the Monokai theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-solarized-light",
+    "type": "block",
+    "title": "Code Snippet - Solarized Light",
+    "description": "VS Code workbench with per-character typing animation in the Solarized Light theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-visual-studio-dark",
+    "type": "block",
+    "title": "Code Snippet - Visual Studio Dark",
+    "description": "VS Code workbench with per-character typing animation in the Visual Studio Dark theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-snippet-visual-studio-light",
+    "type": "block",
+    "title": "Code Snippet - Visual Studio Light",
+    "description": "VS Code workbench with per-character typing animation in the Visual Studio Light theme. Full editor chrome with activity bar, sidebar, tabs, terminal, and status bar.",
+    "tags": [
+      "code",
+      "developer",
+      "showcase",
+      "vscode"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 11
+  },
+  {
+    "name": "code-morph",
+    "type": "block",
+    "title": "Code Morph",
+    "description": "One snippet transforms into another — tokens glide between positions, leavers fade out, enterers fade in. Shiki Magic Move re-driven as a paused GSAP timeline.",
+    "tags": [
+      "code",
+      "code-animation",
+      "morph",
+      "refactor",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "code-snippet-flight",
+    "type": "block",
+    "title": "Code Snippet Flight",
+    "description": "Discrete code snippets fly in from the side and assemble into a stacked program, staggered. Block-level FLIP.",
+    "tags": [
+      "code",
+      "code-animation",
+      "flight",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "code-typing",
+    "type": "block",
+    "title": "Code Typing",
+    "description": "Token-streamed typing reveal with a caret that tracks the frontier — deterministic, no CSS animation.",
+    "tags": [
+      "code",
+      "code-animation",
+      "typing",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "code-diff",
+    "type": "block",
+    "title": "Code Diff",
+    "description": "An edit shown as a colored diff — removed lines collapse in red, added lines expand in green.",
+    "tags": [
+      "code",
+      "code-animation",
+      "diff",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "code-highlight",
+    "type": "block",
+    "title": "Code Highlight Sweep",
+    "description": "A highlight band sweeps across a target line while the surrounding context dims — draws the eye to one line.",
+    "tags": [
+      "code",
+      "code-animation",
+      "highlight",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 5
+  },
+  {
+    "name": "code-scroll",
+    "type": "block",
+    "title": "Code Scroll To Line",
+    "description": "The camera scrolls a long file to bring a target line to center and spotlights it — for walking through real modules.",
+    "tags": [
+      "code",
+      "code-animation",
+      "scroll",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 6
+  },
+  {
+    "name": "code-3d-extrude",
+    "type": "block",
+    "title": "Code 3D Extrude",
+    "description": "Syntax-highlighted code on a lit, beveled 3D slab that rotates through real space and settles to a readable rest — true WebGL depth and lighting, not a 2D transform.",
+    "tags": [
+      "code",
+      "code-animation",
+      "3d",
+      "webgl",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "code-shader-dissolve",
+    "type": "block",
+    "title": "Code Shader Dissolve",
+    "description": "The code compiles into existence: a GPU fragment shader resolves it out of seeded noise with a chromatic dissolve front and edge glow, then holds crisp.",
+    "tags": [
+      "code",
+      "code-animation",
+      "shader",
+      "webgl",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 7
+  },
+  {
+    "name": "code-particle-assemble",
+    "type": "block",
+    "title": "Code Particle Assemble",
+    "description": "Thousands of GPU points scatter through space and fly to the exact glyph pixels of the code, resolving into readable syntax-highlighted text — a particle system, not a token tween.",
+    "tags": [
+      "code",
+      "code-animation",
+      "particles",
+      "gpu",
+      "webgl",
+      "developer"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 8
+  },
+  {
+    "name": "flowchart-vertical",
+    "type": "block",
+    "title": "Flowchart Vertical",
+    "description": "Portrait animated decision tree with SVG connectors, sticky-note nodes, cursor interaction, and typing correction",
+    "tags": [
+      "diagram",
+      "flowchart",
+      "interactive",
+      "portrait"
+    ],
+    "dimensions": {
+      "width": 1440,
+      "height": 2560
+    },
+    "duration": 12
+  },
+  {
+    "name": "vfx-liquid-glass",
+    "type": "block",
+    "title": "Liquid Glass",
+    "description": "VFX composition block",
+    "tags": [
+      "html-in-canvas",
+      "webgl"
+    ],
+    "dimensions": {
+      "width": 1920,
+      "height": 1080
+    },
+    "duration": 20
+  },
+  {
+    "name": "parallax-zoom",
+    "type": "component",
+    "title": "Parallax Zoom",
+    "description": "Center card scales up to fill the frame while siblings parallax outward — inspired by the eBay Playbook hero transition",
+    "tags": [
+      "transition",
+      "zoom",
+      "parallax",
+      "grid",
+      "hero"
+    ]
+  },
+  {
+    "name": "parallax-unzoom",
+    "type": "component",
+    "title": "Parallax Unzoom",
+    "description": "Reveal transition — focus card scales down from full frame as siblings parallax in to form a grid (reverse of parallax-zoom)",
+    "tags": [
+      "transition",
+      "reveal",
+      "unzoom",
+      "parallax",
+      "grid",
+      "hero"
+    ]
+  }
+]

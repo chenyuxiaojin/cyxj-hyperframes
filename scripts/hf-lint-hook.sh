@@ -2,7 +2,7 @@
 # hf-lint-hook.sh — Claude Code PostToolUse 钩子
 #
 # 在 Edit/Write 一个 HyperFrames composition / index HTML 后，对该文件做
-# cyxj/docs/HARD_CONSTRAINTS.md 里「机械可检测」那批硬约束的 grep 自检。
+# 制作规范/docs/HARD_CONSTRAINTS.md 里「机械可检测」那批硬约束的 grep 自检。
 # 命中就通过 hookSpecificOutput.additionalContext 把警告注入回模型，让它自纠。
 #
 # 设计：
@@ -25,7 +25,7 @@ esac
 
 # 跳过只读上游 / 参考目录（不是我们手写的 composition）
 case "$file" in
-  *hyperframes-student-kit/*|*hyperframes-launches/*|*/templates/*|*/归档/*|*/参考/*|*remotion-text-effects/*) exit 0 ;;
+  *hyperframes-student-kit/*|*hyperframes-launches/*|*/组件库/*|*/归档/*|*/参考/*|*remotion-text-effects/*) exit 0 ;;
 esac
 
 warnings=""
@@ -79,7 +79,7 @@ fi
 # 有命中才输出（注入回模型）；没命中静默
 if [ -n "$warnings" ]; then
   msg="⚠️ HARD_CONSTRAINTS 机械自检命中 — ${file}
-${warnings}请对照 cyxj/docs/HARD_CONSTRAINTS.md 确认。极少数是合法例外，不是每条都得改。"
+${warnings}请对照 制作规范/docs/HARD_CONSTRAINTS.md 确认。极少数是合法例外，不是每条都得改。"
   jq -nc --arg ctx "$msg" '{hookSpecificOutput:{hookEventName:"PostToolUse",additionalContext:$ctx}}'
 fi
 exit 0

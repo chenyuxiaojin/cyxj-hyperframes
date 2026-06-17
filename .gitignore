@@ -34,7 +34,7 @@ hyperframes-launches/
 #     真身落 .agents/skills/<name>/，.claude/skills/<name> 软链过去，均不进 git
 #   - 版本真源是 skills-lock.json（进 git）；换机器跑 `npx skills experimental_install` 还原
 #   - cyxj-* 反向 include → 本仓库 wrapper skill 入口必须 commit
-# （2026-06-17 弃用 Codex official/ 镜像，改 GitHub 直连；详见 cyxj/docs/ops.md）
+# （2026-06-17 弃用 Codex official/ 镜像，改 GitHub 直连；详见 制作规范/docs/ops.md）
 # ============================================================
 /MOTION_PHILOSOPHY.md
 .claude/skills/*
@@ -65,12 +65,12 @@ hyperframes-launches/
 
 # 子工程内部 .claude state
 视频项目/已发布/**/.claude/
-templates/**/.claude/
+组件库/**/.claude/
 
 # ============================================================
 # 仓库根禁止 debug 截图（2026-05-21 新增，cold-open 翻车教训）
 # 截图必须放工程目录 `<工程>/debug-shots/` 或 /tmp/
-# 详见 cyxj/docs/HARD_CONSTRAINTS.md §13
+# 详见 制作规范/docs/HARD_CONSTRAINTS.md §13
 # ============================================================
 /*.png
 /*.jpg
@@ -95,7 +95,7 @@ templates/**/.claude/
 # 大目录（GB 级，本地保留，不进 git）
 # /参考/ = 原 参考库/（我的作品快照）+ hyperframes-launches 上游仓
 /参考/
-/素材/录屏/
+/资源库/录屏/
 归档/
 
 # ============================================================

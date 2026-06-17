@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 同步 DNA token 单源到所有 mirror。
 #
-# 单源：templates/components/xcyj-tokens/xcyj-tokens.css
+# 单源：组件库/xcyj-tokens/xcyj-tokens.css
 # Mirror：每个 hyperframes 工程的 assets/xcyj-tokens.css
 #
 # 用法（仓库根跑）：
@@ -15,7 +15,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SOURCE="$REPO_ROOT/templates/components/xcyj-tokens/xcyj-tokens.css"
+SOURCE="$REPO_ROOT/组件库/xcyj-tokens/xcyj-tokens.css"
 MODE="${1:-dry-run}"
 
 if [[ ! -f "$SOURCE" ]]; then

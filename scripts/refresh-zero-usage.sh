@@ -2,12 +2,12 @@
 # refresh-zero-usage.sh
 #
 # 扫 视频项目/已发布/ 下所有工程，反查每个工程用过哪些 catalog block / component。
-# 输出格式与 cyxj/docs/REFERENCE_INDEX.md "真实工程里用过哪些零件" 节一致。
+# 输出格式与 制作规范/docs/REFERENCE_INDEX.md "真实工程里用过哪些零件" 节一致。
 #
 # 检测规则：
 #   block      → compositions/<name>.html 文件存在
 #   component  → compositions/components/<name>.html 文件存在
-# name 列表来自 templates/catalog.json
+# name 列表来自 参考/catalog.json
 #
 # 用法：
 #   bash scripts/refresh-zero-usage.sh                      # 打印到 stdout
@@ -20,8 +20,8 @@ set -euo pipefail
 shopt -s nullglob
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-CATALOG="$ROOT/templates/catalog.json"
-INDEX="$ROOT/cyxj/docs/REFERENCE_INDEX.md"
+CATALOG="$ROOT/参考/catalog.json"
+INDEX="$ROOT/制作规范/docs/REFERENCE_INDEX.md"
 
 if [ ! -f "$CATALOG" ]; then
     echo "ERROR: catalog.json 不存在，先跑 bash scripts/refresh-catalog.sh" >&2
