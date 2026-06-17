@@ -2,66 +2,32 @@
 
 > **入口文件**。做新视频前先扫这里：找参考工程、找零件。
 >
-> 📅 最后更新：2026-05-06 · 19 个完整工程 + 46 个 catalog 零件 + 78 页官方文档镜像
+> 📅 最后更新：2026-06-17（重构清理，删废弃引用）· 当前可参考工程见下 + catalog 零件索引（完整清单以 `参考/catalog.json` 为准）+ 官方文档镜像
 
 ---
 
-## 一、完整工程（19 个，可直接打开）
+## 一、可参考的工程
 
-> 路径都是软链或本地真目录。直接 `cd 进去 npx hyperframes preview` 就能跑。
+> ⚠️ 2026-06-17 重构后大幅瘦身:原 `hyperframes-student-kit/` 子模块已废弃移除,`videos/` 目录已并入 `视频项目/`。下面是**当前仓库里真实存在**的可参考工程。
 
-### 🎯 想做横屏教程片头（核心场景）
-
-| 工程 | 比例 | 时长 | 看点 |
-|---|---|---|---|
-| `hyperframes-student-kit/video-projects/claude-edit-intro/` | 16:9 | 23s | 屏幕录制 → PiP 缩小，**教程片头标杆** |
-| `hyperframes-student-kit/video-projects/clickup-demo/` | 16:9 | 60s | 工具云 + Logo + 功能展示 + CTA，**4 幕标准结构** |
-| `videos/2026-05-02-codex-claude-intro/` | 16:9 | 52s | 透视网格 + 中文字幕，**你做过的中文教程片头底版** |
-| `videos/2026-05-02-claude-demo-v2/` | 16:9 | 26s | 录屏铺底 + 4 个 overlay |
-
-### 🎬 想做整片演示（30-60s）
+### 可直接 cd preview 跑的完整工程（有源码）
 
 | 工程 | 比例 | 时长 | 看点 |
 |---|---|---|---|
-| `hyperframes-student-kit/video-projects/linear-promo-30s/` | 16:9 | 30s | Infinite 风格 + 流程图变色，**品牌片金标准** |
-| `hyperframes-student-kit/video-projects/aisoc-app-release/` | 16:9 | 30s | 9 comp 节奏紧凑，闪白 + whip-streak |
-| `hyperframes-launches/hyperframes-launch/` | 16:9 | 49.77s | 玻璃态 UI + 多技术堆栈，**HeyGen 官方标杆** |
+| `视频项目/已发布/2026-05-04-claude-19-tips/` | 16:9 | ~7.5 分钟 | 28 comp，一招一节，cc-window 终端 UI 体系，**你的长教程基线 + DNA/运镜沉淀源** |
+| `参考/hyperframes-launches/hyperframes-launch/` | 16:9 | 49.77s | 玻璃态 UI + 多技术堆栈，**HeyGen 官方标杆** |
+| `参考/hyperframes-launches/timeline-launch/` | 16:9 | 33.53s | 互动 UI + 反转点笑点，故事弧 |
+| `参考/hyperframes-launches/website-to-hyperframes/` | 16:9 | ~61s | 网站截图变身视频，多色彩面板 |
 
-### 📊 想做数据 / 数学动画 / 长视频教学
+### 历史作品快照（`参考/我的作品/`，仅成片/截图，无源码，只作视觉参考）
 
-| 工程 | 比例 | 时长 | 看点 |
-|---|---|---|---|
-| `hyperframes-student-kit/video-projects/golden-ratio-demo/` | 16:9 | 37.67s | 黄金螺旋 SVG + 3 色分割，**数学动画范例** |
-| `hyperframes-student-kit/video-projects/aisoc-lesson-5-1/` | 16:9 | 112s | 全屏讲者 + 信息卡堆栈，**长视频教学结构** |
-| `videos/2026-05-04-claude-19-tips-hf/` | 16:9 | ~7 分钟 | 21 章一招一节，cc-window 终端 UI 体系，**你的长教程基线**（DNA + MY_MOTION_NOTES 沉淀源） |
-
-### 🏢 想做品牌 / Logo 演绎 / 产品发布
-
-| 工程 | 比例 | 时长 | 看点 |
-|---|---|---|---|
-| `hyperframes-student-kit/video-projects/first-agent-promo/` | 16:9 | 32s | React 组件 + 终端 UI，产品发布节奏 |
-| `hyperframes-launches/timeline-launch/` | 16:9 | 33.53s | 互动 UI + 反转点笑点，故事弧 |
-
-### 🎨 复杂多镜头（学习用）
-
-| 工程 | 比例 | 时长 | 看点 |
-|---|---|---|---|
-| `hyperframes-student-kit/video-projects/hyperframes-sizzle/` | 16:9 | ~40s | 30 comp，**技法集大成** |
-| `hyperframes-launches/website-to-hyperframes/` | 16:9 | ~61s | 网站截图变身视频，多色彩面板 |
-| `videos/2026-05-02-claude-overlays-only/` | 16:9 | 26s | 仅 overlay（达芬奇精修用），alpha 通道 |
-
-### 📱 9:16 竖屏短视频（暂留种）
-
-| 工程 | 比例 | 时长 | 看点 |
-|---|---|---|---|
-| `hyperframes-student-kit/video-projects/may-shorts-18/` | 9:16 | ~17s | TikTok 风格 + 卡拉 OK 字幕 |
-| `hyperframes-student-kit/video-projects/may-shorts-19/` | 9:16 | 18.84s | 同上的 v2 迭代 |
-| `hyperframes-student-kit/video-projects/may-shorts-6/` | 16:9 | ~25s | 横屏讲座短视频，3 种面部模式 |
-| `hyperframes-student-kit/video-projects/aisoc-hype/` | 16:9 | ~30s | 颗粒覆盖 + 运动字体 |
+> 这些目录是过往作品的 assets / renders / captures / final.mp4 快照,**没有 index.html、不能 preview**,只能翻成片看效果:
+>
+> `2026-05-04-claude-19-tips-hf/`、`2026-05-02-claude-demo-v2/`、`2026-05-02-codex-claude-intro/`、`2026-05-09-N1-1-mywebsite/`、`2026-05-09-prompt-video-showcase/`、`2026-05-09-分享会-{01-clickup,02-claude-edit,03-linear-promo}/`
 
 ---
 
-## 二、Catalog 零件（46 个：43 blocks + 3 components）
+## 二、Catalog 零件（官方 catalog；完整清单与数量以 `参考/catalog.json` 为准，下表只列常用）
 
 > 用 `npx hyperframes add <name>` 装到工程的 `compositions/components/`。
 > 完整 metadata 看 `参考/catalog.json`。月度刷新跑 `bash scripts/refresh-catalog.sh`。
@@ -146,16 +112,7 @@ components 跟 blocks 不同：components 是"叠加层"，全局生效；blocks
 
 **视频项目/已发布/**
 
-- `视频项目/已发布/2026-05-02-claude-demo-v2/` 用了：`grain-overlay`、`shimmer-sweep`
-- `视频项目/已发布/2026-05-02-claude-overlays-only/` 用了：`grain-overlay`、`shimmer-sweep`
-- `视频项目/已发布/2026-05-02-codex-claude-intro/` 用了：_（未引用 catalog 零件，全部自制）_
 - `视频项目/已发布/2026-05-04-claude-19-tips/` 用了：`cinematic-zoom`、`flash-through-white`、`flowchart`、`logo-outro`、`macos-notification`、`whip-pan`、`grain-overlay`、`shimmer-sweep`
-- `视频项目/已发布/2026-05-07-codex-claude-combo/` 用了：_（未引用 catalog 零件，全部自制）_
-- `视频项目/已发布/2026-05-09-claude-edit-intro/` 用了：`grain-overlay`、`shimmer-sweep`
-- `视频项目/已发布/2026-05-09-clickup-intro/` 用了：_（无 compositions/ 目录，单文件 index.html）_
-- `视频项目/已发布/2026-05-09-linear-promo/` 用了：_（未引用 catalog 零件，全部自制）_
-- `视频项目/已发布/2026-05-09-mywebsite-teaser/` 用了：_（未引用 catalog 零件，全部自制）_
-- `视频项目/已发布/2026-05-09-prompt-video-showcase/` 用了：_（未引用 catalog 零件，全部自制）_
 
 <!-- AUTO:zero-usage:end -->
 
@@ -188,19 +145,17 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 
 ### 自写 wrapper skill（active 入口是 `cyxj-hyperframes-overlay`）
 
-> 当前 active 入口只有 `cyxj-hyperframes-overlay`（先读官方规则，再叠 XCYJ 用户层）；`cyxj-new-video` / `cyxj-add-block` 的 legacy active links 已停用，仅作历史流程参考。
+> 当前唯一 active 入口是 `cyxj-hyperframes-overlay`（先读官方规则，再叠 XCYJ 用户层）。legacy skill `cyxj-new-video` / `cyxj-add-block` 已于 2026-06-17 重构删除，不再保留。
 
 | Skill | 触发词 | 干啥 |
 |---|---|---|
-| `cyxj-hyperframes-overlay`（**active 入口**） | 「新视频」「做视频」「片头」「加个零件」「加个转场」「做完了」「归档」 | 叠加官方 HyperFrames skills 的 XCYJ overlay：复用扫描 → 视觉 DNA → 硬约束 → 全生命周期 |
-| `cyxj-new-video`（历史参考） | 「新视频」「做视频」「片头」「new video」「做完了」「归档」 | 全生命周期：建工程 → 推参考 → 渲染 → 归档 → 询问抽模板 |
-| `cyxj-add-block`（历史参考） | 「加个零件」「装个 X」「加个转场」「加 macos 通知」 | 从 catalog 推荐 1-3 个 block 并 add，告知怎么引用 |
+| `cyxj-hyperframes-overlay`（**唯一 active 入口**） | 「新视频」「做视频」「片头」「加个零件」「加个转场」「做完了」「归档」 | 叠加官方 HyperFrames skills 的 XCYJ overlay：复用扫描 → 视觉 DNA → 硬约束 → 全生命周期 |
 
 ### 边界规则
 
 - Claude 专属措辞留在 `.claude/skills/`，Codex 专属措辞留在 `.agents/skills/`
-- 共享层是 `templates/`、`videos/`、`docs/`、`skills/`、`.gitignore`
-- 另一个 AI 做审查或修共享层时，先排除正在制作的 `2026-MM-DD/<slug>/` 施工目录
+- 共享层是 `组件库/`、`参考/`、`资源库/`、`docs/`、`制作规范/`、`.gitignore`
+- 另一个 AI 做审查或修共享层时，先排除正在制作的 `视频项目/在制/<工程>/` 施工目录
 
 ---
 
@@ -228,38 +183,31 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 
 **当前无内置起步模板**（原 tutorial-8beat 已删，无替代模板）。起新片一律从空白起步：`npx hyperframes init <slug> --example blank`，按官方 `hyperframes` skill 的最小骨架补 `compositions/*.html`。通用复用方法论见 `../notes/TEMPLATE_USAGE.md`。
 
-### 旧形态拓扑回查（看 videos/，不要 cp）
+### 旧形态拓扑回查（从 0 写，不要 cp）
 
-> 这些形态没有现成模板。想做这些形态的视频请**从 0 写**，可看下面工程的拓扑作参考，但不要 cp 起步（id / 文案 / DNA 老色都绑死了）。
-
-| 形态 | 看哪个工程 |
-|---|---|
-| 录屏铺底 + overlay（host-overlay）| `videos/2026-05-02-claude-demo-v2/` |
-| 仅 overlay alpha 输出（host-overlay-alpha）| `videos/2026-05-02-claude-overlays-only/` |
-| 7 beat 串联无录屏（demo-fullscreen）| `videos/2026-05-02-codex-claude-intro/` |
+> 这些形态没有现成模板，想做请**从 0 写**。原 `videos/` 源工程已不在仓内，`参考/我的作品/` 只剩成片快照（无源码）；唯一有完整源码可研究拓扑的长教程是 `视频项目/已发布/2026-05-04-claude-19-tips/`。
 
 **配套资产（做新视频时接入）**：
 - 风格借鉴方法论：`STYLE_BORROW_PLAYBOOK.md`
-- 用户视觉 DNA 基线：`../notes/MY_VISUAL_DNA.md`（仓库根，与 `MOTION_PHILOSOPHY.md` 同级）
+- 用户视觉 DNA 基线：`../notes/MY_VISUAL_DNA.md`（即 `制作规范/notes/MY_VISUAL_DNA.md`）
 
 ---
 
 ## 持续积累循环
 
 ```
-做新视频  (2026-MM-DD/<slug>/)
-   ↓ /新视频 阶段 A：建工程 + 推参考
+做新视频  (视频项目/在制/<日期>-<slug>/)
+   ↓ cyxj-hyperframes-overlay：建工程 + 推参考
    ↓ 提供文案 + 迭代 + 渲染
    ↓ 说「做完了」
-   ↓ /新视频 阶段 B：归档
-归档到  videos/<日期>-<slug>/  （含 final.mp4）
-   ↓ /新视频 主动问：要抽成新模板吗？
+   ↓ overlay：归档
+归档到  视频项目/已发布/<日期>-<slug>/  （含 final.mp4）
+   ↓ overlay 主动问：要把可复用零件抽进 组件库/ 吗？
    ├─ 不要 → 完成
-   └─ 要 → /新视频 阶段 C
-         抽掉具体内容 → templates/<新模板名>/
+   └─ 要 → 抽掉具体内容 → 组件库/<id>/ + 登记 COMPONENTS.json
          ../notes/TEMPLATE_USAGE.md 加一节
    ↓
-本 INDEX.md 加一行
+本 INDEX 加一行
    ↓
 未来 Claude 在做新视频时会推荐这个工程作参考
 ```
@@ -272,6 +220,6 @@ Claude Code 读 `CLAUDE.md` + `.claude/skills/`；Codex 读 `AGENTS.md` + `.agen
 |---|---|
 | 每月 | `bash scripts/refresh-catalog.sh` 刷新 catalog 索引（看是否有新增 block） |
 | 每 1-2 月 | `bash scripts/refresh-docs.sh` 刷新 `docs/hyperframes-official/` 官方文档镜像（78 页，动态读 llms.txt） |
-| 每 1-2 月 | `cd hyperframes-student-kit && git pull && cd ../hyperframes-launches && git pull` 更新上游 |
-| 每条新视频做完 | 归档到 `videos/`，本 INDEX 加一行 |
-| 每 3-6 月 | 盘点 INDEX，把高频参考工程抽成新 templates/ 模板 |
+| 每 1-2 月 | `cd 参考/hyperframes-launches && git pull` 更新上游参考仓 |
+| 每条新视频做完 | 归档到 `视频项目/已发布/`，本 INDEX 加一行 |
+| 每 3-6 月 | 盘点 INDEX，把高频可复用零件抽进 `组件库/` |

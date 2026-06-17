@@ -4,7 +4,7 @@
 
 ## hyperframes CLI 本体在哪
 
-不在本仓库，也不在 `hyperframes-student-kit/node_modules/`，在 npx 全局缓存里：
+不在本仓库，在 npx 全局缓存里：
 
 ```
 ~/.npm/_npx/<hash>/node_modules/hyperframes/   (~109M，含 Playwright/ffmpeg-static)
@@ -39,14 +39,13 @@
 
 | 路径 | 内容 |
 |---|---|
-| `REFERENCE_INDEX.md` | ⭐ 上游参考工程入口：18 工程 + 46 catalog 零件 + 16 官方 skill 索引 |
-| `资源库/logos/` | ⭐ 33 个 AI 厂商 / 工具 SVG logo |
+| `REFERENCE_INDEX.md` | ⭐ 参考入口：可参考工程 + catalog 零件索引 + 16 官方 skill 索引 |
+| `资源库/logos/` | ⭐ 34 个 AI 厂商 / 工具 SVG logo |
 | `组件库/COMPONENTS.json` | ⭐ 组件注册表（7 零件，写 composition 前必查） |
 | `组件库/cc-window/` | Claude Code 终端 UI 零件（19-tips 沉淀） |
 | `参考/inspirations/` | 5 大 React 组件库的 vanilla 转译版 |
-| `视频项目/已发布/2026-05-04-claude-19-tips/` | 最大工程参考：28 composition / 7.5 分钟 |
-| `参考/我的作品/2026-05-02-codex-claude-intro/` | codex-claude-intro 历史作品快照 |
-| `参考/我的作品/2026-05-09-N1-1-mywebsite/` | mywebsite 历史作品快照 |
+| `视频项目/已发布/2026-05-04-claude-19-tips/` | 最大工程参考（唯一有完整源码）：28 composition / 7.5 分钟 |
+| `参考/我的作品/` | 历史成片快照池（仅截图 / renders，无源码，视觉参考用） |
 | `../notes/TEMPLATE_USAGE.md` | 模板复用 checklist |
 
 ## 标准工作流详细

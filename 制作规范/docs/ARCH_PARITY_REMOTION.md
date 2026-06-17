@@ -23,13 +23,13 @@
 | 差异 | Remotion | hyperframes | 为什么不强行对齐 |
 |---|---|---|---|
 | 官方 skill 数 | 1（remotion-best-practices） | 16 | 上游仓库本身不同：hyperframes 官方就发 16 个分工 skill，remotion 发 1 个。 |
-| 用户层命名 | `cyxj/` → 改名 `cyxj-remotion/` + 归档旧层 | `cyxj/` **不改名** | Remotion 当时有新旧两层要消歧 + 独立 git 仓；hyperframes `cyxj/` 是唯一真源、随主仓提交，改名只徒增路径改动。 |
+| 用户层命名 | `cyxj/` → 改名 `cyxj-remotion/` + 归档旧层 | `cyxj/` → 2026-06-17 重构拆成中文桶（`制作规范/`+`组件库/`+`参考/`+`资源库/`） | 两边最终都重构：Remotion 为新旧两层消歧改名；hyperframes 为「一眼看懂 / 极致压缩」把单一 `cyxj/` 用户层按用途拆成顶层中文桶。 |
 | 旧 sync 脚本处理 | 加 `exit 1` fail-fast 保留 | 直接删除 | hyperframes 的 sync 脚本是纯 Codex-cache rsync，迁移后完全无意义 → 删；Remotion 旧脚本另有上下文 → 中和保留。 |
 | 文档 MCP | `.mcp.json` 挂 `@remotion/mcp`（官方文档实时查） | **不加 MCP** | hyperframes 官方文档已本地镜像在 `docs/hyperframes-official/`（78 页，`refresh-docs.sh` 维护）；HeyGen 托管 MCP 对 CLI 端禁用 compose/render，无本地文档 MCP 等价物。 |
 
 ## 尚存差距（建议后续，未在本次动）
 
-1. **双模板树**：hyperframes 有 `templates/`（真源，`/new-video` 取源）与 `cyxj/templates/`（99.9% 镜像，overlay 旧引用指向它）两棵。Remotion 是单一 `cyxj-remotion/scenes/`。建议合并到单源 `templates/`、更新 overlay 引用后删除镜像——属删committed 文件 + 改 skill 引用，需用户确认再动。
+1. ~~**双模板树**~~：原 `templates/` 真源 + `cyxj/templates/` 镜像两棵，已于 2026-06-17 重构合并——单源迁为 `组件库/`、`cyxj/templates` 镜像删除、引用全部更新。此差距消解。
 2. ~~**tutorial-8beat lint 债**~~：模板已于 2026-06-17 删除（两份镜像皆删，无替代模板），此 lint 债作废。
 
 > 维护提醒：两条管线的 skill 升级都走 `npx skills update`；升级后各自重核硬规则单源（HARD_RULES.md / HARD_CONSTRAINTS.md）。
